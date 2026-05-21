@@ -1,0 +1,14 @@
+.dialog-title{
+    color: var(--red-color);
+    font-size: 30px;
+    font-weight: 500;
+    padding: 20px;
+}
+.btn-create {
+ background: var(--red-color);
+  color: white;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}

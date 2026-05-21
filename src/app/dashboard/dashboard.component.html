@@ -1,0 +1,314 @@
+<div class="layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar" [class.closed]="isSidebarClosed" (mouseenter)="onMouseEnter()" (mouseleave)="onMouseLeave()">
+    <div class="logo_card">
+      <img src="../../assets/Images/logo.png" />
+      <span>OZO Gold and Diamond Jewellery</span>
+    </div>
+    <!-- MENU -->
+
+    <ul>
+
+      <!-- DASHBOARD -->
+
+      <li routerLink="home" routerLinkActive="active">
+
+        <i class="fa-solid fa-chart-line"></i>
+
+        <span>Dashboard</span>
+
+      </li>
+
+      <!-- ================= CATALOG ================= -->
+
+
+      <li (click)="toggleMenu('catalog')">
+
+        <div class="menu-left">
+
+          <i class="fa-solid fa-layer-group"></i>
+
+          <span>Catalog</span>
+
+        </div>
+
+        <i class="fa-solid fa-angle-down" [class.rotate]="openMenu === 'catalog'">
+        </i>
+
+      </li>
+
+      <ul class="submenu" [class.show]="openMenu === 'catalog'">
+
+        <li routerLink="category">
+          Category
+        </li>
+
+
+        <li routerLink="list_subcategory">
+          SubCategory
+        </li>
+
+        <li routerLink="subsubcategory">
+          Sub-SubCategory
+        </li>
+
+        <li routerLink="product">
+          Products
+        </li>
+
+        <li routerLink="inventory">
+          Inventory
+        </li>
+
+      </ul>
+
+      <!-- ================= SALES ================= -->
+
+
+      <li (click)="toggleMenu('sales')">
+
+        <div class="menu-left">
+
+          <i class="fa-solid fa-bag-shopping"></i>
+
+          <span>Sales</span>
+
+        </div>
+
+        <i class="fa-solid fa-angle-down" [class.rotate]="openMenu === 'sales'">
+        </i>
+
+      </li>
+
+      <ul class="submenu" [class.show]="openMenu === 'sales'">
+
+        <li routerLink="orders">
+          Orders
+        </li>
+
+        <li routerLink="transactions">
+          Transactions
+        </li>
+
+        <li routerLink="coupons">
+          Coupons
+        </li>
+
+        <li routerLink="returns">
+          Returns
+        </li>
+
+      </ul>
+
+      <!-- ================= USERS ================= -->
+
+
+      <li (click)="toggleMenu('users')">
+
+        <div class="menu-left">
+
+          <i class="fa-solid fa-users"></i>
+
+          <span>Users</span>
+
+        </div>
+
+        <i class="fa-solid fa-angle-down" [class.rotate]="openMenu === 'users'">
+        </i>
+
+      </li>
+
+      <ul class="submenu" [class.show]="openMenu === 'users'">
+
+        <li routerLink="user">
+          Customers
+        </li>
+
+        <li routerLink="address">
+          Addresses
+        </li>
+
+        <li routerLink="reviews">
+          Reviews
+        </li>
+
+
+      </ul>
+
+      <!-- ================= CMS ================= -->
+
+      <li (click)="toggleMenu('cms')">
+
+        <div class="menu-left">
+
+          <i class="fa-solid fa-image"></i>
+
+          <span>CMS</span>
+
+        </div>
+
+        <i class="fa-solid fa-angle-down" [class.rotate]="openMenu === 'cms'">
+        </i>
+
+      </li>
+
+      <ul class="submenu" [class.show]="openMenu === 'cms'">
+
+        <li routerLink="banners">
+          Banners
+        </li>
+
+        <li routerLink="offers">
+          Offers
+        </li>
+
+        <li routerLink="blogs">
+          Blogs
+        </li>
+
+
+      </ul>
+
+      <!-- ================= SETTINGS ================= -->
+
+      <li (click)="toggleMenu('settings')">
+
+        <div class="menu-left">
+
+          <i class="fa-solid fa-gear"></i>
+
+          <span>Settings</span>
+
+        </div>
+
+        <i class="fa-solid fa-angle-down" [class.rotate]="openMenu === 'settings'">
+        </i>
+
+      </li>
+
+      <ul class="submenu" [class.show]="openMenu === 'settings'">
+
+        <li routerLink="gold-rate">
+          Gold Rate
+        </li>
+
+        <li routerLink="admins">
+          Admins
+        </li>
+
+
+      </ul>
+
+    </ul>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <!-- Navbar -->
+    <!-- Navbar -->
+
+    <div class="navbar">
+
+      <!-- LEFT -->
+
+      <div class="nav-left">
+
+        <button (click)="toggleSidebar()" class="menu-btn">
+
+          <i class="fa-solid fa-bars-staggered"></i>
+
+        </button>
+
+        <div class="page-info">
+
+          <h4>Dashboard</h4>
+
+          <p>
+            Welcome back, Admin 👋
+          </p>
+
+        </div>
+
+      </div>
+
+      <!-- CENTER SEARCH -->
+
+      <div class="search-wrapper">
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        <input type="text" placeholder="Search products, orders, users..." />
+
+      </div>
+
+      <!-- RIGHT -->
+
+      <div class="nav-right">
+
+        <!-- NOTIFICATION -->
+
+        <div class="nav-icon">
+
+          <i class="fa-regular fa-bell"></i>
+
+          <span class="badge-count">
+            3
+          </span>
+
+        </div>
+
+        <!-- MESSAGE -->
+
+        <div class="nav-icon">
+
+          <i class="fa-regular fa-envelope"></i>
+
+          <span class="badge-count">
+            5
+          </span>
+
+        </div>
+
+        <!-- PROFILE -->
+
+        <div class="profile-box">
+
+          <div class="profile-img">
+
+            A
+
+          </div>
+
+          <div class="profile-info">
+
+            <h6>Admin</h6>
+
+            <p>Super Admin</p>
+
+          </div>
+
+        </div>
+
+        <!-- LOGOUT -->
+
+        <button class="logout-btn" (click)="logout()">
+
+          <i class="fa-solid fa-right-from-bracket"></i>
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <!-- 🔥 CONTENT AREA (IMPORTANT) -->
+    <div class="content" [ngStyle]="{ marginLeft: isSidebarClosed ? '0px' : '0px' }">
+
+      <router-outlet></router-outlet>
+
+    </div>
+
+  </div>
+</div>

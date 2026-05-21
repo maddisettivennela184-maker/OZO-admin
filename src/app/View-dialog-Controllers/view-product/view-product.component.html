@@ -1,0 +1,423 @@
+<div class="container fiesr-container">
+  <div class="row"><div class="col-md-12">
+    
+  <h2>
+    Product Details
+  </h2>
+
+  <!-- PRODUCT IMAGES -->
+
+  <div class="image-preview">
+
+    <img
+
+      *ngFor="
+        let image
+        of selectedProduct.images
+      "
+
+      [src]="image"
+
+    >
+
+  </div>
+
+  <!-- PRODUCT DETAILS -->
+
+  <div class="details-grid">
+
+    <p>
+      <strong>Name:</strong>
+
+      {{ selectedProduct.name }}
+    </p>
+
+    <p>
+      <strong>Category:</strong>
+
+      {{
+        selectedProduct.category?.name
+      }}
+    </p>
+
+    <p>
+      <strong>SubCategory:</strong>
+
+      {{
+        selectedProduct.subCategory?.name
+      }}
+    </p>
+
+    <p>
+      <strong>SubSubCategory:</strong>
+
+      {{
+        selectedProduct.subSubCategory?.name
+      }}
+    </p>
+
+    <p>
+      <strong>Brand:</strong>
+
+      {{ selectedProduct.brand }}
+    </p>
+
+    <p>
+      <strong>Gender:</strong>
+
+      {{ selectedProduct.gender }}
+    </p>
+
+    <p>
+      <strong>Occasion:</strong>
+
+      {{ selectedProduct.occasion }}
+    </p>
+
+    <p>
+      <strong>SKU:</strong>
+
+      {{ selectedProduct.sku }}
+    </p>
+
+  </div>
+
+  <!-- ================================= -->
+  <!-- VARIANTS -->
+  <!-- ================================= -->
+
+  <div
+
+    *ngFor="
+      let variant
+      of selectedProduct.variants;
+      let i = index
+    "
+
+    class="variant-card"
+  >
+
+
+    <h3>
+      Variant {{ i + 1 }}
+    </h3>
+
+    <div class="variant-grid">
+
+      <p>
+        <strong>Size:</strong>
+
+        {{ variant.size }}
+      </p>
+
+      <p>
+        <strong>Stock:</strong>
+
+        {{ variant.stock }}
+      </p>
+
+      <p>
+        <strong>Gold Purity:</strong>
+
+        {{ variant.goldPurity }}
+      </p>
+
+      <p>
+        <strong>Gold Color:</strong>
+
+        {{ variant.goldColor }}
+      </p>
+
+      <p>
+        <strong>Gross Weight:</strong>
+
+        {{ variant.grossWeight }} gm
+      </p>
+
+      <p>
+        <strong>Net Weight:</strong>
+
+        {{ variant.netWeight }} gm
+      </p>
+
+      <p>
+        <strong>Making Charges:</strong>
+
+        ₹ {{ variant.makingCharges }}
+      </p>
+
+      <p>
+        <strong>Wastage %:</strong>
+
+        {{
+          variant.wastagePercentage
+        }}%
+      </p>
+
+      <p>
+        <strong>Gold Rate / Gram:</strong>
+
+        ₹
+        {{
+          variant.goldRatePerGram
+        }}
+      </p>
+
+      <p>
+        <strong>Gold Cost:</strong>
+
+        ₹
+        {{
+          variant.goldCost
+        }}
+      </p>
+
+      <p>
+        <strong>Total Diamond Price:</strong>
+
+        ₹
+        {{
+          variant.totalDiamondPrice
+        }}
+      </p>
+
+      <p>
+        <strong>Total Price:</strong>
+
+        ₹
+        {{
+          variant.totalPrice
+        }}
+      </p>
+
+      <p>
+        <strong>Discount:</strong>
+
+        {{
+          variant.discountPercentage
+        }}%
+      </p>
+
+      <p>
+        <strong>Final Price:</strong>
+
+        ₹
+        {{
+          variant.finalPrice
+        }}
+      </p>
+
+    </div>
+<!-- ================================= -->
+<!-- DIAMOND DETAILS -->
+<!-- ================================= -->
+
+<div
+  *ngIf="
+    variant.diamonds?.length > 0
+  "
+>
+
+  <h3>
+    Diamond Details
+  </h3>
+
+  <div
+
+    *ngFor="
+      let diamond
+      of variant.diamonds
+    "
+
+    class="diamond-card"
+  >
+
+    <div class="diamond-grid">
+
+      <p>
+        <strong>Type:</strong>
+
+        {{
+          diamond.diamondType
+        }}
+      </p>
+
+      <p>
+        <strong>Shape:</strong>
+
+        {{ diamond.shape }}
+      </p>
+
+      <p>
+        <strong>Carat:</strong>
+
+        {{ diamond.carat }}
+      </p>
+
+      <p>
+        <strong>Color:</strong>
+
+        {{ diamond.color }}
+      </p>
+
+      <p>
+        <strong>Clarity:</strong>
+
+        {{ diamond.clarity }}
+      </p>
+
+      <p>
+        <strong>Cut:</strong>
+
+        {{ diamond.cut }}
+      </p>
+
+      <p>
+        <strong>Polish:</strong>
+
+        {{ diamond.polish }}
+      </p>
+
+      <p>
+        <strong>Symmetry:</strong>
+
+        {{ diamond.symmetry }}
+      </p>
+
+      <p>
+        <strong>Fluorescence:</strong>
+
+        {{
+          diamond.fluorescence
+        }}
+      </p>
+
+      <p>
+        <strong>Certificate Lab:</strong>
+
+        {{
+          diamond.certificateLab
+        }}
+      </p>
+
+      <p>
+        <strong>Certificate Number:</strong>
+
+        {{
+          diamond.certificateNumber
+        }}
+      </p>
+
+      <p>
+        <strong>Diamond Price:</strong>
+
+        ₹
+        {{
+          diamond.diamondPrice
+        }}
+      </p>
+
+      <p>
+        <strong>Total Diamonds:</strong>
+
+        {{
+          diamond.totalDiamonds
+        }}
+      </p>
+
+    </div>
+
+    <!-- ================================= -->
+    <!-- CERTIFICATE -->
+    <!-- ================================= -->
+
+    <div
+      class="certificate-section"
+      *ngIf="
+        diamond.certificateUrl
+      "
+    >
+
+      <h4>
+        Certificate
+      </h4>
+
+      <!-- IMAGE -->
+
+      <img
+
+        *ngIf="
+          diamond.certificateUrl
+          .includes('.jpg')
+
+          ||
+
+          diamond.certificateUrl
+          .includes('.jpeg')
+
+          ||
+
+          diamond.certificateUrl
+          .includes('.png')
+        "
+
+        [src]="
+          diamond.certificateUrl
+        "
+
+        class="certificate-image"
+
+      >
+      <!-- video -->
+       <video
+  width="400"
+  controls
+  preload="metadata"
+>
+
+  <source
+
+    [attr.src]="selectedProduct.video"
+
+    type="video/mp4"
+
+  >
+
+</video>
+
+      <!-- PDF -->
+
+      <a
+
+        *ngIf="
+          diamond.certificateUrl
+          .includes('.pdf')
+        "
+
+        [href]="
+          diamond.certificateUrl
+        "
+
+        target="_blank"
+
+        class="certificate-link"
+
+      >
+
+        View Certificate
+
+      </a>
+
+    </div>
+
+  </div>
+
+</div>
+
+    </div>
+
+
+
+
+  </div></div>
+</div>
