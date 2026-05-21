@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   // apiUrl: 'http://localhost:3001/api'
-   apiUrl: "https://ozo-admin.vercel.app"
+   apiUrl: "https://ozo-backend-1.onrender.com"
+  
    
 };
