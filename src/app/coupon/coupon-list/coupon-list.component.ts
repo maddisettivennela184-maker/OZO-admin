@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
-import { Coupon } from 'src/app/models/Coupon';
+import { Coupon } from 'src/app/Models/Coupon';
 import { CouponService } from 'src/app/Services/coupon.service';
 import Swal from 'sweetalert2';
 

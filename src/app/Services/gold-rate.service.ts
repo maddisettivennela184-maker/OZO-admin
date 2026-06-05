@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environment';
-import { GoldRate } from '../models/GoldRate';
+import { GoldRate } from '../Models/GoldRate';
 
 @Injectable({
   providedIn: 'root'

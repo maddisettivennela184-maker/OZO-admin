@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
-import { Banner } from 'src/app/models/banner';
+import { Banner } from '../../Models/banner';
 import { BannerService } from 'src/app/Services/banner.service';
 
 @Component({

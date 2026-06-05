@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
-import { Product } from 'src/app/models/Product';
+import { Product } from 'src/app/Models/Product';
 import { ProductService } from 'src/app/Services/product.service';
 import { ViewProductComponent } from 'src/app/View-dialog-Controllers/view-product/view-product.component';
 import Swal from 'sweetalert2';

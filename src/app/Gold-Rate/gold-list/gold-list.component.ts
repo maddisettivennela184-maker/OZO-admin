@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
-import { GoldRate } from 'src/app/models/GoldRate';
+import { GoldRate } from 'src/app/Models/GoldRate';
 import { GoldRateService } from 'src/app/Services/gold-rate.service';
 import { ViewGoldRateComponent } from 'src/app/View-dialog-Controllers/view-gold-rate/view-gold-rate.component';
 import { MatFormFieldModule } from "@angular/material/form-field";

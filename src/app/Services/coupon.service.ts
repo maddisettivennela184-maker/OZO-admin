@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environment';
-import { Coupon } from '../models/Coupon';
+import { Coupon } from '../Models/Coupon';
 
 @Injectable({
   providedIn: 'root'
