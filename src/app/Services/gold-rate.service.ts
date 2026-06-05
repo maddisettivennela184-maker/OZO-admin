@@ -2,20 +2,20 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../environment';
-import { GoldRate } from '../Models/GoldRate';
+import { GoldRate } from '../models/GoldRate';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GoldRateService {
 
- private apiUrl =
+  private apiUrl =
     environment.apiUrl;
 
   constructor(
     private http:
       HttpClient
-  ) {}
+  ) { }
 
   /*
   CREATE GOLD RATE
@@ -33,7 +33,7 @@ export class GoldRateService {
   GET ALL GOLD RATES
   */
   getAllGoldRates():
-  Observable<any> {
+    Observable<any> {
     return this.http.get(
       `${this.apiUrl}/gold-rate`
     );

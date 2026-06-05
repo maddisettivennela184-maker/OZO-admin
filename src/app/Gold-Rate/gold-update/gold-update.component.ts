@@ -121,7 +121,7 @@ implements OnInit {
             );
 
             this.router.navigate([
-              '/admin/gold-rate'
+              '/admin/Gold-list'
             ]);
           },
 

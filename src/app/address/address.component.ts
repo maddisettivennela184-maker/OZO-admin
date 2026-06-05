@@ -3,7 +3,7 @@ import { AddressService } from '../Services/address.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Address } from '../Models/Address';
+import { Address } from '../models/Address';
 
 @Component({
   selector: 'app-address',
@@ -12,20 +12,20 @@ import { Address } from '../Models/Address';
 })
 export class AddressComponent implements OnInit {
 
-  
-displayedColumns: string[] = [
-  'sno',
-  'fullName',
-  'phone',
-  'addressLine1',
-  'addressLine2',
-  'city',
-  'state',
-  'pincode',
-  'country',
-  'isDefault',
-  'createdAt'
-];
+
+  displayedColumns: string[] = [
+    'sno',
+    'fullName',
+    'phone',
+    'addressLine1',
+    'addressLine2',
+    'city',
+    'state',
+    'pincode',
+    'country',
+    'isDefault',
+    'createdAt'
+  ];
 
   dataSource =
     new MatTableDataSource<Address>();
@@ -45,7 +45,7 @@ displayedColumns: string[] = [
   constructor(
     private addressService:
       AddressService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllAddresses();

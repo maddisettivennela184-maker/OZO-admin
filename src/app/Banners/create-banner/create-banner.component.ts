@@ -27,7 +27,7 @@ export class CreateBannerComponent implements OnInit {
 
     private router:
       Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.bannerForm =
@@ -115,7 +115,7 @@ export class CreateBannerComponent implements OnInit {
           );
 
           this.router.navigate([
-            '/admin/banner'
+            '/admin/banners'
           ]);
         },
 
@@ -134,7 +134,7 @@ export class CreateBannerComponent implements OnInit {
   */
   goBack(): void {
     this.router.navigate([
-      '/admin/banner'
+      '/admin/banners'
     ]);
   }
 }

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../environment';
-import { Address } from '../Models/Address';
+import { Address } from '../models/Address';
 
 
 @Injectable({
@@ -10,19 +10,19 @@ import { Address } from '../Models/Address';
 })
 export class AddressService {
 
-   private apiUrl =
+  private apiUrl =
     environment.apiUrl;
 
   constructor(
     private http:
       HttpClient
-  ) {}
+  ) { }
 
   /*
   GET ALL ADDRESSES
   */
   getAllAddresses():
-  Observable<Address[]> {
+    Observable<Address[]> {
     return this.http.get<Address[]>(
       `${this.apiUrl}/getAllAddress`
     );

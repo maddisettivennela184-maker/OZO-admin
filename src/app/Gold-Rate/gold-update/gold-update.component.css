@@ -72,7 +72,7 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  background: #d4af37;
+  background: var(--red-color);
   color: #fff;
   font-weight: 600;
 }

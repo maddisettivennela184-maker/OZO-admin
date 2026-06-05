@@ -3,7 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { CategoryService } from '../../Services/category.service';
-import { Category } from '../../Models/Category';
+import { Category } from '../../models/Category';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
@@ -18,8 +18,8 @@ import Swal from 'sweetalert2';
 })
 export class CategoryComponent implements OnInit {
 
-displayedColumns: string[] = ['sno', 'name', 'image', 'isActive', 'actions'];
-dataSource = new MatTableDataSource<Category>();
+  displayedColumns: string[] = ['sno', 'name', 'image', 'isActive', 'actions'];
+  dataSource = new MatTableDataSource<Category>();
 
   categories: Category[] = [];
   selectedCategory: Category | null = null;
@@ -27,122 +27,122 @@ dataSource = new MatTableDataSource<Category>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private categoryService: CategoryService, private router: Router,  private dialog: MatDialog,
-) {}
+  constructor(private categoryService: CategoryService, private router: Router, private dialog: MatDialog,
+  ) { }
 
   ngOnInit(): void {
     this.getAllCategories();
   }
 
   // Controller method
-getAllCategories(): void {
-  this.categoryService.getAllCategories().subscribe({
-    next: (response: any) => {
-      console.log('API Response:', response);
+  getAllCategories(): void {
+    this.categoryService.getAllCategories().subscribe({
+      next: (response: any) => {
+        console.log('API Response:', response);
 
-      this.categories = response.data;
-      this.dataSource.data = response.data;
+        this.categories = response.data;
+        this.dataSource.data = response.data;
 
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    },
-    error: (error) => {
-      console.error('Error fetching categories:', error);
-    }
-  });
-}
-
-goToCreateCategory() {
-  this.router.navigate([
-    '/create-category'
-  ]);
-}
-
-editCategory(element: any) {
-  this.router.navigate([
-    '/admin/update-category',
-    element._id
-  ]);
-}
-viewCategory(
-  category: Category
-): void {
-
-  this.dialog.open(
-    ViewCategoryComponent,
-    {
-      width: '500px',
-      data: category
-    }
-  );
-}
-
-deleteCategory(
-  data: any
-): void {
-
-  const dialogRef =
-    this.dialog.open(
-
-      DeleteConfirmationComponent,
-
-      {
-        width: '400px'
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      error: (error) => {
+        console.error('Error fetching categories:', error);
       }
-
-    );
-
-  dialogRef
-    .afterClosed()
-    .subscribe((result) => {
-
-      if (result) {
-
-        this.categoryService
-          .deleteCategory(
-            data._id
-          )
-          .subscribe({
-
-            next: () => {
-
-              Swal.fire({
-
-                icon: 'success',
-
-                title: 'Deleted',
-
-                text:
-                  'Deleted Successfully'
-
-              });
-
-              this.getAllCategories();
-
-            },
-
-            error: () => {
-
-              Swal.fire({
-
-                icon: 'error',
-
-                title: 'Oops...',
-
-                text:
-                  'Delete Failed'
-
-              });
-
-            }
-
-          });
-
-      }
-
     });
+  }
 
-}
+  goToCreateCategory() {
+    this.router.navigate([
+      '/create-category'
+    ]);
+  }
+
+  editCategory(element: any) {
+    this.router.navigate([
+      '/admin/update-category',
+      element._id
+    ]);
+  }
+  viewCategory(
+    category: Category
+  ): void {
+
+    this.dialog.open(
+      ViewCategoryComponent,
+      {
+        width: '500px',
+        data: category
+      }
+    );
+  }
+
+  deleteCategory(
+    data: any
+  ): void {
+
+    const dialogRef =
+      this.dialog.open(
+
+        DeleteConfirmationComponent,
+
+        {
+          width: '400px'
+        }
+
+      );
+
+    dialogRef
+      .afterClosed()
+      .subscribe((result) => {
+
+        if (result) {
+
+          this.categoryService
+            .deleteCategory(
+              data._id
+            )
+            .subscribe({
+
+              next: () => {
+
+                Swal.fire({
+
+                  icon: 'success',
+
+                  title: 'Deleted',
+
+                  text:
+                    'Deleted Successfully'
+
+                });
+
+                this.getAllCategories();
+
+              },
+
+              error: () => {
+
+                Swal.fire({
+
+                  icon: 'error',
+
+                  title: 'Oops...',
+
+                  text:
+                    'Delete Failed'
+
+                });
+
+              }
+
+            });
+
+        }
+
+      });
+
+  }
   // Search Filter
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;

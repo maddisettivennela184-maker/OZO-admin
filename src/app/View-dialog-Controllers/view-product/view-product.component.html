@@ -1,423 +1,239 @@
-<div class="container fiesr-container">
-  <div class="row"><div class="col-md-12">
-    
-  <h2>
-    Product Details
-  </h2>
-
-  <!-- PRODUCT IMAGES -->
-
-  <div class="image-preview">
-
-    <img
-
-      *ngFor="
-        let image
-        of selectedProduct.images
-      "
-
-      [src]="image"
-
-    >
-
-  </div>
-
-  <!-- PRODUCT DETAILS -->
-
-  <div class="details-grid">
-
-    <p>
-      <strong>Name:</strong>
-
-      {{ selectedProduct.name }}
-    </p>
-
-    <p>
-      <strong>Category:</strong>
-
-      {{
-        selectedProduct.category?.name
-      }}
-    </p>
-
-    <p>
-      <strong>SubCategory:</strong>
-
-      {{
-        selectedProduct.subCategory?.name
-      }}
-    </p>
-
-    <p>
-      <strong>SubSubCategory:</strong>
-
-      {{
-        selectedProduct.subSubCategory?.name
-      }}
-    </p>
-
-    <p>
-      <strong>Brand:</strong>
-
-      {{ selectedProduct.brand }}
-    </p>
-
-    <p>
-      <strong>Gender:</strong>
-
-      {{ selectedProduct.gender }}
-    </p>
-
-    <p>
-      <strong>Occasion:</strong>
-
-      {{ selectedProduct.occasion }}
-    </p>
-
-    <p>
-      <strong>SKU:</strong>
-
-      {{ selectedProduct.sku }}
-    </p>
-
-  </div>
-
-  <!-- ================================= -->
-  <!-- VARIANTS -->
-  <!-- ================================= -->
-
-  <div
-
-    *ngFor="
-      let variant
-      of selectedProduct.variants;
-      let i = index
-    "
-
-    class="variant-card"
-  >
-
-
-    <h3>
-      Variant {{ i + 1 }}
-    </h3>
-
-    <div class="variant-grid">
-
-      <p>
-        <strong>Size:</strong>
-
-        {{ variant.size }}
-      </p>
-
-      <p>
-        <strong>Stock:</strong>
-
-        {{ variant.stock }}
-      </p>
-
-      <p>
-        <strong>Gold Purity:</strong>
-
-        {{ variant.goldPurity }}
-      </p>
-
-      <p>
-        <strong>Gold Color:</strong>
-
-        {{ variant.goldColor }}
-      </p>
-
-      <p>
-        <strong>Gross Weight:</strong>
-
-        {{ variant.grossWeight }} gm
-      </p>
-
-      <p>
-        <strong>Net Weight:</strong>
-
-        {{ variant.netWeight }} gm
-      </p>
-
-      <p>
-        <strong>Making Charges:</strong>
-
-        ₹ {{ variant.makingCharges }}
-      </p>
-
-      <p>
-        <strong>Wastage %:</strong>
-
-        {{
-          variant.wastagePercentage
-        }}%
-      </p>
-
-      <p>
-        <strong>Gold Rate / Gram:</strong>
-
-        ₹
-        {{
-          variant.goldRatePerGram
-        }}
-      </p>
-
-      <p>
-        <strong>Gold Cost:</strong>
-
-        ₹
-        {{
-          variant.goldCost
-        }}
-      </p>
-
-      <p>
-        <strong>Total Diamond Price:</strong>
-
-        ₹
-        {{
-          variant.totalDiamondPrice
-        }}
-      </p>
-
-      <p>
-        <strong>Total Price:</strong>
-
-        ₹
-        {{
-          variant.totalPrice
-        }}
-      </p>
-
-      <p>
-        <strong>Discount:</strong>
-
-        {{
-          variant.discountPercentage
-        }}%
-      </p>
-
-      <p>
-        <strong>Final Price:</strong>
-
-        ₹
-        {{
-          variant.finalPrice
-        }}
-      </p>
-
-    </div>
-<!-- ================================= -->
-<!-- DIAMOND DETAILS -->
-<!-- ================================= -->
-
-<div
-  *ngIf="
-    variant.diamonds?.length > 0
-  "
->
-
-  <h3>
-    Diamond Details
-  </h3>
-
-  <div
-
-    *ngFor="
-      let diamond
-      of variant.diamonds
-    "
-
-    class="diamond-card"
-  >
-
-    <div class="diamond-grid">
-
-      <p>
-        <strong>Type:</strong>
-
-        {{
-          diamond.diamondType
-        }}
-      </p>
-
-      <p>
-        <strong>Shape:</strong>
-
-        {{ diamond.shape }}
-      </p>
-
-      <p>
-        <strong>Carat:</strong>
-
-        {{ diamond.carat }}
-      </p>
-
-      <p>
-        <strong>Color:</strong>
-
-        {{ diamond.color }}
-      </p>
-
-      <p>
-        <strong>Clarity:</strong>
-
-        {{ diamond.clarity }}
-      </p>
-
-      <p>
-        <strong>Cut:</strong>
-
-        {{ diamond.cut }}
-      </p>
-
-      <p>
-        <strong>Polish:</strong>
-
-        {{ diamond.polish }}
-      </p>
-
-      <p>
-        <strong>Symmetry:</strong>
-
-        {{ diamond.symmetry }}
-      </p>
-
-      <p>
-        <strong>Fluorescence:</strong>
-
-        {{
-          diamond.fluorescence
-        }}
-      </p>
-
-      <p>
-        <strong>Certificate Lab:</strong>
-
-        {{
-          diamond.certificateLab
-        }}
-      </p>
-
-      <p>
-        <strong>Certificate Number:</strong>
-
-        {{
-          diamond.certificateNumber
-        }}
-      </p>
-
-      <p>
-        <strong>Diamond Price:</strong>
-
-        ₹
-        {{
-          diamond.diamondPrice
-        }}
-      </p>
-
-      <p>
-        <strong>Total Diamonds:</strong>
-
-        {{
-          diamond.totalDiamonds
-        }}
-      </p>
-
+<div class="product-details-page" *ngIf="selectedProduct">
+  <div class="product-shell">
+
+    <!-- Header -->
+    <div class="page-header">
+      <div class="page-header__left">
+        <div class="page-breadcrumb">Admin / Products / View</div>
+        <h2 class="page-title">{{ selectedProduct.name || 'Product Details' }}</h2>
+        <p class="page-subtitle">
+          Complete product information, pricing, variants, stones, media and certification details.
+        </p>
+      </div>
+
+      <div class="page-header__right">
+        <span class="status-badge" [class.active]="selectedProduct.isActive">
+          {{ selectedProduct.isActive ? 'Active' : 'Inactive' }}
+        </span>
+        <button class="btn btn-close-custom" (click)="closeDialog()">Close</button>
+      </div>
     </div>
 
-    <!-- ================================= -->
-    <!-- CERTIFICATE -->
-    <!-- ================================= -->
+    <!-- Top summary -->
+    <div class="top-layout">
+      <!-- Media -->
+      <div class="panel panel-media">
+        <div class="panel-head">
+          <h3>Product Media</h3>
+          <span>{{ selectedProduct.images?.length || 0 }} Images</span>
+        </div>
 
-    <div
-      class="certificate-section"
-      *ngIf="
-        diamond.certificateUrl
-      "
-    >
+        <div class="main-preview" *ngIf="selectedProduct.images?.length; else noImages">
+          <img [src]="selectedProduct.images[0]" alt="Product image">
+        </div>
 
-      <h4>
-        Certificate
-      </h4>
+        <ng-template #noImages>
+          <div class="empty-state">No product images available</div>
+        </ng-template>
 
-      <!-- IMAGE -->
+        <div class="thumb-grid" *ngIf="selectedProduct.images?.length">
+          <div class="thumb-card" *ngFor="let image of selectedProduct.images">
+            <img [src]="image" alt="Product thumbnail">
+          </div>
+        </div>
 
-      <img
+        <div class="media-extra" *ngIf="selectedProduct.video || selectedProduct.certificateUrl">
+          <div class="mini-media-card" *ngIf="selectedProduct.certificateUrl">
+            <h4>Certificate</h4>
+            <img [src]="selectedProduct.certificateUrl" class="certificate-image" alt="Certificate image">
+          </div>
 
-        *ngIf="
-          diamond.certificateUrl
-          .includes('.jpg')
+          <div class="mini-media-card" *ngIf="selectedProduct.video">
+            <h4>Product Video</h4>
+            <video class="product-video" controls>
+              <source [src]="selectedProduct.video">
+            </video>
+          </div>
+        </div>
+      </div>
 
-          ||
+      <!-- Overview -->
+      <div class="overview-side">
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-label">Category</span>
+            <strong>{{ selectedProduct.category?.name || '-' }}</strong>
+          </div>
 
-          diamond.certificateUrl
-          .includes('.jpeg')
+          <div class="stat-card">
+            <span class="stat-label">Brand</span>
+            <strong>{{ selectedProduct.brand || '-' }}</strong>
+          </div>
 
-          ||
 
-          diamond.certificateUrl
-          .includes('.png')
-        "
+        </div>
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-label">Product Type</span>
+            <strong>{{ selectedProduct.productType || '-' }}</strong>
+          </div>
 
-        [src]="
-          diamond.certificateUrl
-        "
+          <div class="stat-card">
+            <span class="stat-label">Variants</span>
+            <strong>{{ selectedProduct.variants?.length || 0 }}</strong>
+          </div>
+        </div>
 
-        class="certificate-image"
 
-      >
-      <!-- video -->
-       <video
-  width="400"
-  controls
-  preload="metadata"
->
+        <div class="panel">
+          <div class="panel-head">
+            <h3>Product Overview</h3>
+          </div>
 
-  <source
+          <div class="info-grid">
+            <div class="info-item">
+              <label>Name</label>
+              <span>{{ selectedProduct.name || '-' }}</span>
+            </div>
 
-    [attr.src]="selectedProduct.video"
+            <div class="info-item">
+              <label>Category</label>
+              <span>{{ selectedProduct.category?.name || '-' }}</span>
+            </div>
 
-    type="video/mp4"
+            <div class="info-item">
+              <label>Sub Category</label>
+              <span>{{ selectedProduct.subCategory?.name || '-' }}</span>
+            </div>
 
-  >
+            <div class="info-item">
+              <label>Sub Sub Category</label>
+              <span>{{ selectedProduct.subSubCategory?.name || '-' }}</span>
+            </div>
 
-</video>
+            <div class="info-item">
+              <label>Brand</label>
+              <span>{{ selectedProduct.brand || '-' }}</span>
+            </div>
 
-      <!-- PDF -->
+            <div class="info-item">
+              <label>Gender</label>
+              <span>{{ selectedProduct.gender || '-' }}</span>
+            </div>
 
-      <a
+            <div class="info-item">
+              <label>Occasion</label>
+              <span>{{ selectedProduct.occasion || '-' }}</span>
+            </div>
 
-        *ngIf="
-          diamond.certificateUrl
-          .includes('.pdf')
-        "
+            <div class="info-item">
+              <label>Hallmark Number</label>
+              <span>{{ selectedProduct.hallmarkNumber || '-' }}</span>
+            </div>
 
-        [href]="
-          diamond.certificateUrl
-        "
+            <div class="info-item">
+              <label>Hallmark Certified</label>
+              <span>{{ selectedProduct.hallmarkCertified ? 'Yes' : 'No' }}</span>
+            </div>
 
-        target="_blank"
+            <div class="info-item">
+              <label>Certificate Included</label>
+              <span>{{ selectedProduct.certificationIncluded ? 'Yes' : 'No' }}</span>
+            </div>
 
-        class="certificate-link"
+            <div class="info-item info-item--full">
+              <label>Tags</label>
+              <span>{{ selectedProduct.tags?.length ? selectedProduct.tags.join(', ') : '-' }}</span>
+            </div>
+          </div>
+        </div>
 
-      >
+        <div class="panel" *ngIf="selectedProduct.description">
+          <div class="panel-head">
+            <h3>Description</h3>
+          </div>
+          <p class="description-text">{{ selectedProduct.description }}</p>
+        </div>
+      </div>
+    </div>
 
-        View Certificate
+    <!-- Variants -->
+    <div class="panel variants-panel" *ngIf="selectedProduct.variants?.length">
+      <div class="panel-head">
+        <h3>Variants</h3>
+        <span>{{ selectedProduct.variants.length }} Total</span>
+      </div>
 
-      </a>
+      <div class="variant-list">
+        <div class="variant-card" *ngFor="let variant of selectedProduct.variants; let i = index">
+          <div class="variant-card__header">
+            <div>
+              <h4>Variant {{ i + 1 }}</h4>
+              <p>SKU: {{ variant.sku || '-' }}</p>
+            </div>
+            <div class="variant-price">
+              <p>Variant total Price</p>
+              ₹ {{
+              formatPrice(variant.priceDetails.finalPrice || 0) }}
+            </div>
+          </div>
 
+          <div class="variant-grid">
+            <div class="info-item"><label>Size</label><span>{{ variant.size || '-' }}</span></div>
+            <div class="info-item"><label>Stock</label><span>{{ variant.stock || 0 }}</span></div>
+            <div class="info-item"><label>Metal Type</label><span>{{ variant.metalType || '-' }}</span></div>
+            <div class="info-item"><label>Metal Purity</label><span>{{ variant.metalPurity || '-' }}</span></div>
+            <div class="info-item"><label>Metal Color</label><span>{{ variant.metalColor || '-' }}</span></div>
+            <div class="info-item"><label>Gross Weight</label><span>{{ variant.grossWeight || 0 }} gm</span></div>
+            <div class="info-item"><label>Net Weight</label><span>{{ variant.netWeight || 0 }} gm</span></div>
+            <div class="info-item"><label>Wastage</label><span>{{ variant.wastagePercentage || 0 }}%</span></div>
+            <div class="info-item"><label>Making Charges</label><span>₹ {{ formatPrice(variant.makingCharges || 0)
+                }}</span></div>
+            <div class="info-item"><label>Making Charge Type</label><span>{{ variant.makingChargeType || '-' }}</span>
+            </div>
+            <div class="info-item"><label>Discount</label><span>{{ variant.discountPercentage || 0 }}%</span></div>
+            <div class="info-item"><label>Calculated Price</label><span>₹ {{ formatPrice(variant.calculatedPrice || 0)
+                }}</span></div>
+          </div>
+
+          <div class="sub-panel" *ngIf="variant.priceDetails">
+            <div class="sub-panel__title">Price Breakup</div>
+            <div class="price-grid">
+              <div class="price-item"><span>Metal Rate</span><strong>₹ {{ formatPrice(variant.priceDetails.metalRate ||
+                  0) }}</strong></div>
+              <div class="price-item"><span>Metal Value</span><strong>₹ {{ formatPrice(variant.priceDetails.metalValue
+                  || 0) }}</strong></div>
+              <div class="price-item"><span>Wastage</span><strong>₹ {{ formatPrice(variant.priceDetails.wastageAmount ||
+                  0) }}</strong></div>
+              <div class="price-item"><span>Stone Value</span><strong>₹ {{ formatPrice(variant.priceDetails.stoneValue
+                  || 0) }}</strong></div>
+              <div class="price-item"><span>Making Charges</span><strong>₹ {{
+                  formatPrice(variant.priceDetails.makingCharges || 0) }}</strong></div>
+              <div class="price-item"><span>GST</span><strong>₹ {{ formatPrice(variant.priceDetails.gstAmount || 0)
+                  }}</strong></div>
+              <div class="price-item total"><span>Final Price</span><strong>₹ {{
+                  formatPrice(variant.priceDetails.finalPrice || 0) }}</strong></div>
+            </div>
+          </div>
+
+          <div class="sub-panel" *ngIf="variant.stones?.length">
+            <div class="sub-panel__title">Stone Details</div>
+            <div class="stone-list">
+              <div class="stone-card" *ngFor="let stone of variant.stones">
+                <div class="stone-grid">
+                  <div class="info-item"><label>Type</label><span>{{ stone.stoneType || '-' }}</span></div>
+                  <div class="info-item"><label>Category</label><span>{{ stone.stoneCategory || '-' }}</span></div>
+                  <div class="info-item"><label>Quality</label><span>{{ stone.quality || '-' }}</span></div>
+                  <div class="info-item"><label>Weight</label><span>{{ stone.totalWeight || 0 }} ct</span></div>
+                  <div class="info-item"><label>Quantity</label><span>{{ stone.quantity || 0 }}</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
     </div>
 
   </div>
-
-</div>
-
-    </div>
-
-
-
-
-  </div></div>
 </div>

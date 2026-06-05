@@ -108,6 +108,24 @@ input[type="checkbox"] {
   height: 18px;
   accent-color: #d4af37;
 }
+.checkbox-container {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.checkbox-row {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.checkbox-row label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
 
 /* =========================================
    FILE INPUT
@@ -205,7 +223,7 @@ button {
    ACTION BUTTONS
 ========================================= */
 
-button[type="button"] {
+.variant {
   background: #222;
   color: #fff;
   padding: 10px 18px;
@@ -214,7 +232,7 @@ button[type="button"] {
   font-size: 14px;
 }
 
-button[type="button"]:hover {
+.variant:hover {
   background: #000;
 }
 
@@ -224,6 +242,11 @@ button[type="button"]:hover {
 
 .remove-btn {
   background: #e53935 !important;
+  color: #fff;
+  padding: 10px 18px;
+  margin-top: 15px;
+  margin-right: 10px;
+  font-size: 14px;
 }
 
 .remove-btn:hover {
@@ -276,3 +299,4 @@ button[type="button"]:hover {
   }
 
 }
+

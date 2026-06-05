@@ -47,26 +47,7 @@
   transition: all 0.3s ease;
 }
 
-/* ICON FIX WIDTH (🔥 main key point) */
-.sidebar ul li i {
-  width: 25px;
-  /* fixed width */
-  text-align: start;
-  font-size: 18px;
-  flex-shrink: 0;
 
-  /* prevent shrinking */
-  transition: transform 0.4s ease;
-  /* 🔥 smooth rotate */
-
-}
-
-/* TEXT */
-.sidebar ul li span {
-  white-space: nowrap;
-  transition: 0.3s;
-
-}
 
 .sidebar.closed {
   width: 70px;

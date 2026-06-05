@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../environment';
-import { User } from '../Models/User';
+import { User } from '../models/User';
 
 @Injectable({
   providedIn: 'root'
@@ -15,13 +15,13 @@ export class UserService {
   constructor(
     private http:
       HttpClient
-  ) {}
+  ) { }
 
   /*
   GET ALL USERS
   */
   getAllUsers():
-  Observable<User[]> {
+    Observable<User[]> {
     return this.http.get<User[]>(
       `${this.apiUrl}/getAllUsers`
     );
@@ -31,7 +31,7 @@ export class UserService {
   GET USERS COUNT
   */
   getUsersCount():
-  Observable<any> {
+    Observable<any> {
     return this.http.get(
       `${this.apiUrl}/getUsersCount`
     );

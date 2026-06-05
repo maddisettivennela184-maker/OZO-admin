@@ -19,6 +19,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatIconModule } from '@angular/material/icon';
 import { CreateCategoryComponent } from './CategoryConteroller/create-category/create-category.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { GoldListComponent } from './Gold-Rate/gold-list/gold-list.component';
 
 
 import {MatSnackBarModule} from '@angular/material/snack-bar';
@@ -44,6 +45,19 @@ import { ViewCategoryComponent } from './View-dialog-Controllers/view-category/v
 import { ViewSubCategoryComponent } from './View-dialog-Controllers/view-sub-category/view-sub-category.component';
 import { ViewSubSubCategoryComponent } from './View-dialog-Controllers/view-sub-sub-category/view-sub-sub-category.component';
 import { ViewProductComponent } from './View-dialog-Controllers/view-product/view-product.component';
+import { MatButtonModule } from '@angular/material/button';
+import { GoldCreateComponent } from './Gold-Rate/gold-create/gold-create.component';
+import { GoldUpdateComponent } from './Gold-Rate/gold-update/gold-update.component';
+import { CouponListComponent } from './coupon/coupon-list/coupon-list.component';
+import { CouponCreateComponent } from './coupon/coupon-create/coupon-create.component';
+import { CouponUpdateComponent } from './coupon/coupon-update/coupon-update.component';
+import { ReviewComponent } from './review/review.component';
+import { MetalCreateComponent } from './metal/metal-create/metal-create.component';
+import { MetalListComponent } from './metal/metal-list/metal-list.component';
+import { MetalUpdateComponent } from './metal/metal-update/metal-update.component';
+import { StonesUpdateComponent } from './stones/stones-update/stones-update.component';
+import { StonesCreateComponent } from './stones/stones-create/stones-create.component';
+import { StonesListComponent } from './stones/stones-list/stones-list.component';
 
 
 @NgModule({
@@ -73,7 +87,20 @@ import { ViewProductComponent } from './View-dialog-Controllers/view-product/vie
     ViewCategoryComponent,
     ViewSubCategoryComponent,
     ViewSubSubCategoryComponent,
-    ViewProductComponent
+    ViewProductComponent,  GoldListComponent,
+    GoldCreateComponent,
+    GoldUpdateComponent,
+    CouponListComponent,
+    CouponCreateComponent,
+    CouponUpdateComponent,
+    ReviewComponent,
+    MetalCreateComponent,
+    MetalListComponent,
+    MetalUpdateComponent,
+    StonesUpdateComponent,
+    StonesCreateComponent,
+    StonesListComponent,
+   
   ],
   imports: [
     BrowserModule,
@@ -89,7 +116,9 @@ import { ViewProductComponent } from './View-dialog-Controllers/view-product/vie
      MatIconModule,
     MatSortModule,MatSnackBarModule,
     MatDialogModule,
-     MatSelectModule 
+     MatSelectModule,
+    //  MatButtonModule 
+     
   ],
   providers: [],
   bootstrap: [AppComponent]

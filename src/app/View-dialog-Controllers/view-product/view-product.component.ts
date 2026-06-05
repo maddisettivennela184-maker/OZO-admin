@@ -45,15 +45,7 @@ export class ViewProductComponent implements OnInit {
 
   }
 
-  // =====================================
-  // CLOSE DIALOG
-  // =====================================
 
-  closeDialog(): void {
-
-    this.dialogRef.close();
-
-  }
 
   // =====================================
   // CHECK VIDEO
@@ -152,5 +144,14 @@ export class ViewProductComponent implements OnInit {
     ).format(price);
 
   }
+  // =====================================
+  // CLOSE DIALOG
+  // =====================================
 
+
+  closeDialog(): void {
+
+    this.dialogRef.close();
+
+  }
 }

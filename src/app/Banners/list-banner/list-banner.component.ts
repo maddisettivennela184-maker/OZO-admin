@@ -5,7 +5,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
-import { Banner } from 'src/app/Models/banner';
+import { Banner } from 'src/app/models/banner';
 import { BannerService } from 'src/app/Services/banner.service';
 
 @Component({
@@ -48,7 +48,7 @@ export class ListBannerComponent implements OnInit {
 
     private dialog:
       MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllBanners();
@@ -132,31 +132,31 @@ export class ListBannerComponent implements OnInit {
       .subscribe(
         result => {
 
-        if (result) {
+          if (result) {
 
-          this.bannerService
-            .deleteBanner(
-              data._id
-            )
-            .subscribe({
+            this.bannerService
+              .deleteBanner(
+                data._id
+              )
+              .subscribe({
 
-              next: () => {
-                alert(
-                  "Deleted successfully"
-                );
+                next: () => {
+                  alert(
+                    "Deleted successfully"
+                  );
 
-                this.getAllBanners();
-              },
+                  this.getAllBanners();
+                },
 
-              error: () => {
-                alert(
-                  "Delete failed"
-                );
-              }
+                error: () => {
+                  alert(
+                    "Delete failed"
+                  );
+                }
 
-            });
-        }
-      });
+              });
+          }
+        });
   }
 
   /*

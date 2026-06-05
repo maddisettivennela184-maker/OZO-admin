@@ -1,6 +1,6 @@
-.sidebar ul li:hover i {
+/* .sidebar ul li:hover i {
   animation: spin 1.0s linear;
-}
+} */
 
 @keyframes spin {
   from {
@@ -109,7 +109,7 @@ img {
    margin-top:30px;
   padding:15px 15px;
   border:none;
-  border-radius:30px;
+  border-radius:7px;
   background:var(--red-color);
   color:var(--wight-color);
   cursor:pointer; 
@@ -125,6 +125,7 @@ img {
 }
 .btn-create{
   border-radius: 10px;
+  border: none;
 }
 
 
@@ -132,10 +133,12 @@ img {
 .btn-back {
  background: var(--gray-colour);
   color: white;
-  padding: 10px 12px;
-  border-radius: 8px;
-  border: none;
+     padding: 14px 28px;
+    font-size: 16px;
+    margin-top: 25px;
   cursor: pointer;
+  border-radius: 10px;
+  border: none;
 }
 
 

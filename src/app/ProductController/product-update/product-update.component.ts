@@ -53,10 +53,13 @@ export class ProductUpdateComponent implements OnInit {
   imagePreview: any[] = [];
 
   videoPreview: any;
+  certificateFile: File | null = null;
+  certificatePreview: string | ArrayBuffer | null = null;
 
   // =====================================
   // CONSTRUCTOR
   // =====================================
+
 
   constructor(
 
@@ -80,7 +83,7 @@ export class ProductUpdateComponent implements OnInit {
     private subSubCategoryService:
       SubsubcategoryService
 
-  ) {}
+  ) { }
 
   // =====================================
   // ON INIT
@@ -105,55 +108,58 @@ export class ProductUpdateComponent implements OnInit {
 
   initializeForm(): void {
 
-    this.productForm =
-      this.fb.group({
+    this.productForm = this.fb.group({
 
-        name: ['', Validators.required],
+      name: ['', Validators.required],
 
-        slug: [''],
+      slug: [''],
 
-        shortDescription: [''],
+      shortDescription: [''],
 
-        description: [''],
+      description: [''],
 
-        category: [''],
+      category: [''],
 
-        subCategory: [''],
+      subCategory: [''],
 
-        subSubCategory: [''],
+      subSubCategory: [''],
 
-        productType: [''],
+      productType: ['', Validators.required],
 
-        gender: [''],
+      gender: [''],
 
-        occasion: [''],
+      occasion: [''],
 
-        brand: [''],
+      brand: [''],
 
-        sku: [''],
+      hallmarkNumber: [''],
 
-        tags: [''],
+      hallmarkCertified: [true],
 
-        seoTitle: [''],
+      certificationIncluded: [true],
 
-        seoDescription: [''],
+      featured: [false],
 
-        hallmarkCertified: [false],
+      bestSeller: [false],
 
-        certificationIncluded: [false],
+      trending: [false],
 
-        featured: [false],
+      newArrival: [false],
 
-        bestSeller: [false],
+      tags: [''],
 
-        trending: [false],
+      seoTitle: [''],
 
-        isActive: [true],
+      seoDescription: [''],
 
-        variants:
-          this.fb.array([])
+      metaKeywords: [''],
 
-      });
+      isActive: [true],
+
+      variants: this.fb.array([])
+
+    });
+
 
   }
 
@@ -172,135 +178,111 @@ export class ProductUpdateComponent implements OnInit {
   // =====================================
   // CREATE VARIANT
   // =====================================
-
   createVariant(): FormGroup {
 
     return this.fb.group({
 
       size: [''],
 
+      sku: [''],
+
       stock: [0],
 
-      goldPurity: [''],
+      metalType: ['gold'],
 
-      goldColor: [''],
+      metalPurity: [''],
+
+      metalColor: ['yellow'],
 
       grossWeight: [0],
 
       netWeight: [0],
 
-      makingCharges: [0],
-
       wastagePercentage: [0],
 
-      goldPrice: [0],
+      makingCharges: [0],
 
-      basePrice: [0],
+      makingChargeType: ['fixed'],
 
       discountPercentage: [0],
 
-      finalPrice: [0],
-
-      hasDiamond: [false],
-
-      diamonds:
-        this.fb.array([])
+      stones: this.fb.array([])
 
     });
 
   }
 
-  // =====================================
-  // ADD VARIANT
-  // =====================================
-
   addVariant(): void {
 
+    const variant =
+      this.createVariant();
+
     this.variants.push(
-      this.createVariant()
+      variant
     );
 
   }
 
-  // =====================================
-  // REMOVE VARIANT
-  // =====================================
-
-  removeVariant(
-    index: number
-  ): void {
+  removeVariant(index: number): void {
 
     this.variants.removeAt(index);
 
   }
-
   // =====================================
   // GET DIAMONDS
   // =====================================
+  getStones(
+    variantIndex: number
+  ): FormArray {
 
- getDiamonds(
-  variantIndex: number
-): FormArray {
+    return this.variants
+      .at(variantIndex)
+      .get('stones') as FormArray;
 
-  return this.variants
-    .at(variantIndex)
-    .get('diamonds') as FormArray;
+  }
 
-}
-
-  // =====================================
-  // CREATE DIAMOND
-  // =====================================
-
-  createDiamond(): FormGroup {
+  createStone(): FormGroup {
 
     return this.fb.group({
 
-      diamondType: ['NATURAL'],
+      stoneType: ['diamond'],
 
-      shape: [''],
+      stoneCategory: ['natural'],
 
-      carat: [0],
+      quality: [''],
 
-      color: [''],
+      totalWeight: [0],
 
-      clarity: [''],
-
-      cut: [''],
-
-      polish: [''],
-
-      symmetry: [''],
-
-      fluorescence: [''],
-
-      certificateLab: ['NONE'],
-
-      certificateNumber: [''],
-
-      diamondPrice: [0],
-
-      totalDiamonds: [1]
+      quantity: [1]
 
     });
 
   }
-
-  // =====================================
-  // ADD DIAMOND
-  // =====================================
-
-  addDiamond(
+  addStone(
     variantIndex: number
   ): void {
 
-    this.getDiamonds(
+    this.getStones(
       variantIndex
     ).push(
-      this.createDiamond()
+      this.createStone()
     );
 
   }
+
+  removeStone(
+    variantIndex: number,
+    stoneIndex: number
+  ): void {
+
+    this.getStones(
+      variantIndex
+    ).removeAt(
+      stoneIndex
+    );
+
+  }
+
 
   // =====================================
   // GET PRODUCT BY ID
@@ -319,7 +301,9 @@ export class ProductUpdateComponent implements OnInit {
           const product =
             res.data;
 
-          // PATCH FORM
+          // =========================
+          // PATCH PRODUCT
+          // =========================
 
           this.productForm.patchValue({
 
@@ -356,17 +340,8 @@ export class ProductUpdateComponent implements OnInit {
             brand:
               product.brand,
 
-            sku:
-              product.sku,
-
-            tags:
-              product.tags?.join(','),
-
-            seoTitle:
-              product.seoTitle,
-
-            seoDescription:
-              product.seoDescription,
+            hallmarkNumber:
+              product.hallmarkNumber,
 
             hallmarkCertified:
               product.hallmarkCertified,
@@ -383,22 +358,42 @@ export class ProductUpdateComponent implements OnInit {
             trending:
               product.trending,
 
+            newArrival:
+              product.newArrival,
+
+            tags:
+              product.tags?.join(', '),
+
+            seoTitle:
+              product.seoTitle,
+
+            seoDescription:
+              product.seoDescription,
+
+            metaKeywords:
+              product.metaKeywords?.join(', '),
+
             isActive:
               product.isActive
 
           });
 
-          // IMAGE PREVIEW
+          // =========================
+          // PREVIEWS
+          // =========================
 
           this.imagePreview =
             product.images || [];
 
-          // VIDEO PREVIEW
-
           this.videoPreview =
-            product.video;
+            product.video || '';
 
-          // SUBCATEGORY
+          this.certificatePreview =
+            product.certificateUrl || '';
+
+          // =========================
+          // LOAD DROPDOWNS
+          // =========================
 
           this.onCategoryChange({
 
@@ -411,8 +406,6 @@ export class ProductUpdateComponent implements OnInit {
 
           });
 
-          // SUBSUBCATEGORY
-
           this.onSubCategoryChange({
 
             target: {
@@ -424,7 +417,15 @@ export class ProductUpdateComponent implements OnInit {
 
           });
 
+          // =========================
+          // CLEAR EXISTING VARIANTS
+          // =========================
+
+          this.variants.clear();
+
+          // =========================
           // VARIANTS
+          // =========================
 
           product.variants.forEach(
             (variant: any) => {
@@ -437,14 +438,20 @@ export class ProductUpdateComponent implements OnInit {
                 size:
                   variant.size,
 
+                sku:
+                  variant.sku,
+
                 stock:
                   variant.stock,
 
-                goldPurity:
-                  variant.goldPurity,
+                metalType:
+                  variant.metalType,
 
-                goldColor:
-                  variant.goldColor,
+                metalPurity:
+                  variant.metalPurity,
+
+                metalColor:
+                  variant.metalColor,
 
                 grossWeight:
                   variant.grossWeight,
@@ -452,85 +459,58 @@ export class ProductUpdateComponent implements OnInit {
                 netWeight:
                   variant.netWeight,
 
-                makingCharges:
-                  variant.makingCharges,
-
                 wastagePercentage:
                   variant.wastagePercentage,
 
-                goldPrice:
-                  variant.goldPrice,
+                makingCharges:
+                  variant.makingCharges,
 
-                basePrice:
-                  variant.basePrice,
+                makingChargeType:
+                  variant.makingChargeType,
 
                 discountPercentage:
-                  variant.discountPercentage,
-
-                finalPrice:
-                  variant.finalPrice,
-
-                hasDiamond:
-                  variant.hasDiamond
+                  variant.discountPercentage
 
               });
 
-              const diamondsArray =
+              // =========================
+              // STONES
+              // =========================
+
+              const stonesArray =
                 variantGroup.get(
-                  'diamonds'
+                  'stones'
                 ) as FormArray;
 
-              variant.diamonds.forEach(
-                (diamond: any) => {
+              stonesArray.clear();
 
-                  const diamondGroup =
-                    this.createDiamond();
+              variant.stones?.forEach(
+                (stone: any) => {
 
-                  diamondGroup.patchValue({
+                  const stoneGroup =
+                    this.createStone();
 
-                    diamondType:
-                      diamond.diamondType,
+                  stoneGroup.patchValue({
 
-                    shape:
-                      diamond.shape,
+                    stoneType:
+                      stone.stoneType,
 
-                    carat:
-                      diamond.carat,
+                    stoneCategory:
+                      stone.stoneCategory,
 
-                    color:
-                      diamond.color,
+                    quality:
+                      stone.quality,
 
-                    clarity:
-                      diamond.clarity,
+                    totalWeight:
+                      stone.totalWeight,
 
-                    cut:
-                      diamond.cut,
-
-                    polish:
-                      diamond.polish,
-
-                    symmetry:
-                      diamond.symmetry,
-
-                    fluorescence:
-                      diamond.fluorescence,
-
-                    certificateLab:
-                      diamond.certificateLab,
-
-                    certificateNumber:
-                      diamond.certificateNumber,
-
-                    diamondPrice:
-                      diamond.diamondPrice,
-
-                    totalDiamonds:
-                      diamond.totalDiamonds
+                    quantity:
+                      stone.quantity
 
                   });
 
-                  diamondsArray.push(
-                    diamondGroup
+                  stonesArray.push(
+                    stoneGroup
                   );
 
                 }
@@ -607,60 +587,60 @@ export class ProductUpdateComponent implements OnInit {
   // SUBCATEGORY CHANGE
   // =====================================
 
-onSubCategoryChange(
-  event: any
-): void {
+  onSubCategoryChange(
+    event: any
+  ): void {
 
-  const subCategoryId =
-    event.target.value;
+    const subCategoryId =
+      event.target.value;
 
-  this.subSubCategoryService
-    .getSubSubCategoryBySubCategory(
-      subCategoryId
-    )
-    .subscribe({
+    this.subSubCategoryService
+      .getSubSubCategoryBySubCategory(
+        subCategoryId
+      )
+      .subscribe({
 
-      next: (res: any) => {
+        next: (res: any) => {
 
-        console.log(res);
+          console.log(res);
 
-        this.subSubCategories =
-          res.data;
+          this.subSubCategories =
+            res.data;
 
-        // PATCH AFTER DATA LOAD
+          // PATCH AFTER DATA LOAD
 
-        setTimeout(() => {
+          setTimeout(() => {
 
-          this.productForm
-            .patchValue({
+            this.productForm
+              .patchValue({
 
-              subSubCategory:
-                this.productForm.value
-                  .subSubCategory
+                subSubCategory:
+                  this.productForm.value
+                    .subSubCategory
 
-            });
+              });
 
-        });
+          });
 
-      },
+        },
 
-      error: (err: any) => {
+        error: (err: any) => {
 
-        console.log(err);
- Swal.fire({
+          console.log(err);
+          Swal.fire({
 
-    icon: 'success',
+            icon: 'success',
 
-    title: 'Success',
+            title: 'Success',
 
-    text: 'Updated Successfully'
+            text: 'Updated Successfully'
 
-  });
-      }
+          });
+        }
 
-    });
+      });
 
-}
+  }
 
   // =====================================
   // IMAGE SELECT
@@ -749,12 +729,20 @@ onSubCategoryChange(
   // CERTIFICATE SELECT
   // =====================================
 
-  onCertificateSelect(
-    event: any
-  ): void {
+  onCertificateSelect(event: any): void {
 
-    this.selectedCertificate =
+    const file =
       event.target.files[0];
+
+    if (file) {
+
+      this.selectedCertificate =
+        file;
+
+      this.certificatePreview =
+        URL.createObjectURL(file);
+
+    }
 
   }
 
@@ -762,179 +750,185 @@ onSubCategoryChange(
   // UPDATE PRODUCT
   // =====================================
 
- onSubmit(): void {
+  onSubmit(): void {
 
-  const formData =
-    new FormData();
+    if (this.productForm.invalid) {
 
-  // SIMPLE FIELDS
+      this.productForm.markAllAsTouched();
 
-  Object.keys(
-    this.productForm.value
-  ).forEach((key) => {
-
-    if (
-
-      key !== 'variants'
-
-      &&
-
-      key !== 'tags'
-
-    ) {
-
-      formData.append(
-
-        key,
-
-        this.productForm.value[key]
-
-      );
+      return;
 
     }
 
-  });
+    const formValue = this.productForm.value;
 
-  // TAGS
+    const formData = new FormData();
 
-  formData.append(
+    // =========================
+    // TAGS ARRAY
+    // =========================
 
-    'tags',
-
-    JSON.stringify(
-
-      this.productForm.value.tags
+    formValue.tags = formValue.tags
+      ? formValue.tags
         .split(',')
+        .map((tag: string) => tag.trim())
+      : [];
 
-    )
+    // =========================
+    // META KEYWORDS ARRAY
+    // =========================
 
-  );
+    formValue.metaKeywords = formValue.metaKeywords
+      ? formValue.metaKeywords
+        .split(',')
+        .map((keyword: string) => keyword.trim())
+      : [];
 
-  // VARIANTS
-
-  formData.append(
-
-    'variants',
-
-    JSON.stringify(
-
-      this.productForm.value.variants
-
-    )
-
-  );
-
-  // IMAGES
-
-  this.selectedImages
-    .forEach((image) => {
-
-      formData.append(
-
-        'images',
-
-        image
-
-      );
-
-    });
-
-  // VIDEO
-
-  if (
-    this.selectedVideo
-  ) {
+    // =========================
+    // VARIANTS
+    // =========================
 
     formData.append(
-
-      'video',
-
-      this.selectedVideo
-
+      'variants',
+      JSON.stringify(formValue.variants)
     );
 
-  }
+    // =========================
+    // OTHER FIELDS
+    // =========================
 
-  // CERTIFICATE
+    Object.keys(formValue).forEach((key) => {
 
-  if (
-    this.selectedCertificate
-  ) {
+      if (
+        key !== 'variants' &&
+        key !== 'tags' &&
+        key !== 'metaKeywords'
+      ) {
 
-    formData.append(
-
-      'certificate',
-
-      this.selectedCertificate
-
-    );
-
-  }
-
-  // UPDATE API
-
-  this.productService
-    .updateProduct(
-
-      this.productId,
-
-      formData
-
-    )
-    .subscribe({
-
-      // SUCCESS
-
-      next: (res: any) => {
-
-        console.log(res);
-
-        Swal.fire({
-
-          icon: 'success',
-
-          title: 'Success',
-
-          text:
-            'Product Updated Successfully',
-
-          timer: 2000,
-
-          showConfirmButton:
-            false
-
-        });
-
-        this.router.navigate([
-
-          '/admin/product'
-
-        ]);
-
-      },
-
-      // ERROR
-
-      error: (err) => {
-
-        console.log(err);
-
-        Swal.fire({
-
-          icon: 'error',
-
-          title: 'Oops...',
-
-          text:
-            'Update Failed'
-
-        });
+        formData.append(
+          key,
+          formValue[key]
+        );
 
       }
 
     });
 
-}
+    // =========================
+    // TAGS
+    // =========================
+
+    formData.append(
+      'tags',
+      JSON.stringify(formValue.tags)
+    );
+
+    // =========================
+    // META KEYWORDS
+    // =========================
+
+    formData.append(
+      'metaKeywords',
+      JSON.stringify(formValue.metaKeywords)
+    );
+
+    // =========================
+    // IMAGES
+    // =========================
+
+    this.selectedImages.forEach((image) => {
+
+      formData.append(
+        'images',
+        image
+      );
+
+    });
+
+    // =========================
+    // VIDEO
+    // =========================
+
+    if (this.selectedVideo) {
+
+      formData.append(
+        'video',
+        this.selectedVideo
+      );
+
+    }
+
+    // =========================
+    // CERTIFICATE
+    // =========================
+
+    if (this.selectedCertificate) {
+
+      formData.append(
+        'certificate',
+        this.selectedCertificate
+      );
+
+    }
+
+    // =========================
+    // UPDATE API
+    // =========================
+
+    this.productService
+      .updateProduct(
+        this.productId,
+        formData
+      )
+      .subscribe({
+
+        next: (res: any) => {
+
+          console.log(res);
+
+          Swal.fire({
+
+            icon: 'success',
+
+            title: 'Success',
+
+            text: 'Product Updated Successfully',
+
+            timer: 2000,
+
+            showConfirmButton: false
+
+          });
+
+          this.router.navigate([
+            '/admin/product'
+          ]);
+
+        },
+
+        error: (err) => {
+
+          console.log(err);
+
+          Swal.fire({
+
+            icon: 'error',
+
+            title: 'Oops...',
+
+            text: 'Update Failed'
+
+          });
+
+        }
+
+      });
+
+  }
+  removeCertificate(): void {
+    this.certificateFile = null;
+    this.certificatePreview = null;
+  }
   goBack() {
     this.router.navigate([
       '/admin/product'

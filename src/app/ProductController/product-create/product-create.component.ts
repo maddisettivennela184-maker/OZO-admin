@@ -14,17 +14,17 @@ import Swal from 'sweetalert2';
 })
 export class ProductCreateComponent implements OnInit {
 
-  
- productForm!: FormGroup;
+
+  productForm!: FormGroup;
 
   // =========================
   // FILES
   // =========================
   categories: any[] = [];
 
-subCategories: any[] = [];
+  subCategories: any[] = [];
 
-subSubCategories: any[] = [];
+  subSubCategories: any[] = [];
 
   selectedImages: File[] = [];
 
@@ -35,27 +35,25 @@ subSubCategories: any[] = [];
   imagePreview: string[] = [];
 
   videoPreview: string = '';
+  certificateFile: File | null = null;
+  certificatePreview: string | ArrayBuffer | null = null;
 
   constructor(
     private fb: FormBuilder,
     private productService: ProductService,
-     private categoryService: CategoryService,
+    private categoryService: CategoryService,
 
-  private subCategoryService: SubcategoryService,
+    private subCategoryService: SubcategoryService,
 
-  private subSubCategoryService:
-  
-    SubsubcategoryService,
-      public router:
+    private subSubCategoryService:
+
+      SubsubcategoryService,
+    public router:
       Router,
-   
+
   ) {
 
     this.productForm = this.fb.group({
-
-      // =========================
-      // PRODUCT
-      // =========================
 
       name: ['', Validators.required],
 
@@ -71,10 +69,7 @@ subSubCategories: any[] = [];
 
       subSubCategory: [''],
 
-      productType: [
-        '',
-        Validators.required
-      ],
+      productType: ['', Validators.required],
 
       gender: [''],
 
@@ -82,7 +77,7 @@ subSubCategories: any[] = [];
 
       brand: [''],
 
-      sku: [''],
+      hallmarkNumber: [''],
 
       hallmarkCertified: [true],
 
@@ -94,11 +89,15 @@ subSubCategories: any[] = [];
 
       trending: [false],
 
+      newArrival: [false],
+
       tags: [''],
 
       seoTitle: [''],
 
       seoDescription: [''],
+
+      metaKeywords: [''],
 
       isActive: [true],
 
@@ -110,111 +109,111 @@ subSubCategories: any[] = [];
 
   }
   ngOnInit(): void {
-   
-     this.getCategories();
+
+    this.getCategories();
   }
 
   // =========================================================
   // VARIANTS
   // =========================================================
-getCategories(): void {
+  getCategories(): void {
 
-  this.categoryService
-    .getAllCategories()
-    .subscribe({
+    this.categoryService
+      .getAllCategories()
+      .subscribe({
 
-      next: (res: any) => {
+        next: (res: any) => {
 
-        this.categories =
-          res.data;
+          this.categories =
+            res.data;
 
-      },
+        },
 
-      error: (err) => {
+        error: (err) => {
 
-        console.log(err);
+          console.log(err);
 
-      }
+        }
 
-    });
+      });
 
-}
-onCategoryChange(event: any): void {
+  }
+  onCategoryChange(event: any): void {
 
-  const categoryId =
-    event.target.value;
+    const categoryId =
+      event.target.value;
 
-  this.productForm.patchValue({
+    this.productForm.patchValue({
 
-    subCategory: '',
+      subCategory: '',
 
-    subSubCategory: ''
-
-  });
-
-  this.subSubCategories = [];
-
-  this.subCategoryService
-    .getSubCategoryByCategory(
-      categoryId
-    )
-    .subscribe({
-
-      next: (res: any) => {
-
-        this.subCategories =
-          res.data;
-
-      },
-
-      error: (err) => {
-
-        console.log(err);
-
-      }
+      subSubCategory: ''
 
     });
 
-}
-onSubCategoryChange(
-  event: any
-): void {
+    this.subSubCategories = [];
 
-  const subCategoryId =
-    event.target.value;
+    this.subCategoryService
+      .getSubCategoryByCategory(
+        categoryId
+      )
+      .subscribe({
 
-  console.log(subCategoryId);
+        next: (res: any) => {
 
-  this.productForm.patchValue({
+          this.subCategories =
+            res.data;
 
-    subSubCategory: ''
+        },
 
-  });
+        error: (err) => {
 
-  this.subSubCategoryService
-    .getSubSubCategoryBySubCategory(
-      subCategoryId
-    )
-    .subscribe({
+          console.log(err);
 
-      next: (res: any) => {
+        }
 
-        console.log(res);
+      });
 
-        this.subSubCategories =
-          res.data;
+  }
+  onSubCategoryChange(
+    event: any
+  ): void {
 
-      },
+    const subCategoryId =
+      event.target.value;
 
-      error: (err) => {
+    console.log(subCategoryId);
 
-        console.log(err);
+    this.productForm.patchValue({
 
-      }
+      subSubCategory: ''
 
     });
 
-}
+    this.subSubCategoryService
+      .getSubSubCategoryBySubCategory(
+        subCategoryId
+      )
+      .subscribe({
+
+        next: (res: any) => {
+
+          console.log(res);
+
+          this.subSubCategories =
+            res.data;
+
+        },
+
+        error: (err) => {
+
+          console.log(err);
+
+        }
+
+      });
+
+  }
   get variants(): FormArray {
 
     return this.productForm.get(
@@ -223,48 +222,47 @@ onSubCategoryChange(
 
   }
 
-createVariant(): FormGroup {
+  createVariant(): FormGroup {
 
-  return this.fb.group({
+    return this.fb.group({
 
-    size: [''],
+      size: [''],
 
-    stock: [0],
+      sku: [''],
 
-    goldPurity: [''],
+      stock: [0],
 
-    goldColor: [''],
+      metalType: ['gold'],
 
-    grossWeight: [0],
+      metalPurity: [''],
 
-    netWeight: [0],
+      metalColor: ['yellow'],
 
-    makingCharges: [0],
+      grossWeight: [0],
 
-    wastagePercentage: [0],
+      netWeight: [0],
 
-    goldPrice: [0],
+      wastagePercentage: [0],
 
-    hasDiamond: [false],
+      makingCharges: [0],
 
-    totalDiamondPrice: [0],
+      makingChargeType: ['fixed'],
 
-    basePrice: [0],
+      discountPercentage: [0],
 
-    discountPercentage: [0],
+      stones: this.fb.array([])
 
-    finalPrice: [0],
+    });
 
-    diamonds: this.fb.array([])
-
-  });
-
-}
+  }
 
   addVariant(): void {
 
+    const variant =
+      this.createVariant();
+
     this.variants.push(
-      this.createVariant()
+      variant
     );
 
   }
@@ -278,71 +276,55 @@ createVariant(): FormGroup {
   // =========================================================
   // DIAMONDS
   // =========================================================
-
-  getDiamonds(
+  getStones(
     variantIndex: number
   ): FormArray {
 
     return this.variants
       .at(variantIndex)
-      .get('diamonds') as FormArray;
+      .get('stones') as FormArray;
 
   }
 
- createDiamond(): FormGroup {
+  createStone(): FormGroup {
 
-  return this.fb.group({
+    return this.fb.group({
 
-    diamondType: ['NATURAL'],
+      stoneType: ['diamond'],
 
-    shape: ['ROUND'],
+      stoneCategory: ['natural'],
 
-    carat: [0],
+      quality: [''],
 
-    color: [''],
+      totalWeight: [0],
 
-    clarity: [''],
+      quantity: [1]
 
-    cut: [''],
+    });
 
-    polish: [''],
-
-    symmetry: [''],
-
-    fluorescence: [''],
-
-    certificateLab: ['NONE'],
-
-    certificateNumber: [''],
-
-    certificateUrl: [''],
-
-    diamondPrice: [0],
-
-    totalDiamonds: [1]
-
-  });
-
-}
-
-  addDiamond(
+  }
+  addStone(
     variantIndex: number
   ): void {
 
-    this.getDiamonds(
+    this.getStones(
       variantIndex
-    ).push(this.createDiamond());
+    ).push(
+      this.createStone()
+    );
 
   }
 
-  removeDiamond(
+  removeStone(
     variantIndex: number,
-    diamondIndex: number
+    stoneIndex: number
   ): void {
 
-    this.getDiamonds(
+    this.getStones(
       variantIndex
-    ).removeAt(diamondIndex);
+    ).removeAt(
+      stoneIndex
+    );
 
   }
 
@@ -415,208 +397,267 @@ createVariant(): FormGroup {
   // CERTIFICATE
   // =========================================================
 
-  onCertificateSelect(
-    event: any
-  ): void {
+  // onCertificateSelect(
+  //   event: any
+  // ): void {
+
+  //   const file = event.target.files[0];
+
+  //   if (file) {
+
+  //     this.selectedCertificate = file;
+
+  //   }
+
+  // }
+  onCertificateSelect(event: any): void {
 
     const file = event.target.files[0];
 
     if (file) {
 
-      this.selectedCertificate = file;
+      this.certificateFile = file;
 
+      const reader = new FileReader();
+
+      reader.onload = () => {
+        this.certificatePreview = reader.result;
+      };
+
+      reader.readAsDataURL(file);
     }
+  }
 
+  removeCertificate(): void {
+    this.certificateFile = null;
+    this.certificatePreview = null;
   }
 
   // =========================================================
   // SUBMIT
   // =========================================================
-
   onSubmit(): void {
 
-  if (this.productForm.invalid) {
+    if (this.productForm.invalid) {
 
-    this.productForm.markAllAsTouched();
+      this.productForm.markAllAsTouched();
 
-    return;
+      return;
 
-  }
+    }
 
-  const formValue =
-    this.productForm.value;
+    const formValue =
+      this.productForm.value;
 
-  const formData =
-    new FormData();
+    const formData =
+      new FormData();
 
-  // TAGS ARRAY
+    // =========================
+    // TAGS ARRAY
+    // =========================
 
-  formValue.tags =
-    formValue.tags
-      ? formValue.tags
+    formValue.tags =
+      formValue.tags
+        ? formValue.tags
           .split(',')
           .map((tag: string) =>
             tag.trim()
           )
-      : [];
+        : [];
 
-  // VARIANTS
+    // =========================
+    // META KEYWORDS ARRAY
+    // =========================
 
-  formData.append(
+    formValue.metaKeywords =
+      formValue.metaKeywords
+        ? formValue.metaKeywords
+          .split(',')
+          .map((keyword: string) =>
+            keyword.trim()
+          )
+        : [];
 
-    'variants',
+    // =========================
+    // VARIANTS
+    // =========================
 
-    JSON.stringify(
-      formValue.variants
-    )
+    formData.append(
+      'variants',
+      JSON.stringify(
+        formValue.variants
+      )
+    );
 
-  );
+    // =========================
+    // OTHER FIELDS
+    // =========================
 
-  // OTHER FIELDS
+    Object.keys(formValue)
+      .forEach((key) => {
 
-  Object.keys(formValue)
-    .forEach((key) => {
+        if (
 
-      if (
+          key !== 'variants' &&
 
-        key !== 'variants' &&
+          key !== 'tags' &&
 
-        key !== 'tags'
+          key !== 'metaKeywords'
 
-      ) {
+        ) {
+
+          formData.append(
+
+            key,
+
+            formValue[key]
+
+          );
+
+        }
+
+      });
+
+    // =========================
+    // TAGS
+    // =========================
+
+    formData.append(
+
+      'tags',
+
+      JSON.stringify(
+        formValue.tags
+      )
+
+    );
+
+    // =========================
+    // META KEYWORDS
+    // =========================
+
+    formData.append(
+
+      'metaKeywords',
+
+      JSON.stringify(
+        formValue.metaKeywords
+      )
+
+    );
+
+    // =========================
+    // IMAGES
+    // =========================
+
+    this.selectedImages
+      .forEach((file) => {
 
         formData.append(
 
-          key,
+          'images',
 
-          formValue[key]
+          file
 
         );
 
-      }
+      });
 
-    });
+    // =========================
+    // VIDEO
+    // =========================
 
-  // TAGS
-
-  formData.append(
-
-    'tags',
-
-    JSON.stringify(
-      formValue.tags
-    )
-
-  );
-
-  // IMAGES
-
-  this.selectedImages
-    .forEach((file) => {
+    if (this.selectedVideo) {
 
       formData.append(
 
-        'images',
+        'video',
 
-        file
+        this.selectedVideo
 
       );
 
-    });
+    }
 
-  // VIDEO
+    // =========================
+    // CERTIFICATE
+    // =========================
 
-  if (this.selectedVideo) {
-
-    formData.append(
-
-      'video',
-
-      this.selectedVideo
-
-    );
-
-  }
-
-  // CERTIFICATE
-
-  if (
-    this.selectedCertificate
-  ) {
-
-    formData.append(
-
-      'certificate',
-
+    if (
       this.selectedCertificate
+    ) {
 
-    );
+      formData.append(
+
+        'certificate',
+
+        this.selectedCertificate
+
+      );
+
+    }
+
+    // =========================
+    // API CALL
+    // =========================
+
+    this.productService
+      .createProduct(
+        formData
+      )
+      .subscribe({
+
+        next: (res) => {
+
+          console.log(res);
+
+          Swal.fire({
+
+            icon: 'success',
+
+            title: 'Success',
+
+            text:
+              'Product Created Successfully',
+
+            timer: 2000,
+
+            showConfirmButton:
+              false
+
+          });
+
+          this.router.navigate([
+
+            '/admin/product'
+
+          ]);
+
+        },
+
+        error: (err) => {
+
+          console.log(err);
+
+          Swal.fire({
+
+            icon: 'error',
+
+            title: 'Oops...',
+
+            text:
+              'Create Failed'
+
+          });
+
+        }
+
+      });
 
   }
-
-  // API CALL
-
-  this.productService
-    .createProduct(
-      formData
-    )
-    .subscribe({
-
-      // SUCCESS
-
-      next: (res) => {
-
-        console.log(res);
-
-        Swal.fire({
-
-          icon: 'success',
-
-          title: 'Success',
-
-          text:
-            'Product Created Successfully',
-
-          timer: 2000,
-
-          showConfirmButton:
-            false
-
-        });
-
-        this.router.navigate([
-
-          '/admin/products'
-
-        ]);
-
-      },
-
-      // ERROR
-
-      error: (err) => {
-
-        console.log(err);
-
-        Swal.fire({
-
-          icon: 'error',
-
-          title: 'Oops...',
-
-          text:
-            'Create Failed'
-
-        });
-
-      }
-
-    });
-
-}
-   goBack() {
-     this.router.navigate([
-    '/admin/product'
-  ]);
+  goBack() {
+    this.router.navigate([
+      '/admin/product'
+    ]);
   }
 }

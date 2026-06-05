@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { User } from '../Models/User';
+import { User } from '../models/User';
 import { UserService } from '../Services/user.service';
 
 @Component({
@@ -40,7 +40,7 @@ export class UserListComponent implements OnInit {
   constructor(
     private userService:
       UserService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllUsers();
@@ -105,7 +105,7 @@ export class UserListComponent implements OnInit {
       });
   }
 
-   // Search Filter
+  // Search Filter
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

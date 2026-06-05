@@ -5,14 +5,16 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
-import { GoldRate } from 'src/app/Models/GoldRate';
+import { GoldRate } from 'src/app/models/GoldRate';
 import { GoldRateService } from 'src/app/Services/gold-rate.service';
 import { ViewGoldRateComponent } from 'src/app/View-dialog-Controllers/view-gold-rate/view-gold-rate.component';
+import { MatFormFieldModule } from "@angular/material/form-field";
+
 
 @Component({
   selector: 'app-gold-list',
   templateUrl: './gold-list.component.html',
-  styleUrls: ['./gold-list.component.css']
+  styleUrls: ['./gold-list.component.css'],
 })
 export class GoldListComponent implements OnInit {
 
@@ -46,7 +48,7 @@ export class GoldListComponent implements OnInit {
 
     private dialog:
       MatDialog
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllGoldRates();
@@ -89,11 +91,9 @@ export class GoldListComponent implements OnInit {
   /*
   EDIT
   */
-  editGoldRate(
-    element: any
-  ) {
+  editGoldRate(element: any) {
     this.router.navigate([
-      '/admin/update-gold',
+      '/admin/Gold-update',
       element._id
     ]);
   }
@@ -134,37 +134,37 @@ export class GoldListComponent implements OnInit {
       .subscribe(
         result => {
 
-        if (result) {
+          if (result) {
 
-          this.goldRateService
-            .deleteGoldRate(
-              data._id
-            )
-            .subscribe({
+            this.goldRateService
+              .deleteGoldRate(
+                data._id
+              )
+              .subscribe({
 
-              next: () => {
-                alert(
-                  "Deleted successfully"
-                );
+                next: () => {
+                  alert(
+                    "Deleted successfully"
+                  );
 
-                this.getAllGoldRates();
-              },
+                  this.getAllGoldRates();
+                },
 
-              error: () => {
-                alert(
-                  "Delete failed"
-                );
-              }
+                error: () => {
+                  alert(
+                    "Delete failed"
+                  );
+                }
 
-            });
-        }
-      });
+              });
+          }
+        });
   }
 
   /*
   SEARCH
   */
-   // Search Filter
+  // Search Filter
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

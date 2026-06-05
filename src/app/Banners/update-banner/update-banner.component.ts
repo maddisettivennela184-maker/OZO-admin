@@ -8,8 +8,8 @@ import { BannerService } from 'src/app/Services/banner.service';
   templateUrl: './update-banner.component.html',
   styleUrls: ['./update-banner.component.css']
 })
-export class UpdateBannerComponent 
-implements OnInit {
+export class UpdateBannerComponent
+  implements OnInit {
 
   bannerForm!: FormGroup;
 
@@ -33,7 +33,7 @@ implements OnInit {
 
     private router:
       Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
 
@@ -162,7 +162,7 @@ implements OnInit {
           );
 
           this.router.navigate([
-            '/admin/banner'
+            '/admin/banners'
           ]);
         },
 
@@ -181,7 +181,7 @@ implements OnInit {
   */
   goBack(): void {
     this.router.navigate([
-      '/admin/banner'
+      '/admin/banners'
     ]);
   }
 }

@@ -5,16 +5,7 @@
     <!-- Left Panel -->
     <div class="left-panel">
 
-      <!-- Background Shapes -->
-
-
-
-      <!-- Tabs -->
-      <div class="tabs">
-
-
-
-      </div>
+      <div class="tabs"></div>
 
     </div>
 
@@ -23,52 +14,109 @@
 
       <div class="user-icon">
         <img src="../../assets/Images/logo.png">
-        <!-- <i class="fa fa-user-o"></i> -->
       </div>
 
-      <h2>{{isLogin ? 'LOGIN' : 'REGISTER'}}</h2>
+      <h2>
+        {{ isLogin ? 'LOGIN' : 'REGISTER' }}
+      </h2>
 
-      <form (ngSubmit)="onSubmit()">
+      <form
+        [formGroup]="authForm"
+        (ngSubmit)="onSubmit()">
 
-        <!-- Name only Register -->
-        <div class="input-box" *ngIf="!isLogin">
+        <!-- Name (Register Only) -->
+
+        <div
+          class="input-box"
+          *ngIf="!isLogin">
+
           <i class="fa fa-user"></i>
-          <input type="text" placeholder="Name">
+
+          <input
+            type="text"
+            placeholder="Name"
+            formControlName="name">
+
         </div>
 
         <!-- Email -->
+
         <div class="input-box">
+
           <i class="fa fa-envelope"></i>
-          <input type="email" placeholder="Email">
+
+          <input
+            type="email"
+            placeholder="Email"
+            formControlName="email">
+
         </div>
 
         <!-- Password -->
+
         <div class="input-box">
+
           <i class="fa fa-lock"></i>
-          <input type="password" placeholder="Password">
+
+          <input
+            type="password"
+            placeholder="Password"
+            formControlName="password">
+
         </div>
 
-        <!-- Login only -->
-        <div class="auth-links" *ngIf="isLogin">
-          <span class="forgot">Forgot Password?</span>
+        <!-- Login Links -->
 
-          <span class="signup-link" (click)="signupForm()">
-            Sign Up
+        <div
+          class="auth-links"
+          *ngIf="isLogin">
+
+          <span
+            class="forgot"
+            (click)="forgotPassword()">
+
+            Forgot Password?
+
           </span>
+
+          <span
+            class="signup-link"
+            (click)="signupForm()">
+
+            Sign Up
+
+          </span>
+
         </div>
-        <!-- Register only -->
-  <div class="auth-links" *ngIf="!isLogin">
-    <span>
-      Already have an account?
-    </span>
 
-    <span class="signup-link" (click)="signupForm()">
-      Login
-    </span>
-  </div>
+        <!-- Register Links -->
 
-        <button type="submit" class="login-btn" routerLink="admin/home" routerLinkActive="active">
-          {{isLogin ? 'LOGIN' : 'REGISTER'}}
+        <div
+          class="auth-links"
+          *ngIf="!isLogin">
+
+          <span>
+            Already have an account?
+          </span>
+
+          <span
+            class="signup-link"
+            (click)="signupForm()">
+
+            Login
+
+          </span>
+
+        </div>
+
+        <!-- Submit Button -->
+
+        <button
+          type="submit"
+          class="login-btn">
+
+          {{ isLogin ? 'LOGIN' : 'REGISTER' }}
+
         </button>
 
       </form>
@@ -76,4 +124,5 @@
     </div>
 
   </div>
+
 </div>

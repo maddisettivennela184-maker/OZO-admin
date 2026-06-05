@@ -20,6 +20,19 @@ import { ListBannerComponent } from './Banners/list-banner/list-banner.component
 import { CreateBannerComponent } from './Banners/create-banner/create-banner.component';
 import { UpdateBannerComponent } from './Banners/update-banner/update-banner.component';
 import { UserListComponent } from './user-list/user-list.component';
+import { GoldListComponent } from './Gold-Rate/gold-list/gold-list.component';
+import { GoldCreateComponent } from './Gold-Rate/gold-create/gold-create.component';
+import { GoldUpdateComponent } from './Gold-Rate/gold-update/gold-update.component';
+import { CouponListComponent } from './coupon/coupon-list/coupon-list.component';
+import { CouponCreateComponent } from './coupon/coupon-create/coupon-create.component';
+import { CouponUpdateComponent } from './coupon/coupon-update/coupon-update.component';
+import { ReviewComponent } from './review/review.component';
+import { MetalCreateComponent } from './metal/metal-create/metal-create.component';
+import { MetalListComponent } from './metal/metal-list/metal-list.component';
+import { MetalUpdateComponent } from './metal/metal-update/metal-update.component';
+import { StonesCreateComponent } from './stones/stones-create/stones-create.component';
+import { StonesListComponent } from './stones/stones-list/stones-list.component';
+import { StonesUpdateComponent } from './stones/stones-update/stones-update.component';
 
 const routes: Routes = [
 
@@ -42,6 +55,23 @@ const routes: Routes = [
         path: 'home',
         component: HomeComponent
       },
+      { path: 'Gold-list', component: GoldListComponent },
+      { path: 'Gold-create', component: GoldCreateComponent },
+      { path: 'Gold-update/:id', component: GoldUpdateComponent },
+
+      { path: 'metal-list', component: MetalListComponent },
+      { path: 'metal-create', component: MetalCreateComponent },
+      { path: 'metal-update/:id', component: MetalUpdateComponent },
+
+      { path: 'stones-list', component: StonesListComponent },
+      { path: 'stones-create', component: StonesCreateComponent },
+      { path: 'stones-update/:id', component: StonesUpdateComponent },
+      { path: 'Coupon-lists', component: CouponListComponent },
+      { path: 'Coupon-Crate', component: CouponCreateComponent },
+      { path: 'update-coupon/:id', component: CouponUpdateComponent },
+      { path: 'get-all-review', component: ReviewComponent },
+
+
       { path: 'category', component: CategoryComponent },
       { path: 'create-category', component: CreateCategoryComponent },
       { path: 'update-category/:id', component: UpdateCategoryComponent },

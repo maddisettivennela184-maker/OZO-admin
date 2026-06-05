@@ -6,7 +6,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
-import { Product } from 'src/app/Models/Product';
+import { Product } from 'src/app/models/Product';
 import { ProductService } from 'src/app/Services/product.service';
 import { ViewProductComponent } from 'src/app/View-dialog-Controllers/view-product/view-product.component';
 import Swal from 'sweetalert2';
@@ -35,7 +35,7 @@ export class ProductListComponent implements OnInit {
 
     'productType',
 
-    'price',
+    // 'price',
 
     'status',
 
@@ -75,7 +75,7 @@ export class ProductListComponent implements OnInit {
 
   @ViewChild(MatSort)
   sort!: MatSort;
- 
+
 
   // =====================================
   // CONSTRUCTOR
@@ -88,10 +88,10 @@ export class ProductListComponent implements OnInit {
 
     private router:
       Router,
-       private dialog:
-    MatDialog
+    private dialog:
+      MatDialog
 
-  ) {}
+  ) { }
 
   // =====================================
   // ON INIT
@@ -154,7 +154,7 @@ export class ProductListComponent implements OnInit {
     const filterValue =
 
       (event.target as HTMLInputElement)
-      .value;
+        .value;
 
     this.dataSource.filter =
 
@@ -168,27 +168,27 @@ export class ProductListComponent implements OnInit {
   // VIEW PRODUCT
   // =====================================
 
-viewProduct(
-  product: Product
-): void {
+  viewProduct(
+    product: Product
+  ): void {
 
-  this.dialog.open(
+    this.dialog.open(
 
-    ViewProductComponent,
+      ViewProductComponent,
 
-    {
+      {
 
-      width: '1000px',
+        width: '1000px',
 
-      maxHeight: '90vh',
+        maxHeight: '90vh',
 
-      data: product
+        data: product
 
-    }
+      }
 
-  );
+    );
 
-}
+  }
 
   // =====================================
   // EDIT PRODUCT
@@ -207,89 +207,89 @@ viewProduct(
     ]);
 
   }
-// =====================================
-// DELETE PRODUCT
-// =====================================
+  // =====================================
+  // DELETE PRODUCT
+  // =====================================
 
-deleteProduct(
-  product: any
-): void {
+  deleteProduct(
+    product: any
+  ): void {
 
-  const dialogRef =
-    this.dialog.open(
+    const dialogRef =
+      this.dialog.open(
 
-      DeleteConfirmationComponent,
+        DeleteConfirmationComponent,
 
-      {
-        width: '400px'
-      }
+        {
+          width: '400px'
+        }
 
-    );
+      );
 
-  dialogRef
-    .afterClosed()
-    .subscribe((result) => {
+    dialogRef
+      .afterClosed()
+      .subscribe((result) => {
 
-      // IF DELETE CONFIRMED
+        // IF DELETE CONFIRMED
 
-      if (result) {
+        if (result) {
 
-        this.productService
-          .deleteProduct(
-            product._id
-          )
-          .subscribe({
+          this.productService
+            .deleteProduct(
+              product._id
+            )
+            .subscribe({
 
-            // SUCCESS
+              // SUCCESS
 
-            next: () => {
+              next: () => {
 
-              Swal.fire({
+                Swal.fire({
 
-                icon: 'success',
+                  icon: 'success',
 
-                title: 'Deleted',
+                  title: 'Deleted',
 
-                text:
-                  'Product Deleted Successfully',
+                  text:
+                    'Product Deleted Successfully',
 
-                timer: 2000,
+                  timer: 2000,
 
-                showConfirmButton:
-                  false
+                  showConfirmButton:
+                    false
 
-              });
+                });
 
-              this.getProducts();
+                this.getProducts();
 
-            },
+              },
 
-            // ERROR
+              // ERROR
 
-            error: (err) => {
+              error: (err) => {
 
-              console.log(err);
+                console.log(err);
 
-              Swal.fire({
+                Swal.fire({
 
-                icon: 'error',
+                  icon: 'error',
 
-                title: 'Oops...',
+                  title: 'Oops...',
 
-                text:
-                  'Delete Failed'
+                  text:
+                    'Delete Failed'
 
-              });
+                });
 
-            }
+              }
 
-          });
+            });
 
-      }
+        }
 
-    });
+      });
 
-}
+  }
   // =====================================
   // GET PRODUCT IMAGE
   // =====================================
@@ -306,7 +306,7 @@ deleteProduct(
       : 'assets/no-image.png';
 
   }
- 
+
 
   // =====================================
   // GET VIDEO URL

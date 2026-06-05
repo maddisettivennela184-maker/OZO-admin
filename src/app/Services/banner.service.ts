@@ -2,20 +2,20 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { environment } from '../environment';
-import { Banner } from '../Models/banner';
+import { Banner } from '../models/banner';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BannerService {
 
- private apiUrl =
+  private apiUrl =
     environment.apiUrl;
 
   constructor(
     private http:
       HttpClient
-  ) {}
+  ) { }
 
   /*
   CREATE BANNER
@@ -33,7 +33,7 @@ export class BannerService {
   GET ALL BANNERS
   */
   getAllBanners():
-  Observable<Banner[]> {
+    Observable<Banner[]> {
     return this.http.get<Banner[]>(
       `${this.apiUrl}/getAllBanners`
     );
