@@ -2,9 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-// import { Review } from '../models/review';
-import { ReviewService } from '../Services/review.service';
 import { Review } from '../Models/review';
+import { ReviewService } from '../Services/review.service';
 
 @Component({
   selector: 'app-review',
