@@ -46,7 +46,21 @@
                 Product Name
               </label>
 
-              <input type="text" placeholder="Enter Product Name" formControlName="name">
+             <input
+  type="text"
+  placeholder="Enter Product Name"
+  formControlName="name">
+
+<div
+  class="text-danger"
+  *ngIf="
+    productForm.get('name')?.touched &&
+    productForm.get('name')?.invalid
+  ">
+
+  Product Name is required
+
+</div>
 
             </div>
 
@@ -148,7 +162,7 @@
                 Product Type
               </label>
 
-              <select formControlName="productType">
+                   <select formControlName="productType">
 
                 <option value="">
                   Select Product Type
@@ -299,8 +313,20 @@
               Short Description
             </label>
 
-            <textarea placeholder="Enter Short Description" formControlName="shortDescription"></textarea>
+<textarea
+  formControlName="description">
+</textarea>
 
+<div
+  class="text-danger"
+  *ngIf="
+    productForm.get('description')?.touched &&
+    productForm.get('description')?.invalid
+  ">
+
+  Description is required
+
+</div>
           </div>
 
           <!-- DESCRIPTION -->
@@ -527,7 +553,20 @@
                     Stock
                   </label>
 
-                  <input type="number" placeholder="Enter Stock" formControlName="stock">
+                  <input
+  type="number"
+  formControlName="stock">
+
+<div
+  class="text-danger"
+  *ngIf="
+    variant.get('stock')?.touched &&
+    variant.get('stock')?.invalid
+  ">
+
+  Stock is required
+
+</div>
 
                 </div>
                 <div class="form-group">
@@ -536,25 +575,7 @@
                     Metal Type
                   </label>
 
-                  <select formControlName="metalType">
-
-                    <option value="">
-                      Select Metal
-                    </option>
-
-                    <option value="gold">
-                      Gold
-                    </option>
-
-                    <option value="silver">
-                      Silver
-                    </option>
-
-                    <option value="platinum">
-                      Platinum
-                    </option>
-
-                  </select>
+                  
 
                 </div>
                 <!-- GOLD PURITY -->
@@ -629,8 +650,20 @@
                     Gross Weight
                   </label>
 
-                  <input type="number" placeholder="Enter Gross Weight" formControlName="grossWeight">
+<input
+  type="number"
+  formControlName="grossWeight">
 
+<div
+  class="text-danger"
+  *ngIf="
+    variant.get('grossWeight')?.touched &&
+    variant.get('grossWeight')?.invalid
+  ">
+
+  Gross Weight is required
+
+</div>
                 </div>
 
                 <!-- NET WEIGHT -->
@@ -641,8 +674,20 @@
                     Net Weight
                   </label>
 
-                  <input type="number" placeholder="Enter Net Weight" formControlName="netWeight">
+<input
+  type="number"
+  formControlName="netWeight">
 
+<div
+  class="text-danger"
+  *ngIf="
+    variant.get('netWeight')?.touched &&
+    variant.get('netWeight')?.invalid
+  ">
+
+  Net Weight is required
+
+</div>
                 </div>
 
                 <!-- MAKING CHARGES -->
@@ -701,7 +746,20 @@
                       SKU
                     </label>
 
-                    <input type="text" formControlName="sku">
+                    <input
+  type="text"
+  formControlName="sku">
+
+<div
+  class="text-danger"
+  *ngIf="
+    variant.get('sku')?.touched &&
+    variant.get('sku')?.invalid
+  ">
+
+  SKU is required
+
+</div>
 
                   </div>
 

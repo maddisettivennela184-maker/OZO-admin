@@ -103,22 +103,23 @@ export class CreateCategoryComponent implements OnInit {
 
     },
 
-    error: (err: any) => {
+   error: (err: any) => {
 
-      console.log(err);
+  console.log(err);
 
-      Swal.fire({
+  Swal.fire({
 
-        icon: 'error',
+    icon: 'error',
 
-        title: 'Oops...',
+    title: 'Oops...',
 
-        text:
-          'Failed To Create Category'
+    text:
+      err?.error?.message ||
+      'Failed To Create Category'
 
-      });
+  });
 
-    }
+}
 
   });
       

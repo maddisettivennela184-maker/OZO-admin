@@ -61,7 +61,7 @@ export class ProductCreateComponent implements OnInit {
 
       shortDescription: [''],
 
-      description: [''],
+      description: ['', Validators.required],
 
       category: [''],
 
@@ -228,19 +228,20 @@ export class ProductCreateComponent implements OnInit {
 
       size: [''],
 
-      sku: [''],
+      sku: ['', Validators.required],
 
-      stock: [0],
+      stock:  [null, Validators.required],
 
-      metalType: ['gold'],
 
-      metalPurity: [''],
+      metalType:  ['', Validators.required],
+
+      metalPurity: ['', Validators.required],
 
       metalColor: ['yellow'],
 
-      grossWeight: [0],
+      grossWeight: [null, Validators.required],
 
-      netWeight: [0],
+      netWeight: [null, Validators.required],
 
       wastagePercentage: [0],
 
@@ -437,14 +438,21 @@ export class ProductCreateComponent implements OnInit {
   // SUBMIT
   // =========================================================
   onSubmit(): void {
+    
 
-    if (this.productForm.invalid) {
+   if (this.productForm.invalid) {
 
-      this.productForm.markAllAsTouched();
+  this.productForm.markAllAsTouched();
 
-      return;
+  Swal.fire({
+    icon: 'error',
+    title: 'Validation Error',
+    text: 'Please fill all required fields'
+  });
 
-    }
+  return;
+
+}
 
     const formValue =
       this.productForm.value;
@@ -557,6 +565,7 @@ export class ProductCreateComponent implements OnInit {
 
           'images',
 
+
           file
 
         );
@@ -635,22 +644,17 @@ export class ProductCreateComponent implements OnInit {
 
         },
 
-        error: (err) => {
+       error: (err) => {
 
-          console.log(err);
+  console.log(err);
 
-          Swal.fire({
+  Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: err.error.message
+  });
 
-            icon: 'error',
-
-            title: 'Oops...',
-
-            text:
-              'Create Failed'
-
-          });
-
-        }
+}
 
       });
 

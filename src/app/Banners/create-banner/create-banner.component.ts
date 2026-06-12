@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BannerService } from 'src/app/Services/banner.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create-banner',
@@ -17,6 +18,7 @@ export class CreateBannerComponent implements OnInit {
 
   imagePreview:
     string | ArrayBuffer | null = null;
+ errorMessage: string = '';
 
   constructor(
     private fb:
@@ -74,60 +76,69 @@ export class CreateBannerComponent implements OnInit {
   /*
   CREATE BANNER
   */
-  onSubmit(): void {
+ onSubmit(): void {
 
-    if (
-      this.bannerForm.invalid
-    ) {
-      return;
-    }
-
-    const formData =
-      new FormData();
-
-    formData.append(
-      'title',
-      this.bannerForm.value.title
-    );
-
-    formData.append(
-      'description',
-      this.bannerForm.value.description
-    );
-
-    if (
-      this.selectedFile
-    ) {
-      formData.append(
-        'image',
-        this.selectedFile
-      );
-    }
-
-    this.bannerService
-      .createBanner(
-        formData
-      )
-      .subscribe({
-        next: () => {
-          alert(
-            'Banner created successfully'
-          );
-
-          this.router.navigate([
-            '/admin/banners'
-          ]);
-        },
-
-        error: (
-          error
-        ) => {
-          console.error(
-            error
-          );
-        }
-      });
+  if (this.bannerForm.invalid) {
+    return;
   }
+
+  const formData = new FormData();
+
+  formData.append(
+    'title',
+    this.bannerForm.value.title
+  );
+
+  formData.append(
+    'description',
+    this.bannerForm.value.description
+  );
+
+  if (this.selectedFile) {
+    formData.append(
+      'image',
+      this.selectedFile
+    );
+  }
+
+  this.bannerService
+    .createBanner(formData)
+    .subscribe({
+
+      next: () => {
+
+        Swal.fire({
+          icon: 'success',
+          title: 'Success',
+          text: 'Banner created successfully'
+        });
+
+        this.router.navigate([
+          '/admin/banners'
+        ]);
+      },
+
+      error: (error) => {
+
+  let message = 'Something went wrong';
+
+  if (error.error?.message) {
+    message = error.error.message;
+  }
+  else if (typeof error.error === 'string') {
+    message = error.error;
+  }
+
+  Swal.fire({
+    icon: 'error',
+    title: 'Error',
+    text: message
+  });
+
+}
+
+    });
+}
 
   /*
   BACK

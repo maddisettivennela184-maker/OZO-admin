@@ -153,20 +153,23 @@ export class CreateSubcategoryComponent implements OnInit {
 
       // ERROR
 
-      error: () => {
+     error: (err: any) => {
 
-        Swal.fire({
+  console.log('ERROR =>', err);
 
-          icon: 'error',
+  Swal.fire({
 
-          title: 'Oops...',
+    icon: 'error',
 
-          text:
-            'Failed To Create'
+    title: 'Error',
 
-        });
+    text:
+      err?.error?.message ||
+      'Failed To Create SubCategory'
 
-      }
+  });
+
+}
 
     });
 

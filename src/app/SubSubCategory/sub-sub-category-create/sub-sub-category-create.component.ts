@@ -264,26 +264,23 @@ onSubmit() {
 
         // ERROR
 
-        error: (
-          error
-        ) => {
+        error: (err: any) => {
 
-          console.error(
-            error
-          );
+      console.log(err);
 
-          Swal.fire({
+      Swal.fire({
 
-            icon: 'error',
+        icon: 'error',
 
-            title: 'Oops...',
+        title: 'Error',
 
-            text:
-              'Failed To Create'
+        text:
+          err?.error?.message ||
+          'Failed To Create SubCategory'
 
-          });
+      });
 
-        }
+    }
 
       });
 

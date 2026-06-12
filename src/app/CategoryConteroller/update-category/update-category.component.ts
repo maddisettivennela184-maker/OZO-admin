@@ -143,20 +143,21 @@ export class UpdateCategoryComponent implements OnInit {
 
       error: (err: any) => {
 
-        console.log(err);
+      console.log('ERROR =>', err);
 
-        Swal.fire({
+      Swal.fire({
 
-          icon: 'error',
+        icon: 'error',
 
-          title: 'Oops...',
+        title: 'Error',
 
-          text:
-            'Update Failed'
+        text:
+          err?.error?.message ||
+          'Update Failed'
 
-        });
+      });
 
-      }
+    }
 
     });
 
