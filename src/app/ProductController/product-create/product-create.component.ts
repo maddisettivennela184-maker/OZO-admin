@@ -233,7 +233,7 @@ export class ProductCreateComponent implements OnInit {
       stock:  [null, Validators.required],
 
 
-      metalType:  ['', Validators.required],
+      metalType:  [''],
 
       metalPurity: ['', Validators.required],
 
@@ -440,22 +440,34 @@ export class ProductCreateComponent implements OnInit {
   onSubmit(): void {
     
 
-   if (this.productForm.invalid) {
-
-  this.productForm.markAllAsTouched();
-
-  Swal.fire({
-    icon: 'error',
-    title: 'Validation Error',
-    text: 'Please fill all required fields'
-  });
-
+   if (!this.productForm.get('name')?.value) {
+  Swal.fire('Error', 'Product Name is required', 'error');
   return;
+}
 
+if (!this.productForm.get('category')?.value) {
+  Swal.fire('Error', 'Category is required', 'error');
+  return;
+}
+
+if (!this.productForm.get('subCategory')?.value) {
+  Swal.fire('Error', 'Sub Category is required', 'error');
+  return;
+}
+
+if (!this.productForm.get('productType')?.value) {
+  Swal.fire('Error', 'Product Type is required', 'error');
+  return;
+}
+
+if (this.selectedImages.length === 0) {
+  Swal.fire('Error', 'At least one Product Image is required', 'error');
+  return;
 }
 
     const formValue =
       this.productForm.value;
+      
 
     const formData =
       new FormData();
@@ -490,12 +502,81 @@ export class ProductCreateComponent implements OnInit {
     // VARIANTS
     // =========================
 
-    formData.append(
-      'variants',
-      JSON.stringify(
-        formValue.variants
-      )
-    );
+   for (let i = 0; i < formValue.variants.length; i++) {
+
+  const variant =
+    formValue.variants[i];
+
+  if (!variant.sku) {
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: `Variant ${i + 1} - SKU is required`
+    });
+
+    return;
+  }
+
+  if (
+    variant.stock === null ||
+    variant.stock === undefined
+  ) {
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: `Variant ${i + 1} - Stock is required`
+    });
+
+    return;
+  }
+
+  if (!variant.metalType) {
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: `Variant ${i + 1} - Metal Type is required`
+    });
+
+    return;
+  }
+
+  if (!variant.metalPurity) {
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: `Variant ${i + 1} - Metal Purity is required`
+    });
+
+    return;
+  }
+
+  if (!variant.grossWeight) {
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: `Variant ${i + 1} - Gross Weight is required`
+    });
+
+    return;
+  }
+
+  if (!variant.netWeight) {
+
+    Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: `Variant ${i + 1} - Net Weight is required`
+    });
+
+    return;
+  }
+
+}
 
     // =========================
     // OTHER FIELDS
@@ -539,6 +620,15 @@ export class ProductCreateComponent implements OnInit {
       )
 
     );
+
+    console.log(formValue.variants);
+
+formData.append(
+  'variants',
+  JSON.stringify(
+    formValue.variants
+  )
+);
 
     // =========================
     // META KEYWORDS
@@ -644,19 +734,21 @@ export class ProductCreateComponent implements OnInit {
 
         },
 
-       error: (err) => {
+        error: (err) => {
 
-  console.log(err);
+      console.log(err);
 
-  Swal.fire({
-    icon: 'error',
-    title: 'Error',
-    text: err.error.message
-  });
-
-}
-
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text:
+          err?.error?.message ||
+          'Something went wrong'
       });
+
+    }
+
+  });
 
   }
   goBack() {
