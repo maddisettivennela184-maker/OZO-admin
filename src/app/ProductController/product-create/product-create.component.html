@@ -421,47 +421,72 @@
           <!-- IMAGES -->
           <!-- ========================================= -->
 
-          <h2>
+          <!-- <h2>
             Product Images
-          </h2>
+          </h2> -->
 
-          <div class="form-group">
+          <h2>Product Images</h2>
 
-            <label>
-              Upload Images
-            </label>
+<div class="image-row">
 
-            <input type="file" multiple accept="image/*" (change)="onImageSelect($event)">
+  <div
+    class="image-card"
+    *ngFor="
+      let img of imageCards;
+      let i = index
+    "
+  >
 
-          </div>
+    <!-- Preview -->
 
-          <div class="image-preview-container" *ngIf="imagePreview.length">
+    <div class="preview-box">
 
-            <div class="image-preview-card" *ngFor="
-            let img of imagePreview;
-            let i = index
-          ">
+      <img
+        *ngIf="img.preview"
+        [src]="img.preview"
+      >
 
-              <img [src]="img" alt="preview">
+      <span *ngIf="!img.preview">
 
-              <button type="button" class="image-remove-btn" (click)="removeImage(i)">
+        Image Preview
 
-                ×
+      </span>
 
-              </button>
+    </div>
 
-            </div>
+    <!-- Choose -->
 
-          </div>
+    <input
+      type="file"
+      accept="image/*"
+      (change)="onImageSelect($event,i)"
+    >
 
-          <div class="image-preview-container">
-            <div class="image-preview-card" *ngFor="let img of imagePreview; let i = index">
-              <img [src]="img">
-              <button type="button" class="image-remove-btn" (click)="removeImage(i)">
-                X
-              </button>
-            </div>
-          </div>
+    <!-- Buttons -->
+
+    <div class="btn-group">
+
+      <button
+        type="button"
+           class="add-btn"
+        (click)="addImageCard()"
+      >
+        + Add Image
+      </button>
+
+      <button
+        type="button"
+           class="delete-btn"
+        (click)="removeImage(i)"
+      >
+        Delete
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
           <!-- ========================================= -->
           <!-- VIDEO -->
@@ -541,7 +566,21 @@
                     Size
                   </label>
 
-                  <input type="text" placeholder="Enter Size" formControlName="size">
+                  <!-- <input type="text" placeholder="Enter Size" formControlName="size"> -->
+                  <input
+  type="text"
+  formControlName="size">
+
+<div
+  class="text-danger"
+  *ngIf="
+    variant.get('size')?.touched &&
+    variant.get('size')?.invalid
+  ">
+
+  Size is required
+
+</div>
 
                 </div>
 

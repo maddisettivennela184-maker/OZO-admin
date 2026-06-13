@@ -37,6 +37,12 @@ export class ProductCreateComponent implements OnInit {
   videoPreview: string = '';
   certificateFile: File | null = null;
   certificatePreview: string | ArrayBuffer | null = null;
+ imageCards: any[] = [
+  {
+    file: null,
+    preview: ''
+  }
+];
 
   constructor(
     private fb: FormBuilder,
@@ -226,7 +232,7 @@ export class ProductCreateComponent implements OnInit {
 
     return this.fb.group({
 
-      size: [''],
+      size: ['', Validators.required],
 
       sku: ['', Validators.required],
 
@@ -329,51 +335,64 @@ export class ProductCreateComponent implements OnInit {
 
   }
 
-  // =========================================================
+  // =========================================================>
   // MULTIPLE IMAGES
   // =========================================================
 
-  onImageSelect(event: any): void {
+  onImageSelect(
+  event: any,
+  index: number
+): void {
 
-    const files = event.target.files;
+  const file =
+    event.target.files[0];
 
-    if (files.length > 0) {
+  if (file) {
 
-      for (let i = 0; i < files.length; i++) {
+    this.imageCards[index].file =
+      file;
 
-        this.selectedImages.push(files[i]);
+    const reader =
+      new FileReader();
 
-        const reader = new FileReader();
+    reader.onload =
+      (e: any) => {
 
-        reader.onload = (e: any) => {
+        this.imageCards[index].preview =
+          e.target.result;
 
-          this.imagePreview.push(
-            e.target.result
-          );
+      };
 
-        };
-
-        reader.readAsDataURL(files[i]);
-
-      }
-
-    }
-
-  }
-
-  removeImage(index: number): void {
-
-    this.selectedImages.splice(
-      index,
-      1
-    );
-
-    this.imagePreview.splice(
-      index,
-      1
-    );
+    reader.readAsDataURL(file);
 
   }
+
+}
+
+addImageCard(): void {
+
+  this.imageCards.push({
+
+    file: null,
+
+    preview: ''
+
+  });
+
+}
+
+removeImage(
+  index: number
+): void {
+
+  this.imageCards.splice(
+    index,
+    1
+  );
+
+}
+
+  
 
   // =========================================================
   // VIDEO
@@ -459,11 +478,27 @@ if (!this.productForm.get('productType')?.value) {
   Swal.fire('Error', 'Product Type is required', 'error');
   return;
 }
+const hasImage =
+  this.imageCards.some(
+    img => img.file
+  );
 
-if (this.selectedImages.length === 0) {
-  Swal.fire('Error', 'At least one Product Image is required', 'error');
+if (!hasImage) {
+
+  Swal.fire(
+    'Error',
+    'At least one Product Image is required',
+    'error'
+  );
+
   return;
+
 }
+
+// if (this.selectedImages.length === 0) {
+//   Swal.fire('Error', 'At least one Product Image is required', 'error');
+//   return;
+// }
 
     const formValue =
       this.productForm.value;
@@ -648,19 +683,33 @@ formData.append(
     // IMAGES
     // =========================
 
-    this.selectedImages
-      .forEach((file) => {
+    // this.selectedImages
+    //   .forEach((file) => {
 
-        formData.append(
+    //     formData.append(
 
-          'images',
+    //       'images',
 
 
-          file
+    //       file
 
-        );
+    //     );
 
-      });
+    //   });
+    this.imageCards.forEach(
+  (img) => {
+
+    if (img.file) {
+
+      formData.append(
+        'images',
+        img.file
+      );
+
+    }
+
+  }
+);
 
     // =========================
     // VIDEO
