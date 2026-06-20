@@ -1,0 +1,243 @@
+<div class="order-container">
+
+  <div class="page-header">
+    <h2>Create Order</h2>
+  </div>
+
+  <form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+
+    <!-- Top Section -->
+
+    <div class="form-grid">
+
+      <div class="form-group">
+        <label>User</label>
+        <input
+          type="text"
+          formControlName="user">
+      </div>
+
+      <div class="form-group">
+        <label>Address</label>
+        <input
+          type="text"
+          formControlName="address">
+      </div>
+
+      <div class="form-group">
+        <label>Payment Method</label>
+
+        <select formControlName="paymentMethod">
+
+          <option value="COD">COD</option>
+
+          <option value="ONLINE">
+            ONLINE
+          </option>
+
+          <option value="UPI">
+            UPI
+          </option>
+
+          <option value="CARD">
+            CARD
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+    <!-- Order Items -->
+
+    <div formArrayName="items">
+
+      <div
+        class="item-card"
+        *ngFor="
+        let item of items.controls;
+        let i = index
+      "
+        [formGroupName]="i">
+
+        <h3>
+          Item {{ i + 1 }}
+        </h3>
+
+        <div class="item-grid">
+
+          <div class="form-group">
+
+            <label>
+              Product
+            </label>
+
+            <input
+              type="text"
+              formControlName="product">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>
+              Variant
+            </label>
+
+            <input
+              type="text"
+              formControlName="variant">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>
+              Quantity
+            </label>
+
+            <input
+              type="number"
+              formControlName="quantity">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>
+              Unit Price
+            </label>
+
+            <input
+              type="number"
+              formControlName="unitPrice">
+
+          </div>
+
+          <div class="form-group">
+
+            <label>
+              Total Price
+            </label>
+
+            <input
+              type="number"
+              formControlName="totalPrice">
+
+          </div>
+
+        </div>
+
+        <button
+          type="button"
+          class="btn-delete"
+          (click)="removeItem(i)">
+
+          Remove Item
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <button
+      type="button"
+      class="btn-add"
+      (click)="addItem()">
+
+      + Add Item
+
+    </button>
+
+    <!-- Summary -->
+
+    <div class="summary-grid">
+
+      <div class="form-group">
+
+        <label>
+          Sub Total
+        </label>
+
+        <input
+          type="number"
+          formControlName="subTotal">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>
+          Discount
+        </label>
+
+        <input
+          type="number"
+          formControlName="discountAmount">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>
+          Shipping
+        </label>
+
+        <input
+          type="number"
+          formControlName="shippingCharge">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>
+          GST
+        </label>
+
+        <input
+          type="number"
+          formControlName="gstAmount">
+
+      </div>
+
+      <div class="form-group">
+
+        <label>
+          Total Amount
+        </label>
+
+        <input
+          type="number"
+          formControlName="totalAmount">
+
+      </div>
+
+    </div>
+
+    <div class="form-group">
+
+      <label>
+        Notes
+      </label>
+
+      <textarea
+        rows="4"
+        formControlName="notes">
+      </textarea>
+
+    </div>
+
+    <button
+      type="submit"
+      class="btn-save">
+
+      Save Order
+
+    </button>
+
+  </form>
+
+</div>

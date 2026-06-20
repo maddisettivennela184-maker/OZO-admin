@@ -23,7 +23,7 @@ import { GoldListComponent } from './Gold-Rate/gold-list/gold-list.component';
 
 
 import {MatSnackBarModule} from '@angular/material/snack-bar';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UpdateCategoryComponent } from './CategoryConteroller/update-category/update-category.component';
 import { DeleteConfirmationComponent } from './delete-confirmation/delete-confirmation.component';
 import { SubCategoryListComponent } from './SubCategory/sub-category-list/sub-category-list.component';
@@ -58,6 +58,10 @@ import { MetalUpdateComponent } from './metal/metal-update/metal-update.componen
 import { StonesUpdateComponent } from './stones/stones-update/stones-update.component';
 import { StonesCreateComponent } from './stones/stones-create/stones-create.component';
 import { StonesListComponent } from './stones/stones-list/stones-list.component';
+import { CreateOrderComponent } from './order/create-order/create-order.component';
+import { ListOrderComponent } from './order/list-order/list-order.component';
+import { AdsListComponent } from './AdsController/ads-list/ads-list.component';
+import { AdsUpdateComponent } from './AdsController/ads-update/ads-update.component';
 
 
 @NgModule({
@@ -100,6 +104,10 @@ import { StonesListComponent } from './stones/stones-list/stones-list.component'
     StonesUpdateComponent,
     StonesCreateComponent,
     StonesListComponent,
+    CreateOrderComponent,
+    ListOrderComponent,
+    AdsListComponent,
+    AdsUpdateComponent,
    
   ],
   imports: [
@@ -108,7 +116,7 @@ import { StonesListComponent } from './stones/stones-list/stones-list.component'
       HttpClientModule,
       BrowserAnimationsModule,
  ReactiveFormsModule,
-
+FormsModule,
       MatTableModule,
     MatFormFieldModule,
     MatInputModule,

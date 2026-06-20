@@ -1,0 +1,149 @@
+<div class="page-container">
+
+  <!-- Header -->
+
+  <div class="page-header">
+
+    <div>
+
+      <h2>
+        Order Management
+      </h2>
+
+      <p>
+        Manage all orders here
+      </p>
+
+    </div>
+
+     <div class="button-section">
+            <button routerLink="/admin/Order-create">
+                Add Orders
+            </button>
+        </div>
+
+  </div>
+
+  <!-- Search -->
+
+  <div class="search-box">
+
+    <input
+  type="text"
+  placeholder="Search Order Number"
+  (input)="searchOrder($event)">
+
+  </div>
+
+  <!-- Table -->
+
+  <div class="table-card">
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>S.No</th>
+
+          <th>Order No</th>
+
+          <th>Customer</th>
+
+          <th>Payment</th>
+
+          <th>Status</th>
+
+          <th>Total Amount</th>
+
+          <th>Created Date</th>
+
+          <th>Actions</th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        <tr
+          *ngFor="
+          let order of filteredOrders;
+          let i = index
+        ">
+
+          <td>
+            {{ i + 1 }}
+          </td>
+
+          <td>
+            {{ order.orderNumber }}
+          </td>
+
+          <td>
+            {{ order.user?.name }}
+          </td>
+
+          <td>
+            {{ order.paymentMethod }}
+          </td>
+
+          <td>
+
+            <span class="status">
+
+              {{ order.orderStatus }}
+
+            </span>
+
+          </td>
+
+          <td>
+
+            ₹ {{ order.totalAmount }}
+
+          </td>
+
+          <td>
+
+            {{ order.createdAt | date }}
+
+          </td>
+
+          <td>
+<button
+  class="action-btn view"
+  (click)="viewOrder(order)">
+
+  <i class="fa fa-eye"></i>
+
+</button>
+
+            <button
+              class="action-btn edit"
+              (click)="editOrder(order._id)">
+
+              <i class="fa fa-pencil"></i>
+
+            </button>
+
+            <button
+              class="action-btn delete"
+              (click)="deleteOrder(order._id)">
+
+              <i class="fa fa-trash"></i>
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

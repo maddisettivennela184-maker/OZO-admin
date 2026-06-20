@@ -1,0 +1,48 @@
+.card{
+  background:#fff;
+  padding:20px;
+  margin-bottom:20px;
+  border-radius:10px;
+  box-shadow:0 2px 8px rgba(0,0,0,.1);
+}
+
+.card h3{
+  color:#7b0000;
+  margin-bottom:15px;
+}
+
+.table{
+  width:100%;
+  border-collapse:collapse;
+}
+
+.table th{
+  background:#7b0000;
+  color:#fff;
+  padding:12px;
+}
+
+.table td{
+  padding:12px;
+  border:1px solid gray;
+}
+.card{
+    color: var(--gray-colour);
+}
+
+
+
+img{
+  border-radius:8px;
+}
+
+h2{
+  color:#7b0000;
+}
+.variant-card{
+  background:#f8f8f8;
+  padding:15px;
+  margin-top:15px;
+  border-radius:10px;
+  border-left:4px solid #7b0000;
+}

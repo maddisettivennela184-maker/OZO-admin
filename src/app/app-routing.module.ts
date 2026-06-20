@@ -33,6 +33,10 @@ import { MetalUpdateComponent } from './metal/metal-update/metal-update.componen
 import { StonesCreateComponent } from './stones/stones-create/stones-create.component';
 import { StonesListComponent } from './stones/stones-list/stones-list.component';
 import { StonesUpdateComponent } from './stones/stones-update/stones-update.component';
+import { CreateOrderComponent } from './order/create-order/create-order.component';
+import { ListOrderComponent } from './order/list-order/list-order.component';
+import { AdsListComponent } from './AdsController/ads-list/ads-list.component';
+import { AdsUpdateComponent } from './AdsController/ads-update/ads-update.component';
 
 const routes: Routes = [
 
@@ -88,7 +92,11 @@ const routes: Routes = [
       { path: "banners", component: ListBannerComponent },
       { path: "create-banner", component: CreateBannerComponent },
       { path: "update-banner/:id", component: UpdateBannerComponent },
-      { path: "user", component: UserListComponent }
+      { path: "user", component: UserListComponent },
+      {path:"Order",component:ListOrderComponent},
+       {path:"Order-create",component:CreateOrderComponent},
+       {path:"Ads",component:AdsListComponent},
+        {path:"update-Ads/:id",component:AdsUpdateComponent}
 
     ]
   }

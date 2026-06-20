@@ -1,0 +1,283 @@
+<h2 mat-dialog-title>
+  Order Details
+</h2>
+
+
+<div mat-dialog-content>
+
+  <!-- ORDER INFO -->
+
+  <div class="card">
+
+    <h3>Order Information</h3>
+
+    <p>
+      <b>Order Number:</b>
+      {{order.orderNumber}}
+    </p>
+
+    <p>
+      <b>Order Status:</b>
+      {{order.orderStatus}}
+    </p>
+
+    <p>
+      <b>Payment Method:</b>
+      {{order.paymentMethod}}
+    </p>
+
+    <p>
+      <b>Payment Status:</b>
+      {{order.paymentStatus}}
+    </p>
+
+    <p>
+      <b>Created Date:</b>
+     {{ getFormattedDate(order.createdAt) }}
+    </p>
+
+  </div>
+
+  <!-- CUSTOMER -->
+
+  <div class="card">
+
+    <h3>Customer Details</h3>
+
+    <p>
+      <b>Name:</b>
+      {{order.user?.name}}
+    </p>
+
+    <p>
+      <b>Phone:</b>
+      {{order.user?.phone}}
+    </p>
+
+    <p>
+      <b>Email:</b>
+      {{order.user?.email}}
+    </p>
+
+  </div>
+
+  <!-- ADDRESS -->
+
+  <div class="card">
+
+    <h3>Shipping Address</h3>
+
+    <p>
+      <b>Name:</b>
+      {{order.address?.fullName}}
+    </p>
+
+    <p>
+      <b>Phone:</b>
+      {{order.address?.phone}}
+    </p>
+
+    <p>
+      <b>Address 1:</b>
+      {{order.address?.addressLine1}}
+    </p>
+
+    <p>
+      <b>Address 2:</b>
+      {{order.address?.addressLine2}}
+    </p>
+
+    <p>
+      <b>City:</b>
+      {{order.address?.city}}
+    </p>
+
+    <p>
+      <b>State:</b>
+      {{order.address?.state}}
+    </p>
+
+    <p>
+      <b>Pincode:</b>
+      {{order.address?.pincode}}
+    </p>
+
+    <p>
+      <b>Country:</b>
+      {{order.address?.country}}
+    </p>
+
+  </div>
+
+  <!-- ITEMS -->
+
+
+<!-- ITEMS -->
+
+<div class="card">
+
+  <h3>Product Details</h3>
+
+  <p>
+    <b>Product Name:</b>
+    {{order.items[0].product.name}}
+  </p>
+
+  <p>
+    <b>Brand:</b>
+    {{order.items[0].product.brand}}
+  </p>
+
+  <p>
+    <b>Description:</b>
+    {{order.items[0].product.description}}
+  </p>
+
+  <p>
+    <b>Slug:</b>
+    {{order.items[0].product.slug}}
+  </p>
+
+  <p>
+    <b>Product Type:</b>
+    {{order.items[0].product.productType}}
+  </p>
+
+  <p>
+    <b>Gender:</b>
+    {{order.items[0].product.gender}}
+  </p>
+
+  <p>
+    <b>Occasion:</b>
+    {{order.items[0].product.occasion}}
+  </p>
+
+  <p>
+    <b>Hallmark Number:</b>
+    {{order.items[0].product.hallmarkNumber}}
+  </p>
+
+  <p>
+    <b>SEO Title:</b>
+    {{order.items[0].product.seoTitle}}
+  </p>
+
+  <p>
+    <b>SEO Description:</b>
+    {{order.items[0].product.seoDescription}}
+  </p>
+
+</div>
+<div class="card">
+
+  <h3>Product Image</h3>
+
+  <img
+    [src]="order.items[0].product.images[0]"
+    width="250"
+    style="
+      border-radius:10px;
+      border:1px solid #ddd;
+    ">
+
+</div>
+
+<!-- varients -->
+<div class="card">
+
+  <h3>Product Variant Information</h3>
+
+  <p>
+    <b>SKU:</b>
+    {{order.items[0].product.variants[0].sku}}
+  </p>
+
+  <p>
+    <b>Metal Type:</b>
+    {{order.items[0].product.variants[0].metalType}}
+  </p>
+
+  <p>
+    <b>Metal Purity:</b>
+    {{order.items[0].product.variants[0].metalPurity}}
+  </p>
+
+  <p>
+    <b>Size:</b>
+    {{order.items[0].product.variants[0].size}}
+  </p>
+
+  <p>
+    <b>Gross Weight:</b>
+    {{order.items[0].product.variants[0].grossWeight}}
+  </p>
+
+  <p>
+    <b>Net Weight:</b>
+    {{order.items[0].product.variants[0].netWeight}}
+  </p>
+<p>
+  Stone Type :
+  {{order.items[0].product.variants[0].stones[0].stoneType}}
+</p>
+
+<p>
+  Stone Category :
+  {{order.items[0].product.variants[0].stones[0].stoneCategory}}
+</p>
+
+<p>
+  Quality :
+  {{order.items[0].product.variants[0].stones[0].quality}}
+</p>
+
+<p>
+  Quantity :
+  {{order.items[0].product.variants[0].stones[0].quantity}}
+</p>
+
+<p>
+  Total Weight :
+  {{order.items[0].product.variants[0].stones[0].totalWeight}}
+</p>
+
+</div>
+
+  
+</div>
+
+  <table class="table">
+  <!-- PRICE DETAILS -->
+
+  <div class="card">
+
+    <h3>Price Summary</h3>
+
+    <p>
+      <b>Sub Total:</b>
+      ₹{{order.subTotal}}
+    </p>
+
+    <p>
+      <b>Discount:</b>
+      ₹{{order.discountAmount}}
+    </p>
+
+    <p>
+      <b>Shipping:</b>
+      ₹{{order.shippingCharge}}
+    </p>
+
+    <p>
+      <b>GST:</b>
+      ₹{{order.gstAmount}}
+    </p>
+
+    <h2>
+      Total Amount :
+      ₹{{order.totalAmount}}
+    </h2>
+
+  </div>
+

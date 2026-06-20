@@ -1,0 +1,133 @@
+<div class="container mt-4">
+
+  <div class="card p-4">
+
+    <h3 class="page-title">
+      Update Ads
+    </h3>
+
+    <div
+      *ngFor="let section of sections"
+      class="section-card">
+
+      <h4 class="section-title">
+
+        {{ section.name }}
+
+      </h4>
+
+      <!-- Title & Description -->
+
+      <div class="row">
+
+        <div class="col-md-6 mb-3">
+
+          <label>
+            Title
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="section.title">
+
+        </div>
+
+        <div class="col-md-6 mb-3">
+
+          <label>
+            Description
+          </label>
+
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="section.description">
+
+        </div>
+
+      </div>
+
+      <!-- Active -->
+
+      <div class="mb-3">
+
+        <label>
+
+          <input
+            type="checkbox"
+            [(ngModel)]="section.isActive">
+
+          Active
+
+        </label>
+
+      </div>
+
+      <!-- Existing Images -->
+<h6 class="mt-3">Existing Images</h6>
+
+<div class="image-preview">
+
+  <!-- Existing Images -->
+  <div
+    class="preview-card"
+    *ngFor="let image of section.existingImages; let i = index">
+
+    <img [src]="image">
+
+    <button
+  type="button"
+  class="remove-btn"
+  (click)="removeImage(section,i)">
+  ×
+</button>
+
+  </div>
+
+  <!-- New Images -->
+  <div
+    class="preview-card"
+    *ngFor="let image of section.newImagePreviews">
+
+    <img [src]="image">
+
+  </div>
+
+  <!-- Add Image Card -->
+  <label class="add-image-card">
+
+    <input
+      type="file"
+      multiple
+      accept="image/*"
+      hidden
+      (change)="onImageSelect($event, section)">
+
+    <span>+ Add Image</span>
+
+    
+
+  </label>
+
+</div>
+
+      <hr>
+
+    </div>
+
+    <div class="text-end mt-4">
+
+      <button
+        class="btn btn-success"
+        (click)="updateAds()">
+
+        Update Ads
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
