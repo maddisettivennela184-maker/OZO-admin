@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdsService } from 'src/app/Services/ads.service';
 import Swal from 'sweetalert2';
@@ -10,258 +11,180 @@ import Swal from 'sweetalert2';
 })
 export class AdsUpdateComponent implements OnInit {
 
-  adsId!: string;
-   selectedImages: File[] = [];
-    imagePreview: any[] = [];
+adsId!: string;
+section!: string;
 
-  sections: any[] = [
-    {
-      key: 'section1',
-      name: 'Section 1',
-      title: '',
-      description: '',
-      isActive: true,
-      existingImages: [],
-      imageCards: [
-        {
-          file: null,
-          preview: ''
-        }
-      ]
-    },
-    {
-      key: 'section2',
-      name: 'Section 2',
-      title: '',
-      description: '',
-      isActive: true,
-      existingImages: [],
-      imageCards: [
-        {
-          file: null,
-          preview: ''
-        }
-      ]
-    },
-    {
-      key: 'section3',
-      name: 'Section 3',
-      title: '',
-      description: '',
-      isActive: true,
-      existingImages: [],
-      imageCards: [
-        {
-          file: null,
-          preview: ''
-        }
-      ]
-    }   
-  ];
+  updateForm!: FormGroup;
+
+  imagePreview: any;
+
+  selectedImage!: File;
 
   constructor(
+    private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private adsService: AdsService
   ) {}
 
-  ngOnInit(): void {
+ ngOnInit(): void {
 
-    this.adsId =
-      this.route.snapshot.paramMap.get('id') || '';
+  this.updateForm = this.fb.group({
 
-    this.getAdsById();
+    title: [''],
 
-  }
+    description: ['']
 
-  getAdsById(): void {
+  });
 
-    this.adsService
-      .getAdsById(this.adsId)
-      .subscribe({
+  this.adsId =
+    this.route.snapshot.paramMap.get('id')!;
 
-        next: (res: any) => {
+  this.section =
+    this.route.snapshot.paramMap.get('section')!;
 
-          const ad = res.data;
+  this.getAdsById();
 
-          this.sections.forEach(section => {
+}
 
-            if (ad[section.key]) {
+getAdsById() {
 
-              section.title =
-                ad[section.key].title;
+  this.adsService
+    .getAdsById(this.adsId)
+    .subscribe((res: any) => {
 
-              section.description =
-                ad[section.key].description;
+      const data =
+        res.data[this.section];
 
-              section.isActive =
-                ad[section.key].isActive;
+      this.updateForm.patchValue({
 
-              section.existingImages =
-                ad[section.key].images || [];
+        title: data.title,
 
-            }
-
-          });
-
-        },
-
-        error: (err: any) => {
-
-          console.log(err);
-
-        }
+        description: data.description
 
       });
 
-  }
-
-  addImageCard(
-    section: any
-  ): void {
-
-    section.imageCards.push({
-
-      file: null,
-
-      preview: ''
+      this.imagePreview =
+        data.image;
 
     });
 
+}
+
+  onImageSelect(
+    event: any
+  ) {
+
+    const file =
+      event.target.files[0];
+
+    if (file) {
+
+      this.selectedImage =
+        file;
+
+      const reader =
+        new FileReader();
+
+      reader.onload =
+        () => {
+
+          this.imagePreview =
+            reader.result;
+
+        };
+
+      reader.readAsDataURL(
+        file
+      );
+
+    }
+
   }
 
-  removeImageCard(
-    section: any,
-    index: number
-  ): void {
+ updateAds() {
 
-    section.imageCards.splice(
-      index,
-      1
+  const formData =
+    new FormData();
+
+  formData.append(
+    'section',
+    this.section
+  );
+
+  formData.append(
+    'title',
+    this.updateForm.value.title
+  );
+
+  formData.append(
+    'description',
+    this.updateForm.value.description
+  );
+
+  if (this.selectedImage) {
+
+    formData.append(
+      'image',
+      this.selectedImage
     );
 
   }
 
-onImageSelect(event: any, section: any) {
+  this.adsService
+  .updateSection(
+    this.adsId,
+    formData
+  )
+  .subscribe({
 
-  const files = event.target.files;
+    next: (res: any) => {
 
-  if (!section.newImages) {
-    section.newImages = [];
-  }
+      Swal.fire({
 
-  if (!section.newImagePreviews) {
-    section.newImagePreviews = [];
-  }
+        icon: 'success',
 
-  for (let file of files) {
+        title: 'Success',
 
-    section.newImages.push(file);
+        text: 'Updated Successfully',
 
-    const reader = new FileReader();
+        timer: 2000,
 
-    reader.onload = (e: any) => {
-      section.newImagePreviews.push(e.target.result);
-    };
-
-    reader.readAsDataURL(file);
-
-  }
-
-}
-
-removeImage(section: any, index: number): void {
-
-  section.existingImages.splice(index, 1);
-
-}
-
-  updateAds(): void {
-
-    const formData =
-      new FormData();
-
-  this.sections.forEach(section => {
-
-  formData.append(`${section.key}Title`, section.title);
-
-  formData.append(`${section.key}Description`, section.description);
-
-  formData.append(`${section.key}IsActive`, section.isActive);
-
-  formData.append(
-    `${section.key}ExistingImages`,
-    JSON.stringify(section.existingImages)
-  );
-
-  // NEW IMAGES
-  if (section.newImages?.length) {
-
-    section.newImages.forEach((file: File) => {
-
-      formData.append(
-        `${section.key}Images`,
-        file
-      );
-
-    });
-
-  }
-
-});
-
-    this.adsService
-      .updateAds(
-        this.adsId,
-        formData
-      )
-      .subscribe({
-
-        next: (res: any) => {
-
-          Swal.fire({
-
-            icon: 'success',
-
-            title: 'Success',
-
-            text:
-              res.message ||
-              'Ads Updated Successfully',
-
-            confirmButtonColor:
-              '#7b1113'
-
-          }).then(() => {
-
-            this.router.navigate([
-              '/admin/Ads'
-            ]);
-
-          });
-
-        },
-
-        error: (err: any) => {
-
-          console.log(err);
-
-          Swal.fire({
-
-            icon: 'error',
-
-            title: 'Error',
-
-            text:
-              err.error?.message ||
-              'Update Failed'
-
-          });
-
-        }
+        showConfirmButton: false
 
       });
 
+      this.router.navigate([
+        '/admin/Ads'
+      ]);
+
+    },
+
+    error: (err: any) => {
+
+      console.log(err);
+
+      Swal.fire({
+
+        icon: 'error',
+
+        title: 'Error',
+
+        text:
+          err?.error?.message ||
+          'Update Failed'
+
+      });
+
+    }
+
+  });
+
+}
+ goBack() {
+    this.router.navigate([
+      '/admin/Ads'
+    ]);
   }
 
 }

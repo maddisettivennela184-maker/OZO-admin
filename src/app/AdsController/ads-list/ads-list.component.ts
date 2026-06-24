@@ -16,18 +16,14 @@ import Swal from 'sweetalert2';
   })
   export class AdsListComponent implements OnInit, AfterViewInit {
 
-  constructor(
-    private adsService: AdsService,
-    private router: Router
-  ) {}
-
   displayedColumns: string[] = [
     'section',
     'title',
     'description',
-    'image1',
-    'image2',
-    'image3'
+    'image',
+    'status',
+
+    'actions'
   ];
 
   dataSource =
@@ -36,19 +32,15 @@ import Swal from 'sweetalert2';
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
-  adsId = '';
+  constructor(
+    private adsService: AdsService,
+    private router: Router
+  ) { }
+    ngAfterViewInit(): void {
+    }
 
   ngOnInit(): void {
-
     this.getAds();
-
-  }
-
-  ngAfterViewInit(): void {
-
-    this.dataSource.paginator =
-      this.paginator;
-
   }
 
   getAds(): void {
@@ -59,88 +51,43 @@ import Swal from 'sweetalert2';
 
         next: (res: any) => {
 
-          const rows: any[] = [];
+          const ads = res.data[0];
 
-          if (
-            res.data &&
-            res.data.length > 0
-          ) {
+          const tableData = [
 
-            const ad =
-              res.data[0];
+           {
+  adsId: ads._id,
+  sectionKey: 'section1',
+  sectionName: 'Section 1',
+  title: ads.section1?.title,
+  description: ads.section1?.description,
+  image: ads.section1?.image,
+  isActive: ads.section1?.isActive
+},
+           {
+  adsId: ads._id,
+  sectionKey: 'section2',
+  sectionName: 'Section 2',
+  title: ads.section2?.title,
+  description: ads.section2?.description,
+  image: ads.section2?.image,
+  isActive: ads.section2?.isActive
+},
 
-            this.adsId =
-              ad._id;
+            {
+  adsId: ads._id,
+  sectionKey: 'section3',
+  sectionName: 'Section 3',
+  title: ads.section3?.title,
+  description: ads.section3?.description,
+  image: ads.section3?.image,
+  isActive: ads.section3?.isActive
+}
 
-            if (ad.section1) {
-
-              rows.push({
-
-                sectionName:
-                  'Section 1',
-
-                ...ad.section1
-
-              });
-
-            }
-
-            if (ad.section2) {
-
-              rows.push({
-
-                sectionName:
-                  'Section 2',
-
-                ...ad.section2
-
-              });
-
-            }
-
-            if (ad.section3) {
-
-              rows.push({
-
-                sectionName:
-                  'Section 3',
-
-                ...ad.section3
-
-              });
-
-            }
-
-            if (ad.section4) {
-
-              rows.push({
-
-                sectionName:
-                  'Section 4',
-
-                ...ad.section4
-
-              });
-
-            }
-
-            if (ad.section5) {
-
-              rows.push({
-
-                sectionName:
-                  'Section 5',
-
-                ...ad.section5
-
-              });
-
-            }
-
-          }
+          ];
 
           this.dataSource.data =
-            rows;
+            tableData;
 
           this.dataSource.paginator =
             this.paginator;
@@ -148,45 +95,90 @@ import Swal from 'sweetalert2';
         },
 
         error: (err) => {
-
           console.log(err);
-
         }
 
       });
 
   }
 
-  editAds(): void {
+  applyFilter(
+    event: Event
+  ): void {
 
-    this.router.navigate([
-      '/admin/update-Ads',
-      this.adsId
-    ]);
+    const filterValue =
+      (event.target as HTMLInputElement)
+        .value;
+
+    this.dataSource.filter =
+      filterValue
+        .trim()
+        .toLowerCase();
 
   }
 
-  deleteAds(): void {
+  editAds(element: any): void {
 
-    if (
-      confirm(
-        'Are you sure?'
-      )
-    ) {
+  this.router.navigate([
+  '/admin/update-Ads',
+  element.adsId,
+  element.sectionKey
+]);
+
+}
+changeStatus(element: any) {
+
+  Swal.fire({
+
+    title: 'Change Status',
+
+    input: 'radio',
+
+    inputOptions: {
+
+      true: 'Active',
+
+      false: 'Inactive'
+      
+
+    },
+     
+
+    inputValue:
+      element.isActive
+      ? 'true'
+      : 'false',
+
+    showCancelButton: true,
+     confirmButtonColor: ' #640101',
+
+    cancelButtonColor: '#6c757d'
+
+  }).then((result) => {
+
+    if (result.isConfirmed) {
+
+      const isActive =
+        result.value === 'true';
 
       this.adsService
-        .deleteAds(this.adsId)
+        .updateAdsStatus(
+          element.adsId,
+          element.sectionKey,
+          isActive
+        )
         .subscribe({
 
           next: () => {
 
-            this.getAds();
+            element.isActive =
+              isActive;
 
-          },
-
-          error: (err) => {
-
-            console.log(err);
+            Swal.fire(
+              'Success',
+              'Status Updated',
+              'success'
+            );
 
           }
 
@@ -194,12 +186,8 @@ import Swal from 'sweetalert2';
 
     }
 
-  }
+  });
 
-  // Search Filter
-  applyFilter(event: Event): void {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+}
 
 }

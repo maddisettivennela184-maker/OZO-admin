@@ -17,70 +17,59 @@ export class AdsService {
       HttpClient
   ) { }
 
-  /*
-  CREATE ADS
-  */
-  createAds(
-    formData: FormData
-  ): Observable<any> {
-
-    return this.http.post<any>(
+ createAds(formData: FormData): Observable<any> {
+    return this.http.post(
       `${this.apiUrl}/createAds`,
       formData
     );
-
   }
 
-  /*
-  GET ALL ADS
-  */
-  getAllAds():
-    Observable<Ads[]> {
-
-    return this.http.get<Ads[]>(
+  getAllAds(): Observable<any> {
+    return this.http.get(
       `${this.apiUrl}/get-all-ads`
     );
-
   }
 
-  /*
-  GET ADS BY ID
-  */
-  getAdsById(
-    id: string
-  ): Observable<Ads> {
+ getAdsById(id: string) {
 
-    return this.http.get<Ads>(
-      `${this.apiUrl}/get-ads/${id}`
-    );
+  return this.http.get(
+    `${this.apiUrl}/get-ads/${id}`
+  );
 
-  }
+}
+updateAdsStatus(
+  id: string,
+  section: string,
+  isActive: boolean
+) {
 
-  /*
-  UPDATE ADS
-  */
-  updateAds(
+  return this.http.put(
+
+    `${this.apiUrl}/updateAdsStatus/${id}`,
+
+    {
+      section,
+      isActive
+    }
+
+  );
+
+}
+
+  updateSection(
     id: string,
     formData: FormData
   ): Observable<any> {
 
-    return this.http.put<any>(
-      `${this.apiUrl}/updateAds/${id}`,
+    return this.http.put(
+      `${this.apiUrl}/updateSection/${id}`,
       formData
     );
-
   }
 
-  /*
-  DELETE ADS
-  */
-  deleteAds(
-    id: string
-  ): Observable<any> {
-
-    return this.http.delete<any>(
-      `${this.apiUrl}/delete-ads/${id}`
+  deleteAds(id: string): Observable<any> {
+    return this.http.delete(
+      `${this.apiUrl}/deleteAds/${id}`
     );
-
   }
 }

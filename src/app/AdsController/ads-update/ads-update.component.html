@@ -1,130 +1,83 @@
-<div class="container mt-4">
+<div class="update-container">
 
-  <div class="card p-4">
+  <h2 class="page-title">
+    Update Ads
+  </h2>
 
-    <h3 class="page-title">
-      Update Ads
-    </h3>
+  <div class="update-card">
 
-    <div
-      *ngFor="let section of sections"
-      class="section-card">
+    <form
+      [formGroup]="updateForm"
+      class="form-section">
 
-      <h4 class="section-title">
-
-        {{ section.name }}
-
-      </h4>
-
-      <!-- Title & Description -->
-
-      <div class="row">
-
-        <div class="col-md-6 mb-3">
-
-          <label>
-            Title
-          </label>
-
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="section.title">
-
-        </div>
-
-        <div class="col-md-6 mb-3">
-
-          <label>
-            Description
-          </label>
-
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="section.description">
-
-        </div>
-
-      </div>
-
-      <!-- Active -->
-
-      <div class="mb-3">
+      <div class="form-group">
 
         <label>
-
-          <input
-            type="checkbox"
-            [(ngModel)]="section.isActive">
-
-          Active
-
+          Title
         </label>
+
+        <input
+          type="text"
+          formControlName="title"
+          class="form-control">
 
       </div>
 
-      <!-- Existing Images -->
-<h6 class="mt-3">Existing Images</h6>
+      <div class="form-group">
 
-<div class="image-preview">
+        <label>
+          Description
+        </label>
 
-  <!-- Existing Images -->
-  <div
-    class="preview-card"
-    *ngFor="let image of section.existingImages; let i = index">
+        <textarea
+          rows="5"
+          formControlName="description"
+          class="form-control">
+        </textarea>
 
-    <img [src]="image">
+      </div>
 
-    <button
-  type="button"
-  class="remove-btn"
-  (click)="removeImage(section,i)">
-  ×
-</button>
+      <div class="form-group">
 
-  </div>
+        <label>
+          Ads Image
+        </label>
 
-  <!-- New Images -->
-  <div
-    class="preview-card"
-    *ngFor="let image of section.newImagePreviews">
+        <input
+          type="file"
+          class="form-control"
+          (change)="onImageSelect($event)">
+      </div>
 
-    <img [src]="image">
+    </form>
 
-  </div>
+    <div class="preview-section">
 
-  <!-- Add Image Card -->
-  <label class="add-image-card">
+      <img
+        *ngIf="imagePreview"
+        [src]="imagePreview"
+        class="preview-image">
+<div class="button-group">
 
-    <input
-      type="file"
-      multiple
-      accept="image/*"
-      hidden
-      (change)="onImageSelect($event, section)">
+  <button
+    type="button"
+    class="btn-create"
+    (click)="updateAds()">
 
-    <span>+ Add Image</span>
+    Update
 
-    
+  </button>
 
-  </label>
+  <button
+    type="button"
+    class="btn-back"
+    (click)="goBack()">
+
+    Back
+
+  </button>
 
 </div>
-
-      <hr>
-
-    </div>
-
-    <div class="text-end mt-4">
-
-      <button
-        class="btn btn-success"
-        (click)="updateAds()">
-
-        Update Ads
-
-      </button>
 
     </div>
 

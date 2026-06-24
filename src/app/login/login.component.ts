@@ -39,7 +39,7 @@ export class LoginComponent {
       this.fb.group({
 
         name: [''],
-
+ role: [''],
         email: [
           '',
           [
@@ -137,36 +137,40 @@ export class LoginComponent {
         )
         .subscribe({
 
-          next: (
-            response: any
-          ) => {
+         next: (response: any) => {
+           console.log('LOGIN RESPONSE =>', response);
 
-            // Token Save
+  localStorage.setItem(
+    'token',
+    response.token
+  );
 
-            localStorage.setItem(
+  localStorage.setItem(
+    'role',
+    response.role
+  );
 
-              'token',
+  Swal.fire({
+    icon: 'success',
+    title: 'Success',
+    text: 'Login Successful'
+  });
 
-              response.token
+  if (response.role === 'ADMIN') {
 
-            );
+    this.router.navigate([
+      '/admin/dashboard'
+    ]);
 
-            Swal.fire({
+  } else if (response.role === 'SUB_BRANCH') {
 
-              icon: 'success',
+  this.router.navigate([
+    '/SUB_BRANCH/dashboard'
+  ]);
 
-              title: 'Success',
+  }
 
-              text:
-                'Login Successful'
-
-            });
-
-            this.router.navigate([
-              '/admin/dashboard'
-            ]);
-
-          },
+},
 
           error: (
             error
@@ -207,14 +211,13 @@ export class LoginComponent {
         password:
           this.authForm.value.password,
 
-        role:
-          'ADMIN',
+       role: this.authForm.value.role,
 
         permissions: [
 
-          'ADD_PRODUCT',
+          // 'ADD_PRODUCT',
 
-          'DELETE_PRODUCT'
+          // 'DELETE_PRODUCT'
 
         ]
 

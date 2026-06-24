@@ -37,6 +37,14 @@ import { CreateOrderComponent } from './order/create-order/create-order.componen
 import { ListOrderComponent } from './order/list-order/list-order.component';
 import { AdsListComponent } from './AdsController/ads-list/ads-list.component';
 import { AdsUpdateComponent } from './AdsController/ads-update/ads-update.component';
+import { SubBranchSidebarComponent } from './sub-branch-sidebar/sub-branch-sidebar.component';
+import { SubbranchDashboardComponent } from './subbranch-dashboard/subbranch-dashboard.component';
+import { SubBranchComponent } from './SubBrabch/sub-branch/sub-branch.component';
+import { SubBranchListComponent } from './SubBrabch/sub-branch-list/sub-branch-list.component';
+import { SubBranchUpdateComponent } from './SubBrabch/sub-branch-update/sub-branch-update.component';
+import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
+import { EmployeeCreateComponent } from './employee/employee-create/employee-create.component';
+import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
 
 const routes: Routes = [
 
@@ -59,6 +67,7 @@ const routes: Routes = [
         path: 'home',
         component: HomeComponent
       },
+      
       { path: 'Gold-list', component: GoldListComponent },
       { path: 'Gold-create', component: GoldCreateComponent },
       { path: 'Gold-update/:id', component: GoldUpdateComponent },
@@ -96,10 +105,37 @@ const routes: Routes = [
       {path:"Order",component:ListOrderComponent},
        {path:"Order-create",component:CreateOrderComponent},
        {path:"Ads",component:AdsListComponent},
-        {path:"update-Ads/:id",component:AdsUpdateComponent}
+        {path:"update-Ads/:id/:section",component:AdsUpdateComponent},
+        {path:"subbranch",component:SubBranchComponent},
+        {path:"subranch-list",component:SubBranchListComponent},
+        {path: 'update-subbranch/:id',component: SubBranchUpdateComponent},
+        {path: 'employee-list',component: EmployeeListComponent},
+        {path: 'employee-create',component: EmployeeCreateComponent},
+        {path: 'employee-update/:id',component: EmployeeUpdateComponent}
+
+
+
 
     ]
-  }
+  },
+   {
+  path: 'SUB_BRANCH',
+  component: SubBranchSidebarComponent,
+  children: [
+
+    {
+      path: 'dashboard',
+      component: SubbranchDashboardComponent
+    },
+
+    {
+      path: 'Order',
+      component: ListOrderComponent
+    }
+
+  ]
+}
+
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

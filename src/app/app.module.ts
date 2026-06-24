@@ -62,6 +62,16 @@ import { CreateOrderComponent } from './order/create-order/create-order.componen
 import { ListOrderComponent } from './order/list-order/list-order.component';
 import { AdsListComponent } from './AdsController/ads-list/ads-list.component';
 import { AdsUpdateComponent } from './AdsController/ads-update/ads-update.component';
+import { SubbranchDashboardComponent } from './subbranch-dashboard/subbranch-dashboard.component';
+import { SubBranchSidebarComponent } from './sub-branch-sidebar/sub-branch-sidebar.component';
+import { SubBranchComponent } from './SubBrabch/sub-branch/sub-branch.component';
+import { SubBranchListComponent } from './SubBrabch/sub-branch-list/sub-branch-list.component';
+import { SubBranchUpdateComponent } from './SubBrabch/sub-branch-update/sub-branch-update.component';
+import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
+import { EmployeeCreateComponent } from './employee/employee-create/employee-create.component';
+import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
+import { ViewEmployeeComponent } from './View-dialog-Controllers/view-employee/view-employee.component';
+import { ViewBranchComponent } from './View-dialog-Controllers/view-branch/view-branch.component';
 
 
 @NgModule({
@@ -108,6 +118,16 @@ import { AdsUpdateComponent } from './AdsController/ads-update/ads-update.compon
     ListOrderComponent,
     AdsListComponent,
     AdsUpdateComponent,
+    SubbranchDashboardComponent,
+    SubBranchSidebarComponent,
+    SubBranchComponent,
+    SubBranchListComponent,
+    SubBranchUpdateComponent,
+    EmployeeListComponent,
+    EmployeeCreateComponent,
+    EmployeeUpdateComponent,
+    ViewEmployeeComponent,
+    ViewBranchComponent
    
   ],
   imports: [

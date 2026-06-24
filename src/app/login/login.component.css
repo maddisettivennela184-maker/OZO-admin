@@ -148,8 +148,8 @@
 }
 
 .user-icon img{
-  width:90px;
-  height:70px;
+  width:140px;
+  height:110px;
   border-radius:50%;
 
   display:flex;
@@ -194,7 +194,7 @@ form{
 
 .forgot{
   color:var(--gray-colour);
-  margin-top:10px;
+  margin-top:35px;
 }
 
 .login-btn{

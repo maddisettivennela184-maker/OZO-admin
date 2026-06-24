@@ -1,0 +1,97 @@
+<div class="layout">
+
+  <!-- Sidebar -->
+  <div class="sidebar">
+
+    <div class="logo_card">
+      <img src="../../assets/Images/logo.png" />
+      <span>OZO Gold and Diamond Jewellery</span>
+    </div>
+
+    <ul>
+
+      <li routerLink="dashboard" routerLinkActive="SubbranchDashboardComponent">
+        <i class="fa-solid fa-chart-line"></i>
+        <span>Dashboard</span>
+      </li>
+
+      <li routerLink="Order" routerLinkActive="active">
+        <i class="fa-solid fa-bag-shopping"></i>
+        <span>Orders</span>
+      </li>
+
+      <li routerLink="product" routerLinkActive="active">
+        <i class="fa-solid fa-box"></i>
+        <span>Products</span>
+      </li>
+
+      <li routerLink="Coupon-lists" routerLinkActive="active">
+        <i class="fa-solid fa-ticket"></i>
+        <span>Coupons</span>
+      </li>
+
+      <li routerLink="get-all-review" routerLinkActive="active">
+        <i class="fa-solid fa-star"></i>
+        <span>Reviews</span>
+      </li>
+
+      <li (click)="logout()">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+      </li>
+
+    </ul>
+
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+
+    <div class="navbar">
+
+      <div class="nav-left">
+
+        <button class="menu-btn">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div class="page-info">
+          <h4>Sub Branch Dashboard</h4>
+          <p>Welcome Back 👋</p>
+        </div>
+
+      </div>
+
+      <div class="search-wrapper">
+
+        <i class="fa-solid fa-search"></i>
+
+        <input
+          type="text"
+          placeholder="Search products, orders..." />
+
+      </div>
+
+      <div class="nav-right">
+
+        <button
+          class="logout-btn"
+          (click)="logout()">
+
+          <i class="fa-solid fa-right-from-bracket"></i>
+
+        </button>
+
+      </div>
+
+    </div>
+
+    <div class="content">
+
+      <router-outlet></router-outlet>
+
+    </div>
+
+  </div>
+
+</div>

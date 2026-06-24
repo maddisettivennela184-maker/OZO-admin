@@ -32,6 +32,59 @@ export class AdminLoginService {
     );
 
   }
+  getAllSubBranches() {
+
+  return this.http.get(
+    `${this.apiUrl}/get-all-subbranches`
+  );
+
+}
+ // Get By Id
+
+getSubBranchById(id: string) {
+
+  return this.http.get(
+
+    `${environment.apiUrl}/getSubBranchById/${id}`
+
+  );
+
+}
+
+  // Update
+
+  updateSubBranch(
+    id: string,
+    data: any
+  ) {
+
+    return this.http.put(
+
+      `${this.apiUrl}/update-subbranch/${id}`,
+
+      data
+
+    );
+
+  }
+  updateSubBranchStatus(
+  id: string,
+  status: string
+) {
+
+  return this.http.put(
+
+    `${environment.apiUrl}/update-subbranch-status/${id}`,
+
+    {
+      status
+    }
+
+  );
+
+}
+
+
 
   // ======================
   // LOGIN
@@ -70,6 +123,16 @@ export class AdminLoginService {
     );
 
   }
+  deleteSubBranch(id: string) {
+
+  return this.http.delete(
+
+    `${this.apiUrl}/delete-subbranch/${id}`
+
+  );
+
+}
+
 
   // ======================
   // RESET PASSWORD
@@ -92,6 +155,7 @@ export class AdminLoginService {
     );
 
   }
+
 
   // ======================
   // LOGOUT

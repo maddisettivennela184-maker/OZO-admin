@@ -1,31 +1,15 @@
-export interface AdsSection {
-
-  title?: string;
-
-  description?: string;
-
-  images?: string[];
-
-  isActive?: boolean;
-
+export interface Section {
+  title: string;
+  description: string;
+  image: string;
+  isActive: boolean;
 }
 
 export interface Ads {
-
-  _id?: string;
-
-  section1?: AdsSection;
-
-  section2?: AdsSection;
-
-  section3?: AdsSection;
-
-  section4?: AdsSection;
-
-  section5?: AdsSection;
-
-  createdAt?: string;
-
-  updatedAt?: string;
-
+  _id: string;
+  section1: Section;
+  section2: Section;
+  section3: Section;
+  createdAt: string;
+  updatedAt: string;
 }
