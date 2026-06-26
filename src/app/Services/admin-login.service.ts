@@ -132,7 +132,13 @@ getSubBranchById(id: string) {
   );
 
 }
+getBranchList() {
 
+  return this.http.get(
+    `${this.apiUrl}/get-branch-list`
+  );
+
+}
 
   // ======================
   // RESET PASSWORD

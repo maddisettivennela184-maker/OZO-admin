@@ -26,6 +26,7 @@ export class UserService {
       `${this.apiUrl}/getAllUsers`
     );
   }
+  
 
   /*
   GET USERS COUNT

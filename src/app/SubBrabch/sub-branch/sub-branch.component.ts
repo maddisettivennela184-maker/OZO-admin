@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 export class SubBranchComponent implements OnInit {
 
   userForm!: FormGroup;
+  branchList: any[] = [];
 
 
   constructor(
@@ -23,6 +24,7 @@ export class SubBranchComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+     this.getBranchList();
 
     this.userForm = this.fb.group({
 
@@ -49,11 +51,19 @@ export class SubBranchComponent implements OnInit {
         Validators.required
       ],
 
-      contactNumber: [''],
+      contactNumber: [
+  '',
+  [
+    Validators.required,
+    Validators.pattern(/^[0-9]{10}$/)
+  ]
+],
 
       location: [''],
 
-      address: ['']
+      address: [''],
+
+      branchId:['']
 
     });
 
@@ -96,6 +106,36 @@ export class SubBranchComponent implements OnInit {
       }
 
     });
+
+}
+allowOnlyNumbers(event: KeyboardEvent) {
+
+  const charCode = event.which ? event.which : event.keyCode;
+
+  if (charCode < 48 || charCode > 57) {
+    event.preventDefault();
+  }
+
+}
+getBranchList() {
+
+  this.authService
+      .getBranchList()
+      .subscribe({
+
+        next: (res: any) => {
+
+          this.branchList = res.data;
+
+        },
+
+        error: (err) => {
+
+          console.log(err);
+
+        }
+
+      });
 
 }
 

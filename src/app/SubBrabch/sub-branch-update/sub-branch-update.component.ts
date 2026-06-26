@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./sub-branch-update.component.css']
 })
 export class SubBranchUpdateComponent implements OnInit {
+  branchList: any[] = [];
 
   userForm!: FormGroup;
 
@@ -28,6 +29,7 @@ export class SubBranchUpdateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+      this.getBranchList();
 
     // Route nundi ID tiskovadam
 
@@ -42,6 +44,7 @@ export class SubBranchUpdateComponent implements OnInit {
         '',
         Validators.required
       ],
+       branchId: ['', Validators.required],   
 
       email: [
         '',
@@ -68,7 +71,27 @@ export class SubBranchUpdateComponent implements OnInit {
     this.getSubBranchById();
 
   }
+getBranchList() {
 
+  this.adminService
+      .getBranchList()
+      .subscribe({
+
+        next: (res: any) => {
+
+          this.branchList = res.data;
+
+        },
+
+        error: (err) => {
+
+          console.log(err);
+
+        }
+
+      });
+
+}
   // ===========================
   // GET BY ID
   // ===========================
@@ -90,9 +113,13 @@ export class SubBranchUpdateComponent implements OnInit {
 
             email:
               res.data.email,
+              password:
+               res.data.password,
 
             role:
               res.data.role,
+                branchId: res.data.branchId?._id || res.data.branchId, // 👈 Add this
+
 
             contactNumber:
               res.data.contactNumber,

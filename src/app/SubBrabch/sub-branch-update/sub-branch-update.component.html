@@ -34,6 +34,29 @@
 
         </div>
 
+          <!-- ---brabch--- -->
+        <div class="col-md-4 mb-4">
+
+  <label class="form-label">
+    Branch
+  </label>
+
+  <select class="form-control" formControlName="branchId">
+
+  <option value="">Select Branch</option>
+
+  <option
+    *ngFor="let branch of branchList"
+    [value]="branch._id">
+
+    {{ branch.name }}
+
+  </option>
+
+</select>
+
+</div>
+
         <!-- Email -->
 
         <div class="col-md-4 mb-4">

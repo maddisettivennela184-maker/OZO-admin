@@ -26,6 +26,7 @@ export class ListOrderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    
 
     this.getOrders();
 

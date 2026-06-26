@@ -200,9 +200,9 @@
 
       <ul class="submenu" [class.show]="openMenu === 'settings'">
 
-        <li routerLink="gold-rate">
+        <!-- <li routerLink="gold-rate">
           Gold Rate
-        </li>
+        </li> -->
 
         <li routerLink="subranch-list">
           Sub Branch
@@ -213,6 +213,18 @@
         </li>
 
       </ul>
+
+       <div class="menu-left" (click)="logout()">
+
+         <li><i class="fa-solid fa-right-from-bracket"></i>
+
+          <span>logout</span></li>
+
+        </div>
+
+       <!-- <li (click)="openLogoutPopup()">
+          LOGOUT <i class="fa-solid fa-right-from-bracket"></i>
+        </li> -->
 
     </ul>
   </div>
@@ -307,11 +319,48 @@
 
         <!-- LOGOUT -->
 
-        <button class="logout-btn" (click)="logout()">
+        <!-- <button class="logout-btn" (click)="openLogoutPopup()">
 
           <i class="fa-solid fa-right-from-bracket"></i>
 
-        </button>
+        </button> -->
+        <div class="nav-right">
+
+  <button
+    class="logout-btn"
+    (click)="toggleDropdown()">
+
+    <i class="fa-solid fa-right-from-bracket"></i>
+
+  </button>
+
+  <div
+    class="profile-dropdown"
+    *ngIf="showDropdown">
+
+    <div
+      class="dropdown-item"
+      (click)="goToProfile()">
+
+      <i class="fa fa-user"></i>
+
+      <span>Profile</span>
+
+    </div>
+
+    <div
+      class="dropdown-item"
+      (click)="logout()">
+
+      <i class="fa fa-right-from-bracket"></i>
+
+      <span>Logout</span>
+
+    </div>
+
+  </div>
+
+</div>
 
       </div>
 
@@ -323,6 +372,114 @@
       <router-outlet></router-outlet>
 
     </div>
+    <!-- <div
+  class="profile-overlay"
+  *ngIf="showProfilePopup">
+
+  <div class="profile-popup">
+
+    <h3>My Profile</h3>
+
+    <div class="profile-row">
+      <strong>Name</strong>
+      <span>{{userName}}</span>
+    </div>
+
+    <div class="profile-row">
+      <strong>Email</strong>
+      <span>{{userEmail}}</span>
+    </div>
+
+    <div class="profile-row">
+      <strong>Role</strong>
+      <span>{{role}}</span>
+    </div>
+
+    <button
+      class="close-btn"
+      (click)="closeProfile()">
+
+      Close
+
+    </button>
+
+  </div>
+
+</div> -->
+
+
+<div class="profile-overlay" *ngIf="showProfilePopup">
+
+  <div class="profile-popup">
+
+    <button class="close-icon" (click)="closeProfile()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+
+    <div class="profile-header">
+
+      <div class="profile-avatar">
+        <i class="fa-solid fa-user"></i>
+      </div>
+
+      <h2>{{ userName }}</h2>
+
+      <p>{{ role }}</p>
+
+    </div>
+
+    <div class="profile-body">
+
+      <div class="profile-card">
+
+        <div class="icon-box">
+          <i class="fa-solid fa-user"></i>
+        </div>
+
+        <div>
+          <label>Full Name</label>
+          <h5>{{ userName }}</h5>
+        </div>
+
+      </div>
+
+      <div class="profile-card">
+
+        <div class="icon-box">
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+
+        <div>
+          <label>Email Address</label>
+          <h5>{{ userEmail }}</h5>
+        </div>
+
+      </div>
+
+      <div class="profile-card">
+
+        <div class="icon-box">
+          <i class="fa-solid fa-user-shield"></i>
+        </div>
+
+        <div>
+          <label>Role</label>
+          <h5>{{ role }}</h5>
+        </div>
+
+      </div>
+
+    </div>
+
+    <button class="close-btn" (click)="closeProfile()">
+
+      Close
+
+    </button>
+
+  </div>
+
+</div>
 
   </div>
 </div>

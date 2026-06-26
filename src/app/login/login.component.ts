@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
@@ -9,7 +9,10 @@ import { AdminLoginService } from '../Services/admin-login.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
+  role: string = '';
+  selectedRole = '';
+  showPassword = false;
 
    isLogin = true;
 
@@ -27,6 +30,15 @@ export class LoginComponent {
 
     this.initializeForm();
 
+  }
+  ngOnInit(): void {
+    this.role =
+    localStorage.getItem('role') || '';
+
+  console.log(
+    'ROLE =>',
+    this.role
+  );
   }
 
   // =====================
@@ -89,192 +101,111 @@ export class LoginComponent {
       ?.updateValueAndValidity();
 
   }
+  togglePassword() {
+
+  this.showPassword =
+    !this.showPassword;
+
+}
 
   // =====================
   // SUBMIT
   // =====================
 
-  onSubmit(): void {
+onSubmit() {
 
-    if (
-      this.authForm.invalid
-    ) {
+  if (!this.selectedRole) {
 
-      Swal.fire({
+    Swal.fire(
+      'Error',
+      'Please Select Role',
+      'error'
+    );
 
-        icon: 'warning',
+    return;
+  }
 
-        title: 'Validation Error',
+  const loginData = {
 
-        text:
-          'Please fill all fields'
+    email: this.authForm.value.email,
 
-      });
+    password: this.authForm.value.password
 
-      return;
+  };
 
-    }
+  this.authService.login(loginData)
+    .subscribe({
 
-    // =====================
-    // LOGIN
-    // =====================
+      next: (res: any) => {
 
-    if (this.isLogin) {
+        console.log(res);
 
-      const loginData = {
+        // Role Validation
 
-        email:
-          this.authForm.value.email,
+        if (
+          this.selectedRole !==
+          res.role
+        ) {
 
-        password:
-          this.authForm.value.password
+          Swal.fire(
+            'Error',
+            'Selected Role Not Matched',
+            'error'
+          );
 
-      };
+          return;
 
-      this.authService
-        .login(
-          loginData
-        )
-        .subscribe({
+        }
 
-         next: (response: any) => {
-           console.log('LOGIN RESPONSE =>', response);
+        localStorage.setItem(
+          'token',
+          res.token
+        );
 
+        localStorage.setItem(
+          'role',
+          res.role
+        );
+         // 👇 IKKADA ADD CHEYYI
   localStorage.setItem(
-    'token',
-    response.token
+    'name',
+    res.name
   );
 
   localStorage.setItem(
-    'role',
-    response.role
+    'email',
+    res.email
   );
 
-  Swal.fire({
-    icon: 'success',
-    title: 'Success',
-    text: 'Login Successful'
-  });
+        // Branch Login
 
-  if (response.role === 'ADMIN') {
+        if (
+          res.role === 'BRANCH'
+        ) {
 
-    this.router.navigate([
-      '/admin/dashboard'
-    ]);
+          this.router.navigate([
+            '/admin/dashboard'
+          ]);
 
-  } else if (response.role === 'SUB_BRANCH') {
+        }
 
-  this.router.navigate([
-    '/SUB_BRANCH/dashboard'
-  ]);
+        // Sub Branch Login
 
-  }
+        else if (
+          res.role === 'SUB_BRANCH'
+        ) {
 
-},
+          this.router.navigate([
+            '/SUB_BRANCH/dashboard'
+          ]);
 
-          error: (
-            error
-          ) => {
+        }
 
-            Swal.fire({
+      }
 
-              icon: 'error',
+    });
 
-              title: 'Login Failed',
-
-              text:
-                error?.error?.message ||
-                'Invalid Credentials'
-
-            });
-
-          }
-
-        });
-
-    }
-
-    // =====================
-    // REGISTER
-    // =====================
-
-    else {
-
-      const registerData = {
-
-        name:
-          this.authForm.value.name,
-
-        email:
-          this.authForm.value.email,
-
-        password:
-          this.authForm.value.password,
-
-       role: this.authForm.value.role,
-
-        permissions: [
-
-          // 'ADD_PRODUCT',
-
-          // 'DELETE_PRODUCT'
-
-        ]
-
-      };
-
-      this.authService
-        .register(
-          registerData
-        )
-        .subscribe({
-
-          next: (
-            response: any
-          ) => {
-
-            Swal.fire({
-
-              icon: 'success',
-
-              title: 'Success',
-
-              text:
-                'Registration Successful'
-
-            });
-
-            this.isLogin =
-              true;
-
-            this.authForm.reset();
-
-          },
-
-          error: (
-            error
-          ) => {
-
-            Swal.fire({
-
-              icon: 'error',
-
-              title:
-                'Registration Failed',
-
-              text:
-                error?.error?.message ||
-                'Something went wrong'
-
-            });
-
-          }
-
-        });
-
-    }
-
-  }
+}
 
   // =====================
   // FORGOT PASSWORD

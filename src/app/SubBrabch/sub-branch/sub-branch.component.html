@@ -34,6 +34,29 @@
 
         </div>
 
+        <!-- ---brabch--- -->
+        <div class="col-md-4 mb-4">
+
+  <label class="form-label">
+    Branch
+  </label>
+
+  <select class="form-control" formControlName="branchId">
+
+  <option value="">Select Branch</option>
+
+  <option
+    *ngFor="let branch of branchList"
+    [value]="branch._id">
+
+    {{ branch.name }}
+
+  </option>
+
+</select>
+
+</div>
+
         <!-- Email -->
 
         <div class="col-md-4 mb-4">
@@ -94,17 +117,29 @@
 
         <div class="col-md-4 mb-4">
 
-          <label class="form-label">
-            Phone Number
-          </label>
+  <label class="form-label">
+    Phone Number
+  </label>
 
-          <input
-            type="number"
-            class="form-control"
-            formControlName="contactNumber"
-            placeholder="Enter Phone Number">
+  <input
+    type="text"
+    class="form-control"
+    formControlName="contactNumber"
+    maxlength="10"
+    placeholder="Enter Phone Number"
+    (keypress)="allowOnlyNumbers($event)">
 
-        </div>
+  <small
+    class="text-danger"
+    *ngIf="
+      userForm.get('contactNumber')?.touched &&
+      userForm.get('contactNumber')?.invalid">
+
+    Enter valid 10 digit mobile number
+
+  </small>
+
+</div>
 
         <!-- Location -->
 

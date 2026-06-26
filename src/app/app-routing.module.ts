@@ -45,6 +45,7 @@ import { SubBranchUpdateComponent } from './SubBrabch/sub-branch-update/sub-bran
 import { EmployeeListComponent } from './employee/employee-list/employee-list.component';
 import { EmployeeCreateComponent } from './employee/employee-create/employee-create.component';
 import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
+import { ProfileComponent } from './profile/profile.component';
 
 const routes: Routes = [
 
@@ -129,9 +130,25 @@ const routes: Routes = [
     },
 
     {
+      path: 'product',
+      component: ProductListComponent
+    },
+
+    {
       path: 'Order',
       component: ListOrderComponent
-    }
+    },
+
+    {
+      path: 'Order-create',
+      component: CreateOrderComponent
+    },
+
+    {
+      path: 'stones-list',
+      component: StonesListComponent
+    },
+    {path:"Profile",component:ProfileComponent}
 
   ]
 }

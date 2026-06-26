@@ -146,11 +146,16 @@
   width:65%;
   padding:60px;
 }
+.user-icon{
+  margin-top: -30px;
+}
 
 .user-icon img{
   width:140px;
-  height:110px;
+  height:100px;
   border-radius:50%;
+ 
+ 
 
   display:flex;
   justify-content:center;
@@ -182,7 +187,7 @@ h2{
   color:var(--gray-colour);
 }
 form{
-  margin-top: -45px;
+  margin-top: 45px;
 }
 
 .input-box input{
@@ -221,7 +226,57 @@ form{
 }
 
 .signup-link{
-  color:#8f1f5f;
+  color:var( --red-color);
   font-weight:600;
   cursor:pointer;
+
+
+}
+/* ===== */
+.role-selection{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:15px;
+  margin-top:-20px;
+  margin-bottom:20px;
+}
+
+.role-btn{
+  min-width:120px;
+  height:40px;
+  border:1px solid var( --red-color);
+  border-radius:25px;
+  background:#fff;
+  color:var( --red-color);
+  font-weight:600;
+  cursor:pointer;
+}
+
+.role-btn.active{
+  background:var( --red-color);
+  color:#fff;
+}
+.input-box {
+
+  position: relative;
+
+}
+
+.password-eye {
+
+  position: absolute;
+
+  right: 15px;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  cursor: pointer;
+
+  color: #666;
+
+  font-size: 18px;
+
 }

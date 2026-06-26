@@ -21,6 +21,7 @@ export class SubBranchListComponent implements OnInit {
     'sno',
 
     'name',
+     'branchId',
 
     'email',
 
@@ -29,6 +30,7 @@ export class SubBranchListComponent implements OnInit {
     'location',
 
     'status',
+   
 
     'actions'
 

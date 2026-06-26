@@ -72,6 +72,7 @@ import { EmployeeCreateComponent } from './employee/employee-create/employee-cre
 import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
 import { ViewEmployeeComponent } from './View-dialog-Controllers/view-employee/view-employee.component';
 import { ViewBranchComponent } from './View-dialog-Controllers/view-branch/view-branch.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -127,7 +128,8 @@ import { ViewBranchComponent } from './View-dialog-Controllers/view-branch/view-
     EmployeeCreateComponent,
     EmployeeUpdateComponent,
     ViewEmployeeComponent,
-    ViewBranchComponent
+    ViewBranchComponent,
+    ProfileComponent
    
   ],
   imports: [

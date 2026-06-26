@@ -14,6 +14,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./stones-list.component.css']
 })
 export class StonesListComponent implements OnInit {
+   role: string = '';
 
   displayedColumns: string[] = [
 
@@ -59,11 +60,43 @@ export class StonesListComponent implements OnInit {
 
   ) { }
 
-  ngOnInit(): void {
+ ngOnInit(): void {
 
-    this.getAllStoneRates();
+  this.role = localStorage.getItem('role') || '';
+
+  if (this.role === 'BRANCH') {
+
+    this.displayedColumns = [
+      'sno',
+      'stoneType',
+      'stoneCategory',
+      'quality',
+      'unit',
+      'ratePerUnit',
+      'isActive',
+      'actions'
+    ];
+
+  } else {
+
+    this.displayedColumns = [
+      'sno',
+      'stoneType',
+      'stoneCategory',
+      'quality',
+      'unit',
+      'ratePerUnit',
+      'isActive'
+    ];
 
   }
+
+  this.getAllStoneRates();
+}
+  hasAccess(): boolean {
+  return ['BRANCH', 'SUB_BRANCH'].includes(this.role);
+}
+
 
   // =========================
   // GET ALL STONE RATES
