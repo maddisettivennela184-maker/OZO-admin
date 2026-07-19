@@ -1,56 +1,99 @@
-<h2 mat-dialog-title>
-  SubSubCategory Details
+<h2 mat-dialog-title class="dialog-title">
+
+  <i class="fa fa-layer-group me-2"></i>
+
+  Sub Sub Category Details
+
 </h2>
 
 <div mat-dialog-content>
 
-  <div class="details-grid">
+  <div class="details-card">
 
-    <p>
-      <strong>Name:</strong>
-      {{ data.name }}
-    </p>
+    <!-- Image -->
 
-    <p>
-      <strong>Category:</strong>
-      {{ data.category?.name }}
-    </p>
+    <div class="image-section">
 
-    <p>
-      <strong>SubCategory:</strong>
-      {{ data.subCategory?.name }}
-    </p>
+      <img
+        [src]="data.image"
+        alt="subsubcategory-image"
+        class="category-image">
 
-    <p>
-      <strong>Status:</strong>
-      {{
-        data.isActive
-        ? 'Active'
-        : 'Inactive'
-      }}
-    </p>
+    </div>
 
-    <p>
-      <strong>Created At:</strong>
-      {{ data.createdAt }}
-    </p>
+    <!-- Details -->
 
-  </div>
+    <div class="details-section">
 
-  <div class="image-preview">
+      <div class="detail-item">
 
-    <img
-      [src]="data.image"
-      alt="subsubcategory-image"
-      width="150"
-      height="150">
+        <label>Sub Sub Category</label>
+
+        <span>{{ data.name }}</span>
+
+      </div>
+
+      <div class="detail-item">
+
+        <label>Category</label>
+
+        <span>{{ data.category?.name }}</span>
+
+      </div>
+
+      <div class="detail-item">
+
+        <label>Sub Category</label>
+
+        <span>{{ data.subCategory?.name }}</span>
+
+      </div>
+
+      <div class="detail-item">
+
+        <label>Status</label>
+
+        <span
+          class="status-badge"
+          [ngClass]="
+            data.isActive
+            ? 'active'
+            : 'inactive'
+          ">
+
+          {{ data.isActive ? 'Active' : 'Inactive' }}
+
+        </span>
+
+      </div>
+
+      <div class="detail-item">
+
+        <label>Created Date</label>
+
+        <span>
+
+          {{ data.createdAt | date:'dd MMM yyyy, hh:mm a' }}
+
+        </span>
+
+      </div>
+
+    </div>
 
   </div>
 
 </div>
-<div mat-dialog-actions class="button-group">
 
- <button mat-button [mat-dialog-close]="false"  class="btn-back">
-  Close
-</button>
+<div mat-dialog-actions align="end">
+
+  <button
+    mat-button
+    [mat-dialog-close]="false"
+    class="btn-close">
+
+    Close
+
+  </button>
+
 </div>

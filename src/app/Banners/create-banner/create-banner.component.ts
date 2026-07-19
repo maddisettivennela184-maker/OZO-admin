@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/Services/alert.service';
 import { BannerService } from 'src/app/Services/banner.service';
 import Swal from 'sweetalert2';
 
@@ -28,7 +29,8 @@ export class CreateBannerComponent implements OnInit {
       BannerService,
 
     private router:
-      Router
+      Router,
+        private alert: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -107,11 +109,7 @@ export class CreateBannerComponent implements OnInit {
 
       next: () => {
 
-        Swal.fire({
-          icon: 'success',
-          title: 'Success',
-          text: 'Banner created successfully'
-        });
+       this.alert.success('Banner Created Successfully');
 
         this.router.navigate([
           '/admin/banners'

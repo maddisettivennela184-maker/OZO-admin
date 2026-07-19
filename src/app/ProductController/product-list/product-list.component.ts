@@ -4,9 +4,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { AssignVariantComponent } from 'src/app/assign-variant/assign-variant.component';
+import { AssignedProductsComponent } from 'src/app/AssignedProducts/assigned-products/assigned-products.component';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
 import { Product } from 'src/app/Models/Product';
+import { AlertService } from 'src/app/Services/alert.service';
 import { ProductService } from 'src/app/Services/product.service';
 import { ViewProductComponent } from 'src/app/View-dialog-Controllers/view-product/view-product.component';
 import Swal from 'sweetalert2';
@@ -18,6 +21,9 @@ import Swal from 'sweetalert2';
   styleUrls: ['./product-list.component.css']
 })
 export class ProductListComponent implements OnInit {
+  pageTitle = 'Product Management';
+
+pageSubTitle = 'Manage all products here';
 
   // =====================================
   // TABLE COLUMNS
@@ -42,6 +48,7 @@ export class ProductListComponent implements OnInit {
     'actions'
 
   ];
+  subBranchId:any;
 
   // =====================================
   // DATASOURCE
@@ -89,7 +96,9 @@ export class ProductListComponent implements OnInit {
     private router:
       Router,
     private dialog:
-      MatDialog
+      MatDialog,
+      private route:ActivatedRoute,
+       private alert: AlertService
 
   ) { }
 
@@ -97,12 +106,80 @@ export class ProductListComponent implements OnInit {
   // ON INIT
   // =====================================
 
-  ngOnInit(): void {
+  ngOnInit() {
 
-    this.getProducts();
+  this.subBranchId = this.route.snapshot.paramMap.get('subBranchId');
+
+  if (this.subBranchId) {
+     this.pageTitle =
+      'Assigned Products';
+
+    this.pageSubTitle =
+      'Manage products assigned to this Sub Branch';
+
+    this.displayedColumns = [
+
+      'sno',
+
+      'image',
+
+      'name',
+
+      'category',
+
+      'productType',
+
+      'status',
+
+      'actions'
+
+    ];
 
   }
 
+  this.getProducts();
+
+}
+
+assignProduct(product:any){
+
+const dialogRef=
+
+this.dialog.open(
+
+AssignVariantComponent,
+
+{
+
+width:'900px',
+
+disableClose:true,
+
+data:{
+
+product,
+
+subBranchId:this.subBranchId
+
+}
+
+}
+
+);
+
+dialogRef.afterClosed()
+
+.subscribe(result=>{
+
+if(result){
+
+this.getProducts();
+
+}
+
+});
+
+}
   // =====================================
   // GET PRODUCTS
   // =====================================
@@ -238,52 +315,31 @@ export class ProductListComponent implements OnInit {
             .deleteProduct(
               product._id
             )
-            .subscribe({
+           .subscribe({
 
-              // SUCCESS
+  // SUCCESS
 
-              next: () => {
+  next: () => {
 
-                Swal.fire({
+    this.alert.success('Product Deleted Successfully');
 
-                  icon: 'success',
+    this.getProducts();
 
-                  title: 'Deleted',
+  },
 
-                  text:
-                    'Product Deleted Successfully',
+  // ERROR
 
-                  timer: 2000,
+  error: (err: any) => {
 
-                  showConfirmButton:
-                    false
+    console.log(err);
 
-                });
+    this.alert.error(
+      err?.error?.message || 'Delete Failed'
+    );
 
-                this.getProducts();
+  }
 
-              },
-
-              // ERROR
-
-              error: (err) => {
-
-                console.log(err);
-
-                Swal.fire({
-
-                  icon: 'error',
-
-                  title: 'Oops...',
-
-                  text:
-                    'Delete Failed'
-
-                });
-
-              }
-
-            });
+});
 
         }
 
@@ -387,6 +443,137 @@ export class ProductListComponent implements OnInit {
     return url.includes('.pdf');
 
   }
+//   changeStatus(element: any): void {
+
+//   const newStatus = !element.isActive;
+
+//   Swal.fire({
+//     title: newStatus ? 'Activate Product?' : 'Deactivate Product?',
+//     text: `Are you sure you want to ${newStatus ? 'activate' : 'deactivate'} this product?`,
+//     icon: 'warning',
+//     showCancelButton: true,
+//     confirmButtonColor: '#640101',
+//     cancelButtonColor: '#6c757d',
+//     confirmButtonText: 'Yes',
+//     cancelButtonText: 'Cancel'
+//   }).then((result) => {
+
+//     if (result.isConfirmed) {
+
+//       this.productService.updateProductStatus(element._id, newStatus)
+//         .subscribe({
+
+//           next: (res) => {
+
+//             // Update UI without reloading
+//             element.isActive = newStatus;
+
+//             Swal.fire({
+//               icon: 'success',
+//               title: 'Success',
+//               text: res.message,
+//               timer: 1500,
+//               showConfirmButton: false
+//             });
+
+//           },
+
+//           error: (err) => {
+
+//             Swal.fire({
+//               icon: 'error',
+//               title: 'Error',
+//               text: err.error?.message || 'Something went wrong'
+//             });
+
+//           }
+
+//         });
+
+//     }
+
+//   });
+
+// }
+
+
+changeStatus(product: any): void {
+
+  Swal.fire({
+    title: 'Change Product Status',
+
+    input: 'radio',
+
+    inputOptions: {
+      active: 'Active',
+      inactive: 'Inactive'
+    },
+
+    inputValue: product.isActive ? 'active' : 'inactive',
+
+    showCancelButton: true,
+
+    confirmButtonText: 'Update',
+
+    cancelButtonText: 'Cancel',
+
+    confirmButtonColor: '#640101',
+
+    cancelButtonColor: '#6c757d',
+
+    inputValidator: (value) => {
+      if (!value) {
+        return 'Please select status';
+      }
+      return null;
+    }
+
+  }).then((result) => {
+
+    if (!result.isConfirmed) {
+      return;
+    }
+
+    const status = result.value === 'active';
+
+    this.productService
+      .updateProductStatus(product._id, status)
+      .subscribe({
+
+        next: (res) => {
+
+          product.isActive = status;
+
+          // Refresh table if using MatTableDataSource
+          this.dataSource.data = [...this.dataSource.data];
+
+          Swal.fire({
+            icon: 'success',
+            title: 'Success',
+            text: res.message,
+            timer: 1500,
+            showConfirmButton: false
+          });
+
+        },
+
+        error: (err) => {
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: err.error?.message || 'Something went wrong'
+          });
+
+        }
+
+      });
+
+  });
+
+}
+
+  
 
 
 

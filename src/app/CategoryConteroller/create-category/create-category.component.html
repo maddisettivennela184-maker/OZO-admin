@@ -1,70 +1,70 @@
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="title-section">
-                <h2>Create Category</h2>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="title-section">
+                    <h2>Create Category</h2>
+                </div>
             </div>
-        </div>
-        <div class="category-card">
+            <div class="category-card">
 
-            <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+                <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
 
-                <div class="form-layout">
+                    <div class="form-layout">
 
-                    <!-- Left Section -->
-                    <div class="left-section">
+                        <!-- Left Section -->
+                        <div class="left-section">
 
-                        <div class="form-group">
-                            <label>
-                                Category Name
-                            </label>
+                            <div class="form-group">
+                                <label>
+                                    Category Name
+                                </label>
 
-                            <input type="text" formControlName="name" placeholder="Enter category name" />
+                                <input type="text" formControlName="name" placeholder="Enter category name" />
+                            </div>
+
+                            <div class="form-group">
+                                <label>
+                                    Category Image
+                                </label>
+
+                                <input type="file" (change)="onFileChange($event)" />
+                            </div>
+
                         </div>
 
-                        <div class="form-group">
-                            <label>
-                                Category Image
-                            </label>
+                        <!-- Right Section -->
+                        <div class="right-section">
 
-                            <input type="file" (change)="onFileChange($event)" />
+                            <div class="preview-box">
+
+                                <img *ngIf="imagePreview" [src]="imagePreview" alt="Preview" />
+
+                                <p *ngIf="!imagePreview">
+                                    Image Preview
+                                </p>
+
+                            </div>
+
                         </div>
 
                     </div>
 
-                    <!-- Right Section -->
-                    <div class="right-section">
+                    <!-- Buttons -->
+                    <div class="button-group">
 
-                        <div class="preview-box">
+                        <button type="submit" class="btn-create">
+                        Save
+                        </button>
 
-                            <img *ngIf="imagePreview" [src]="imagePreview" alt="Preview" />
-
-                            <p *ngIf="!imagePreview">
-                                Image Preview
-                            </p>
-
-                        </div>
+                        <button type="button" class="btn-back" (click)="goBack()">
+                            Back
+                        </button>
 
                     </div>
 
-                </div>
+                </form>
 
-                <!-- Buttons -->
-                <div class="button-group">
-
-                    <button type="submit" class="btn-create">
-                     Save
-                    </button>
-
-                    <button type="button" class="btn-back" (click)="goBack()">
-                        Back
-                    </button>
-
-                </div>
-
-            </form>
+            </div>
 
         </div>
-
     </div>
-</div>

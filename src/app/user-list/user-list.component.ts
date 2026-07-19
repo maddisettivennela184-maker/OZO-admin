@@ -107,6 +107,7 @@ export class UserListComponent implements OnInit {
   }
 
   // Search Filter
+  // Search Filter
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();

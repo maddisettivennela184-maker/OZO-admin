@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertService } from 'src/app/Services/alert.service';
 import { CategoryService } from 'src/app/Services/category.service';
 import { ProductService } from 'src/app/Services/product.service';
 import { SubcategoryService } from 'src/app/Services/subcategory.service';
@@ -81,7 +82,9 @@ export class ProductUpdateComponent implements OnInit {
       SubcategoryService,
 
     private subSubCategoryService:
-      SubsubcategoryService
+      SubsubcategoryService,
+             private alert: AlertService
+      
 
   ) { }
 
@@ -886,19 +889,7 @@ export class ProductUpdateComponent implements OnInit {
 
           console.log(res);
 
-          Swal.fire({
-
-            icon: 'success',
-
-            title: 'Success',
-
-            text: 'Product Updated Successfully',
-
-            timer: 2000,
-
-            showConfirmButton: false
-
-          });
+          this.alert.success('Updated Successfully');
 
           this.router.navigate([
             '/admin/product'

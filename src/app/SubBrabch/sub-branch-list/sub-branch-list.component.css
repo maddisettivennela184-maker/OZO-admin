@@ -6,16 +6,16 @@
 }
 
 .header-section h2{
-  color:#7a0000;
+  color:var(--red-color);
   font-weight:700;
 }
 
 .header-section p{
-  color:#777;
+  color:var(--gray-colour);
 }
 
 .add-btn{
-  background:#7a0000;
+  background:var(--red-color);
   color:#fff;
   border:none;
   padding:12px 24px;
@@ -39,7 +39,7 @@
 }
 
 .table th{
-  color:#7a0000;
+  color:var(--red-color);
   font-weight:600;
 }
 
@@ -54,13 +54,13 @@
 }
 
 .action-edit{
-  color:#f5a623;
+  color:#f52323;
   margin-right:15px;
   cursor:pointer;
 }
 
 .action-delete{
-  color:#e65100;
+  color:#e60800;
   cursor:pointer;
 }.status-badge {
 
@@ -68,23 +68,13 @@
 
   border-radius: 20px;
 
-  color: white;
+  color: rgb(18, 5, 5);
 
   cursor: pointer;
 
 }
 
-.active {
 
-  background: green;
-
-}
-
-.inactive {
-
-  background: red;
-
-}
 .top-row {
 
   display: flex;
@@ -95,4 +85,16 @@
 
   margin-bottom: 20px;
 
+}
+.assignProducts {
+  background: var( --red-color);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.assignProducts:hover {
+  background: var( --orange-colour);
 }

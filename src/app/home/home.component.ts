@@ -1,5 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import Chart from 'chart.js/auto';
+import { OrderService } from '../Services/order.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,19 @@ import Chart from 'chart.js/auto';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements AfterViewInit {
+ordersCount: number = 0;
+branchOrdersCount  = 0;
+subBranchOrders = 0;
+
+
+constructor(
+
+  private orderService: OrderService,
+   private router: Router,
+
+
+) { }
+
   @ViewChild('barChart') barChartRef!: ElementRef;
   @ViewChild('lineChart') lineChartRef!: ElementRef;
   @ViewChild('donutChart') donutChartRef!: ElementRef;
@@ -16,6 +31,83 @@ export class HomeComponent implements AfterViewInit {
       this.loadCharts();
     }, 100);
   }
+  getSubBranchOrders() {
+
+  const subBranchId = localStorage.getItem("adminId");
+
+console.log("Sub Branch ID:", subBranchId);
+
+this.orderService.getSubBranchOrders(subBranchId!).subscribe({
+  next: (res: any) => {
+    console.log(res);
+    this.subBranchOrders = res.count;
+  },
+  error: (err: any) => {
+    console.log(err);
+  }
+});
+
+}
+
+getBranchOrders() {
+  
+
+  const branchId = localStorage.getItem("adminId");
+
+  if (!branchId) {
+    console.log("Branch ID not found");
+    return;
+  }
+  
+
+  this.orderService.getBranchOrders(branchId).subscribe({
+
+    next: (res: any) => {
+
+      console.log(res);
+
+      this.branchOrdersCount = res.count;
+
+    },
+
+    error: (err: any) => {
+
+      console.log(err);
+
+    }
+
+  });
+
+}
+  getOrders() {
+
+  this.orderService.getAllOrders().subscribe({
+
+    next: (res: any) => {
+
+      console.log(res);
+
+      this.ordersCount = res.count;
+
+    },
+
+    error: (err) => {
+
+      console.log(err);
+
+    }
+
+  });
+
+}
+ngOnInit(): void {
+
+  this.getOrders();
+     this.getBranchOrders();
+
+  this.getSubBranchOrders();
+
+}
 
   loadCharts() {
 

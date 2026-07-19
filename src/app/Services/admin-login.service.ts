@@ -204,4 +204,15 @@ getBranchList() {
   }
 
 
+
+  // ======================================================================================
+  getRole(): string {
+  return localStorage.getItem('role') || '';
+}
+
+isBranch(): boolean {
+  return this.getRole() === 'BRANCH';
+}
+
+
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/Services/alert.service';
 import { CategoryService } from 'src/app/Services/category.service';
 import { ProductService } from 'src/app/Services/product.service';
 import { SubcategoryService } from 'src/app/Services/subcategory.service';
@@ -56,6 +57,7 @@ export class ProductCreateComponent implements OnInit {
       SubsubcategoryService,
     public router:
       Router,
+      private alert: AlertService
 
   ) {
 
@@ -759,21 +761,7 @@ formData.append(
 
           console.log(res);
 
-          Swal.fire({
-
-            icon: 'success',
-
-            title: 'Success',
-
-            text:
-              'Product Created Successfully',
-
-            timer: 2000,
-
-            showConfirmButton:
-              false
-
-          });
+         this.alert.success('Created Successfully');
 
           this.router.navigate([
 

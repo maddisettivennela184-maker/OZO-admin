@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertService } from 'src/app/Services/alert.service';
 import { MetalRateService } from 'src/app/Services/metal-rate.service';
 import Swal from 'sweetalert2';
 
@@ -18,7 +19,7 @@ export class MetalUpdateComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private metalRateService: MetalRateService,
-    private router: Router, private activeRoute: ActivatedRoute
+    private router: Router, private activeRoute: ActivatedRoute,  private alert: AlertService
   ) {
 
     this.metalRateForm = this.fb.group({
@@ -186,21 +187,8 @@ export class MetalUpdateComponent implements OnInit {
       .subscribe({
 
         next: (response) => {
-          Swal.fire({
+         this.alert.success('Updated Successfully');
 
-            icon: 'success',
-
-            title: 'Success',
-
-            text:
-              'Metal Rate Updated Successfully',
-
-            timer: 2000,
-
-            showConfirmButton:
-              false
-
-          });
           this.router.navigate([
             '/admin/metal-list'
           ]);

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AdminLoginService } from 'src/app/Services/admin-login.service';
+import { AlertService } from 'src/app/Services/alert.service';
 import { EmployeeService } from 'src/app/Services/employee.service';
 import Swal from 'sweetalert2';
 
@@ -14,103 +15,104 @@ export class EmployeeCreateComponent implements OnInit {
 
   employeeForm!: FormGroup;
 
+  loading = false;
+
+  photo!: File;
+
+  aadhaarImage!: File;
+
+  photoPreview: any = '';
+
+  aadhaarPreview: any = '';
+
   subBranches: any[] = [];
-
-  selectedPhoto!: File;
-
-  selectedAadhaar!: File;
-
-  photoPreview: string = '';
-
-  aadhaarPreview: string = '';
 
   constructor(
 
     private fb: FormBuilder,
 
-    private employeeService:
-    EmployeeService,
+    private employeeService: EmployeeService,
 
-    private adminService:
-    AdminLoginService,
+    private adminService: AdminLoginService,
+
+    private alert: AlertService,
 
     private router: Router
 
-  ) { }
+  ) {}
 
   ngOnInit(): void {
 
-    this.employeeForm =
-      this.fb.group({
+    this.employeeForm = this.fb.group({
 
-        firstName: [
+      firstName: [
+        '',
+        Validators.required
+      ],
 
-          '',
+      lastName: [
+        '',
+        Validators.required
+      ],
 
-          Validators.required
+      contactNumber: [
 
-        ],
+        '',
 
-        lastName: [
+        [
 
-          '',
+          Validators.required,
 
-          Validators.required
-
-        ],
-
-        contactNumber: [
-
-          '',
-
-          [
-            Validators.required,
-
-            Validators.pattern(
-              '^[0-9]{10}$'
-            )
-
-          ]
-
-        ],
-
-        role: [
-
-          '',
-
-          Validators.required
-
-        ],
-
-        subBranchId: [
-
-          '',
-
-          Validators.required
-
-        ],
-
-        location: [''],
-
-        address: [''],
-
-        status: [
-
-          'ACTIVE'
+          Validators.pattern('^[0-9]{10}$')
 
         ]
 
-      });
+      ],
 
-    this.getAllSubBranches();
+      role: [
+
+        '',
+
+        Validators.required
+
+      ],
+
+      subBranchId: [
+
+        '',
+
+        Validators.required
+
+      ],
+
+      address: [
+
+        '',
+
+        Validators.required
+
+      ],
+
+      location: [
+
+        '',
+
+        Validators.required
+
+      ]
+
+    });
+
+    this.getSubBranches();
 
   }
 
-  // ====================
-  // GET SUB BRANCHES
-  // ====================
+  // Get Sub Branches
 
-  getAllSubBranches() {
+  getSubBranches() {
+    console.log(this.photo);
+
+console.log(this.aadhaarImage);
 
     this.adminService
       .getAllSubBranches()
@@ -118,8 +120,7 @@ export class EmployeeCreateComponent implements OnInit {
 
         next: (res: any) => {
 
-          this.subBranches =
-            res.data;
+          this.subBranches = res.data;
 
         },
 
@@ -133,241 +134,154 @@ export class EmployeeCreateComponent implements OnInit {
 
   }
 
-  // ====================
-  // PHOTO PREVIEW
-  // ====================
+  // Employee Photo
 
   onPhotoChange(event: any) {
 
-    if (
+    if (event.target.files.length > 0) {
 
-      event.target.files &&
-      event.target.files[0]
+      this.photo = event.target.files[0];
 
-    ) {
+      const reader = new FileReader();
 
-      this.selectedPhoto =
-        event.target.files[0];
+      reader.onload = () => {
 
-      const reader =
-        new FileReader();
-
-      reader.onload = (e: any) => {
-
-        this.photoPreview =
-          e.target.result;
+        this.photoPreview = reader.result;
 
       };
 
-      reader.readAsDataURL(
-
-        this.selectedPhoto
-
-      );
+      reader.readAsDataURL(this.photo);
 
     }
 
   }
 
-  // ====================
-  // AADHAAR PREVIEW
-  // ====================
+  // Aadhaar Image
 
   onAadhaarChange(event: any) {
 
-    if (
+    if (event.target.files.length > 0) {
 
-      event.target.files &&
-      event.target.files[0]
+      this.aadhaarImage = event.target.files[0];
 
-    ) {
+      const reader = new FileReader();
 
-      this.selectedAadhaar =
-        event.target.files[0];
+      reader.onload = () => {
 
-      const reader =
-        new FileReader();
-
-      reader.onload = (e: any) => {
-
-        this.aadhaarPreview =
-          e.target.result;
+        this.aadhaarPreview = reader.result;
 
       };
 
-      reader.readAsDataURL(
-
-        this.selectedAadhaar
-
-      );
+      reader.readAsDataURL(this.aadhaarImage);
 
     }
 
   }
 
-  // ====================
-  // CREATE EMPLOYEE
-  // ====================
+  // Create Employee
 
   createEmployee() {
 
-    if (
+    if (this.employeeForm.invalid) {
 
-      this.employeeForm.invalid
-
-    ) {
-
-      this.employeeForm
-        .markAllAsTouched();
+      this.employeeForm.markAllAsTouched();
 
       return;
 
     }
 
-    const formData =
-      new FormData();
+    const formData = new FormData();
 
     formData.append(
-
       'firstName',
-
       this.employeeForm.value.firstName
-
     );
 
     formData.append(
-
       'lastName',
-
       this.employeeForm.value.lastName
-
     );
 
     formData.append(
-
       'contactNumber',
-
       this.employeeForm.value.contactNumber
-
     );
 
     formData.append(
-
       'role',
-
       this.employeeForm.value.role
-
     );
 
     formData.append(
-
       'subBranchId',
-
       this.employeeForm.value.subBranchId
-
     );
 
     formData.append(
-
-      'location',
-
-      this.employeeForm.value.location
-
-    );
-
-    formData.append(
-
       'address',
-
       this.employeeForm.value.address
-
     );
 
     formData.append(
-
-      'status',
-
-      this.employeeForm.value.status
-
+      'location',
+      this.employeeForm.value.location
     );
 
-    if (
-
-      this.selectedPhoto
-
-    ) {
+    if (this.photo) {
 
       formData.append(
-
         'photo',
-
-        this.selectedPhoto
-
+        this.photo
       );
 
     }
 
-    if (
-
-      this.selectedAadhaar
-
-    ) {
+    if (this.aadhaarImage) {
 
       formData.append(
-
         'aadhaarImage',
-
-        this.selectedAadhaar
-
+        this.aadhaarImage
       );
 
     }
+
+    this.loading = true;
 
     this.employeeService
-      .createEmployee(
-        formData
-      )
+      .createEmployee(formData)
       .subscribe({
 
         next: (res: any) => {
 
-          Swal.fire({
+          this.loading = false;
 
-            icon: 'success',
+          this.alert.success(
+            res.message || 'Employee Created Successfully'
+          );
 
-            title: 'Success',
+          setTimeout(() => {
 
-            text:
-              res.message
+            this.router.navigate([
+              '/admin/employee-list'
+            ]);
 
-          });
-
-          this.employeeForm.reset();
-
-          this.photoPreview = '';
-
-          this.aadhaarPreview = '';
-
-          this.router.navigate([
-
-            '/admin/employee-list'
-
-          ]);
+          }, 2000);
 
         },
 
-        error: (err) => {
+        error: (err: any) => {
 
-          Swal.fire({
+          this.loading = false;
 
-            icon: 'error',
+          console.log(err);
 
-            title: 'Error',
+          this.alert.error(
 
-            text:
-              err.error.message
+            err?.error?.message ||
 
-          });
+            'Failed To Create Employee'
+
+          );
 
         }
 
@@ -375,16 +289,10 @@ export class EmployeeCreateComponent implements OnInit {
 
   }
 
-  // ====================
-  // BACK
-  // ====================
-
   goBack() {
 
     this.router.navigate([
-
       '/admin/employee-list'
-
     ]);
 
   }

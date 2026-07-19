@@ -1,6 +1,7 @@
 .page-header h2 {
-  color: var(--wight-color);
+  color: var(--red-color);
   font-weight: 700;
+  
 }
 
 .form-card {

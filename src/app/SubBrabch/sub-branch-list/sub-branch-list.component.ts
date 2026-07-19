@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
 import { AdminLoginService } from 'src/app/Services/admin-login.service';
 import { ViewBranchComponent } from 'src/app/View-dialog-Controllers/view-branch/view-branch.component';
@@ -21,7 +21,7 @@ export class SubBranchListComponent implements OnInit {
     'sno',
 
     'name',
-     'branchId',
+    //  'branchId',
 
     'email',
 
@@ -31,7 +31,7 @@ export class SubBranchListComponent implements OnInit {
 
     'status',
    
-
+'assign',
     'actions'
 
   ];
@@ -49,6 +49,7 @@ export class SubBranchListComponent implements OnInit {
 
     private adminService: AdminLoginService,
      private dialog: MatDialog,
+      private route:ActivatedRoute,
 
     private router: Router
 
@@ -158,6 +159,16 @@ export class SubBranchListComponent implements OnInit {
     ]);
 
   }
+ assignProducts(element:any){
+
+console.log(element);
+
+this.router.navigate([
+  '/admin/product',
+  element._id
+]);
+
+}
 
   // =========================
   // DELETE
@@ -262,6 +273,7 @@ changeStatus(element: any) {
           result.value
 
         )
+        
         .subscribe({
 
           next: () => {

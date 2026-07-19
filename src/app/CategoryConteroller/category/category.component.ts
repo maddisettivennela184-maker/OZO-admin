@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
 import { ViewCategoryComponent } from 'src/app/View-dialog-Controllers/view-category/view-category.component';
 import Swal from 'sweetalert2';
+import { AlertService } from 'src/app/Services/alert.service';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class CategoryComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private categoryService: CategoryService, private router: Router, private dialog: MatDialog,
+  constructor(private categoryService: CategoryService, private router: Router, private dialog: MatDialog, private alert: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -102,41 +103,59 @@ export class CategoryComponent implements OnInit {
             .deleteCategory(
               data._id
             )
-            .subscribe({
+          .subscribe({
 
-              next: () => {
+  next: () => {
 
-                Swal.fire({
+    Swal.fire({
 
-                  icon: 'success',
+      icon: 'success',
 
-                  title: 'Deleted',
+      title: 'Deleted',
 
-                  text:
-                    'Deleted Successfully'
+      text: 'Deleted Successfully',
 
-                });
+      timer: 2500,
 
-                this.getAllCategories();
+      timerProgressBar: true,
 
-              },
+      showConfirmButton: false,
 
-              error: () => {
+      customClass: {
+        popup: 'success-popup'
+      }
 
-                Swal.fire({
+    });
 
-                  icon: 'error',
+    this.getAllCategories();
 
-                  title: 'Oops...',
+  },
 
-                  text:
-                    'Delete Failed'
+  error: () => {
 
-                });
+    Swal.fire({
 
-              }
+      icon: 'error',
 
-            });
+      title: 'Oops...',
+
+      text: 'Delete Failed',
+
+      timer: 2500,
+
+      timerProgressBar: true,
+
+      showConfirmButton: false,
+
+      customClass: {
+        popup: 'error-popup'
+      }
+
+    });
+
+  }
+
+});
 
         }
 

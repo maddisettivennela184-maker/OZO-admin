@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
+import { AlertService } from 'src/app/Services/alert.service';
 import { SubcategoryService } from 'src/app/Services/subcategory.service';
 import { ViewSubCategoryComponent } from 'src/app/View-dialog-Controllers/view-sub-category/view-sub-category.component';
 
@@ -30,7 +31,7 @@ export class SubCategoryListComponent implements OnInit {
  
  
 
-  constructor(private Subcategoryservice: SubcategoryService,private router: Router,private dialog: MatDialog) {}
+  constructor(private Subcategoryservice: SubcategoryService,private router: Router,private dialog: MatDialog,  private alert: AlertService) {}
 
   ngOnInit() {
     this.getAllSubCategories();
@@ -88,18 +89,27 @@ DeleteConfirmationComponent,      {
 
         this.Subcategoryservice
           .deleteSubCategory(data._id)
-          .subscribe({
+         .subscribe({
 
-            next: () => {
-              alert("Deleted successfully");
-              this.getAllSubCategories();
-            },
+  next: () => {
 
-            error: () => {
-              alert("Delete failed");
-            }
+    this.alert.success('Deleted Successfully');
 
-          });
+    this.getAllSubCategories();
+
+  },
+
+  error: (err: any) => {
+
+    console.log(err);
+
+    this.alert.error(
+      err?.error?.message || 'Delete Failed'
+    );
+
+  }
+
+});
       }
 
     });

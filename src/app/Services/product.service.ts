@@ -33,7 +33,25 @@ export class ProductService {
     );
 
   }
+  assignProducts(data: any) {
 
+  return this.http.post(
+
+   `${this.apiUrl}/assign-multiple-products`,
+
+    data
+
+  );
+
+
+}
+ // Update Product Status
+  updateProductStatus(id: string, isActive: boolean): Observable<any> {
+    return this.http.patch(
+      `${this.apiUrl}/product/status/${id}`,
+      { isActive }
+    );
+  }
 
   /*
   GET ALL PRODUCTS

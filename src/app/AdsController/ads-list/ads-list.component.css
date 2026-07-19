@@ -73,20 +73,8 @@ th {
 
   border-radius: 20px;
 
-  color: white;
 
   cursor: pointer;
 
 }
 
-.active {
-
-  background: green;
-
-}
-
-.inactive {
-
-  background: red;
-
-}

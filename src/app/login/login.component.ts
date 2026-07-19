@@ -176,6 +176,10 @@ onSubmit() {
     'email',
     res.email
   );
+  localStorage.setItem(
+  'adminId',
+  res._id
+);
 
         // Branch Login
 
@@ -201,7 +205,18 @@ onSubmit() {
 
         }
 
-      }
+      },
+      // 👇 ADD THIS BLOCK
+    error: (err) => {
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Login Failed',
+        text: err.error?.message || 'Something went wrong',
+        confirmButtonColor: '#640101'
+      });
+
+    }
 
     });
 

@@ -8,6 +8,7 @@ import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-
 import { SubsubcategoryService } from 'src/app/Services/subsubcategory.service';
 import { MatSelectModule } from "@angular/material/select";
 import { ViewSubSubCategoryComponent } from 'src/app/View-dialog-Controllers/view-sub-sub-category/view-sub-sub-category.component';
+import { AlertService } from 'src/app/Services/alert.service';
 
 @Component({
   selector: 'app-sub-sub-category-list',
@@ -42,7 +43,8 @@ export class SubSubCategoryListComponent implements OnInit {
     private subSubCategoryService:
       SubsubcategoryService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private alert: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -116,17 +118,35 @@ export class SubSubCategoryListComponent implements OnInit {
     dialogRef.afterClosed()
       .subscribe(result => {
 
-        if (result === true) {
-          this.subSubCategoryService
-            .deleteSubSubCategory(
-              data._id
-            )
-            .subscribe(() => {
-              this.getAllSubSubCategories();
-            });
+  if (result === true) {
+
+    this.subSubCategoryService
+      .deleteSubSubCategory(data._id)
+      .subscribe({
+
+        next: () => {
+
+          this.alert.success('Deleted Successfully');
+
+          this.getAllSubSubCategories();
+
+        },
+
+        error: (err: any) => {
+
+          console.log(err);
+
+          this.alert.error(
+            err?.error?.message || 'Delete Failed'
+          );
+
         }
 
       });
+
+  }
+
+});
   }
 
   /*

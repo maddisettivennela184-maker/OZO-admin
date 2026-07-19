@@ -73,6 +73,24 @@ import { EmployeeUpdateComponent } from './employee/employee-update/employee-upd
 import { ViewEmployeeComponent } from './View-dialog-Controllers/view-employee/view-employee.component';
 import { ViewBranchComponent } from './View-dialog-Controllers/view-branch/view-branch.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AssignedProductsComponent } from './AssignedProducts/assigned-products/assigned-products.component';
+import { AssignVariantComponent } from './assign-variant/assign-variant.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { ViewOrdersComponent } from './View-dialog-Controllers/view-orders/view-orders.component';
+import { ViewOrderItemComponent } from './View-dialog-Controllers/view-order-item/view-order-item.component';
+import { ListSchemaComponent } from './schema/list-schema/list-schema.component';
+import { CreateScheemaComponent } from './schema/create-scheema/create-scheema.component';
+import { UpdateScheemaComponent } from './schema/update-scheema/update-scheema.component';
+import { UserSchemaComponent } from './user-scheema/user-schema/user-schema.component';
+import { CreateUserscheemaComponent } from './user-scheema/create-userscheema/create-userscheema.component';
+import { UpdateUserscheemaComponent } from './user-scheema/update-userscheema/update-userscheema.component';
+import { ViewScheemaComponent } from './View-dialog-Controllers/view-scheema/view-scheema.component';
+import { ViewUserscheemaComponent } from './View-dialog-Controllers/view-userscheema/view-userscheema.component';
+import { SchemaPaymentListComponent } from './scheme-payment/schema-payment-list/schema-payment-list.component';
+import { ViewPaymentSchemeComponent } from './View-dialog-Controllers/view-payment-scheme/view-payment-scheme.component';
+import { SizeChatListComponent } from './size-chat/size-chat-list/size-chat-list.component';
+import { SizeChatCreateComponent } from './size-chat/size-chat-create/size-chat-create.component';
+import { SizeChatUpdateComponent } from './size-chat/size-chat-update/size-chat-update.component';
 
 
 @NgModule({
@@ -129,10 +147,28 @@ import { ProfileComponent } from './profile/profile.component';
     EmployeeUpdateComponent,
     ViewEmployeeComponent,
     ViewBranchComponent,
-    ProfileComponent
+    ProfileComponent,
+    AssignedProductsComponent,
+    AssignVariantComponent,
+    ViewOrdersComponent,
+    ViewOrderItemComponent,
+    ListSchemaComponent,
+    CreateScheemaComponent,
+    UpdateScheemaComponent,
+    UserSchemaComponent,
+    CreateUserscheemaComponent,
+    UpdateUserscheemaComponent,
+    ViewScheemaComponent,
+    ViewUserscheemaComponent,
+    SchemaPaymentListComponent,
+    ViewPaymentSchemeComponent,
+    SizeChatListComponent,
+    SizeChatCreateComponent,
+    SizeChatUpdateComponent
    
   ],
   imports: [
+    NgSelectModule,
     BrowserModule,
     AppRoutingModule,
       HttpClientModule,

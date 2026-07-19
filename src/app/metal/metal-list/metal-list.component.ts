@@ -5,6 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
+import { AdminLoginService } from 'src/app/Services/admin-login.service';
+import { AlertService } from 'src/app/Services/alert.service';
 import { MetalRateService } from 'src/app/Services/metal-rate.service';
 
 @Component({
@@ -13,15 +15,24 @@ import { MetalRateService } from 'src/app/Services/metal-rate.service';
   styleUrls: ['./metal-list.component.css']
 })
 export class MetalListComponent implements OnInit {
+   role: string = '';
   displayedColumns: string[] = ['sno', 'metalType', 'purity', 'unit', 'ratePerGram', 'effectiveDate', 'isActive', 'actions'];
+  
   dataSource = new MatTableDataSource<any>();
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
   metalRates: any[] = [];
+  
   constructor(private metalRateService: MetalRateService, private router: Router, private dialog:
-    MatDialog) { }
+    MatDialog,
+     public authService: AdminLoginService,
+  private alert: AlertService) { }
   ngOnInit(): void {
+
+  this.role = localStorage.getItem('role') || '';
+
+  console.log("ROLE =>", this.role);
 
     this.getAllMetalRates();
 
@@ -99,9 +110,7 @@ export class MetalListComponent implements OnInit {
 
               next: () => {
 
-                alert(
-                  'Deleted successfully'
-                );
+               this.alert.success('Deleted Successfully');
 
                 this.getAllMetalRates();
 

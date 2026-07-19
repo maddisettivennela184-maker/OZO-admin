@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/Services/alert.service';
 import { MetalRateService } from 'src/app/Services/metal-rate.service';
 import Swal from 'sweetalert2';
 
@@ -18,7 +19,8 @@ export class MetalCreateComponent {
   constructor(
     private fb: FormBuilder,
     private metalRateService: MetalRateService,
-    private router: Router
+    private router: Router,
+    private alert: AlertService
   ) {
 
     this.metalRateForm = this.fb.group({
@@ -124,21 +126,8 @@ export class MetalCreateComponent {
 
         next: (response) => {
 
-          Swal.fire({
+       this.alert.success('Created Successfully');
 
-            icon: 'success',
-
-            title: 'Success',
-
-            text:
-              'Metal Rate Created Successfully',
-
-            timer: 2000,
-
-            showConfirmButton:
-              false
-
-          });
 
           this.router.navigate([
             '/admin/metal-rate'

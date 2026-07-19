@@ -18,20 +18,16 @@ export class ViewProductComponent implements OnInit {
   // CONSTRUCTOR
   // =====================================
 
-  constructor(
+constructor(
 
-    public dialogRef:
-      MatDialogRef<ViewProductComponent>,
+  public dialogRef: MatDialogRef<ViewProductComponent>,
 
-    @Inject(MAT_DIALOG_DATA)
-    public data: any
+  @Inject(MAT_DIALOG_DATA)
+  public data: any
 
-  ) {
+) {
 
-    this.selectedProduct =
-      data;
-
-  }
+}
 
   // =====================================
   // ON INIT
@@ -39,9 +35,19 @@ export class ViewProductComponent implements OnInit {
 
   ngOnInit(): void {
 
-    console.log(
-      this.selectedProduct
-    );
+  if (this.data.productId) {
+    // Assigned Products page nunchi vachindi
+    this.selectedProduct = this.data.productId;
+
+    // Assigned variant ni use cheyyi
+    if (this.data.variant) {
+      this.selectedProduct.variants = [this.data.variant];
+    }
+
+  } else {
+    // Product List page nunchi vachindi
+    this.selectedProduct = this.data;
+  }
 
   }
 

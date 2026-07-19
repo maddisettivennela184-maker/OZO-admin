@@ -10,6 +10,9 @@
   --orange-colour:rgb(240, 165, 27);
     --btn-red-colour:rgb(223, 84, 3);
     --dark-green: #155724;
+    --active-bg-green:rgba(105, 249, 105, 0.274);
+    --active-text:rgb(73, 118, 4);
+
 
 
   /* Example of another color */
@@ -346,4 +349,30 @@ button[type="submit"] {
 
 button[type="submit"]:hover {
   background:var(--red-color);
+}
+
+
+/* Select */
+.form-select {
+    border: 1px solid var(--red-color);
+    color: var(--gray-colour);
+    background-color: var(--wight-color);
+}
+
+.form-select:focus {
+    border-color: var(--red-color);
+    box-shadow: none;
+    outline: none;
+}
+
+/* Options */
+.form-select option {
+    color: var(--gray-colour);
+    background: var(--wight-color);
+}
+
+/* Selected option */
+.form-select option:checked {
+    background: var(--gray-colour);
+    color: var(--wight-color);
 }

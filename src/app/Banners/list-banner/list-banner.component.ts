@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
 import { Banner } from '../../Models/banner';
 import { BannerService } from 'src/app/Services/banner.service';
+import { AlertService } from 'src/app/Services/alert.service';
 
 @Component({
   selector: 'app-list-banner',
@@ -47,7 +48,8 @@ export class ListBannerComponent implements OnInit {
       Router,
 
     private dialog:
-      MatDialog
+      MatDialog,
+        private alert: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -140,21 +142,25 @@ export class ListBannerComponent implements OnInit {
               )
               .subscribe({
 
-                next: () => {
-                  alert(
-                    "Deleted successfully"
-                  );
+  next: () => {
 
-                  this.getAllBanners();
-                },
+    this.alert.success('Banner Deleted Successfully');
 
-                error: () => {
-                  alert(
-                    "Delete failed"
-                  );
-                }
+    this.getAllBanners();
 
-              });
+  },
+
+  error: (err: any) => {
+
+    console.log(err);
+
+    this.alert.error(
+      err?.error?.message || 'Delete Failed'
+    );
+
+  }
+
+});
           }
         });
   }

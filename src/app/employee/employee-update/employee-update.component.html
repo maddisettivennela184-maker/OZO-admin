@@ -1,35 +1,35 @@
-<div class="container-fluid py-3">
+<div class="container-fluid employee-container">
 
-  <!-- Page Header -->
+  <div class="employee-card">
 
-  <div class="page-header mb-4">
+    <!-- Header -->
 
-    <h2>
-      Update Employee
-    </h2>
+    <div class="card-header">
 
-    <p>
-      Add new employee details
-    </p>
+      <h3>Update Employee</h3>
 
-  </div>
+      <p>Update employee details</p>
 
-  <!-- Form Card -->
+    </div>
 
-  <div class="form-card">
+    <!-- Form -->
 
     <form
-  [formGroup]="employeeForm"
-  (ngSubmit)="updateEmployee()">
+      [formGroup]="employeeForm"
+      (ngSubmit)="updateEmployee()"
+      enctype="multipart/form-data">
 
       <div class="row">
 
         <!-- First Name -->
 
-        <div class="col-md-4 mb-4">
+        <div class="col-md-6 mb-3">
 
           <label class="form-label">
+
             First Name
+            <span class="text-danger">*</span>
+
           </label>
 
           <input
@@ -40,11 +40,10 @@
 
           <small
             class="text-danger"
-            *ngIf="
-            employeeForm.get('firstName')?.touched &&
-            employeeForm.get('firstName')?.invalid">
+            *ngIf="employeeForm.get('firstName')?.touched &&
+                   employeeForm.get('firstName')?.invalid">
 
-            Required
+            First Name is required
 
           </small>
 
@@ -52,10 +51,13 @@
 
         <!-- Last Name -->
 
-        <div class="col-md-4 mb-4">
+        <div class="col-md-6 mb-3">
 
           <label class="form-label">
+
             Last Name
+            <span class="text-danger">*</span>
+
           </label>
 
           <input
@@ -66,37 +68,39 @@
 
           <small
             class="text-danger"
-            *ngIf="
-            employeeForm.get('lastName')?.touched &&
-            employeeForm.get('lastName')?.invalid">
+            *ngIf="employeeForm.get('lastName')?.touched &&
+                   employeeForm.get('lastName')?.invalid">
 
-            Required
+            Last Name is required
 
           </small>
 
         </div>
 
-        <!-- Contact Number -->
+        <!-- Contact -->
 
-        <div class="col-md-4 mb-4">
+        <div class="col-md-6 mb-3">
 
           <label class="form-label">
+
             Contact Number
+            <span class="text-danger">*</span>
+
           </label>
 
           <input
             type="text"
+            maxlength="10"
             class="form-control"
             formControlName="contactNumber"
-            placeholder="Enter Phone Number">
+            placeholder="Enter Contact Number">
 
           <small
             class="text-danger"
-            *ngIf="
-            employeeForm.get('contactNumber')?.touched &&
-            employeeForm.get('contactNumber')?.invalid">
+            *ngIf="employeeForm.get('contactNumber')?.touched &&
+                   employeeForm.get('contactNumber')?.invalid">
 
-            Invalid Phone
+            Enter Valid Mobile Number
 
           </small>
 
@@ -104,10 +108,13 @@
 
         <!-- Role -->
 
-        <div class="col-md-4 mb-4">
+        <div class="col-md-6 mb-3">
 
           <label class="form-label">
+
             Role
+            <span class="text-danger">*</span>
+
           </label>
 
           <select
@@ -136,24 +143,17 @@
 
           </select>
 
-          <small
-            class="text-danger"
-            *ngIf="
-            employeeForm.get('role')?.touched &&
-            employeeForm.get('role')?.invalid">
-
-            Select Role
-
-          </small>
-
         </div>
 
         <!-- Sub Branch -->
 
-        <div class="col-md-4 mb-4">
+        <div class="col-md-6 mb-3">
 
           <label class="form-label">
+
             Sub Branch
+            <span class="text-danger">*</span>
+
           </label>
 
           <select
@@ -165,45 +165,11 @@
             </option>
 
             <option
-              *ngFor="let item of subBranches"
-              [value]="item._id">
+              *ngFor="let branch of subBranches"
+              [value]="branch._id">
 
-              {{ item.name }}
+              {{ branch.name }}
 
-            </option>
-
-          </select>
-
-          <small
-            class="text-danger"
-            *ngIf="
-            employeeForm.get('subBranchId')?.touched &&
-            employeeForm.get('subBranchId')?.invalid">
-
-            Select Branch
-
-          </small>
-
-        </div>
-
-        <!-- Status -->
-
-        <div class="col-md-4 mb-4">
-
-          <label class="form-label">
-            Status
-          </label>
-
-          <select
-            class="form-select"
-            formControlName="status">
-
-            <option value="ACTIVE">
-              Active
-            </option>
-
-            <option value="INACTIVE">
-              Inactive
             </option>
 
           </select>
@@ -212,10 +178,13 @@
 
         <!-- Location -->
 
-        <div class="col-md-12 mb-4">
+        <div class="col-md-6 mb-3">
 
           <label class="form-label">
+
             Location
+            <span class="text-danger">*</span>
+
           </label>
 
           <input
@@ -226,21 +195,44 @@
 
         </div>
 
-        <!-- Employee Photo -->
+        <!-- Address -->
+
+        <div class="col-md-12 mb-4">
+
+          <label class="form-label">
+
+            Address
+            <span class="text-danger">*</span>
+
+          </label>
+
+          <textarea
+            rows="4"
+            class="form-control"
+            formControlName="address"
+            placeholder="Enter Address">
+
+          </textarea>
+
+        </div>
+                <!-- Employee Photo -->
 
         <div class="col-md-6 mb-4">
 
           <label class="form-label">
+
             Employee Photo
+
           </label>
 
           <input
             type="file"
             class="form-control"
+            accept="image/*"
             (change)="onPhotoChange($event)">
 
           <div
-            class="preview-box mt-3"
+            class="text-center mt-3"
             *ngIf="photoPreview">
 
             <img
@@ -256,16 +248,19 @@
         <div class="col-md-6 mb-4">
 
           <label class="form-label">
+
             Aadhaar Image
+
           </label>
 
           <input
             type="file"
             class="form-control"
+            accept="image/*"
             (change)="onAadhaarChange($event)">
 
           <div
-            class="preview-box mt-3"
+            class="text-center mt-3"
             *ngIf="aadhaarPreview">
 
             <img
@@ -276,37 +271,22 @@
 
         </div>
 
-        <!-- Address -->
-
-        <div class="col-md-12 mb-4">
-
-          <label class="form-label">
-            Address
-          </label>
-
-          <textarea
-            rows="4"
-            class="form-control"
-            formControlName="address"
-            placeholder="Enter Address">
-          </textarea>
-
-        </div>
-
       </div>
 
       <!-- Buttons -->
 
-      <div class="text-end">
+      <div class="button-group">
 
-       <button
-  type="submit"
-  class="btn-save me-2">
+        <button
+          type="submit"
+          class="btn-create"
+          [disabled]="loading">
 
-  Update
+          {{ loading ? 'Updating...' : 'Update ' }}
 
-</button>
+        </button>
 
+        
         <button
           type="button"
           class="btn-back"

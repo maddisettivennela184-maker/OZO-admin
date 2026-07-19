@@ -1,315 +1,170 @@
-<div class="container-fluid py-3">
+<div class="container-fluid employee-container">
 
-  <!-- Page Header -->
-
-  <div class="page-header mb-4">
-
-    <h2>
-      Create Employee
-    </h2>
-
-    <p>
-      Add new employee details
-    </p>
-
+  <div class="page-title">
+    <h4>Create Employee</h4>
   </div>
 
-  <!-- Form Card -->
-
-  <div class="form-card">
+  <div class="employee-card">
 
     <form
       [formGroup]="employeeForm"
-      (ngSubmit)="createEmployee()">
+      (ngSubmit)="createEmployee()"
+      enctype="multipart/form-data">
 
-      <div class="row">
+      <div class="row g-4">
 
         <!-- First Name -->
-
-        <div class="col-md-4 mb-4">
-
-          <label class="form-label">
-            First Name
-          </label>
-
+        <div class="col-lg-4 col-md-6">
+          <label class="form-label">First Name</label>
           <input
             type="text"
             class="form-control"
             formControlName="firstName"
             placeholder="Enter First Name">
 
-          <small
-            class="text-danger"
-            *ngIf="
-            employeeForm.get('firstName')?.touched &&
+          <small class="text-danger"
+            *ngIf="employeeForm.get('firstName')?.touched &&
             employeeForm.get('firstName')?.invalid">
-
-            Required
-
+            First Name is required
           </small>
-
         </div>
 
         <!-- Last Name -->
-
-        <div class="col-md-4 mb-4">
-
-          <label class="form-label">
-            Last Name
-          </label>
-
+        <div class="col-lg-4 col-md-6">
+          <label class="form-label">Last Name</label>
           <input
             type="text"
             class="form-control"
             formControlName="lastName"
             placeholder="Enter Last Name">
-
-          <small
-            class="text-danger"
-            *ngIf="
-            employeeForm.get('lastName')?.touched &&
-            employeeForm.get('lastName')?.invalid">
-
-            Required
-
-          </small>
-
         </div>
 
-        <!-- Contact Number -->
-
-        <div class="col-md-4 mb-4">
-
-          <label class="form-label">
-            Contact Number
-          </label>
-
+        <!-- Phone -->
+        <div class="col-lg-4 col-md-6">
+          <label class="form-label">Phone Number</label>
           <input
             type="text"
+            maxlength="10"
             class="form-control"
             formControlName="contactNumber"
             placeholder="Enter Phone Number">
-
-          <small
-            class="text-danger"
-            *ngIf="
-            employeeForm.get('contactNumber')?.touched &&
-            employeeForm.get('contactNumber')?.invalid">
-
-            Invalid Phone
-
-          </small>
-
         </div>
 
         <!-- Role -->
-
-        <div class="col-md-4 mb-4">
-
-          <label class="form-label">
-            Role
-          </label>
-
+        <div class="col-lg-4 col-md-6">
+          <label class="form-label">Role</label>
           <select
             class="form-select"
             formControlName="role">
 
-            <option value="">
-              Select Role
-            </option>
-
-            <option value="MANAGER">
-              Manager
-            </option>
-
-            <option value="SALES_EXECUTIVE">
-              Sales Executive
-            </option>
-
-            <option value="CASHIER">
-              Cashier
-            </option>
-
-            <option value="STAFF">
-              Staff
-            </option>
+            <option value="">Select Role</option>
+            <option value="MANAGER">Manager</option>
+            <option value="SALES_EXECUTIVE">Sales Executive</option>
+            <option value="CASHIER">Cashier</option>
+            <option value="STAFF">Staff</option>
 
           </select>
-
-          <small
-            class="text-danger"
-            *ngIf="
-            employeeForm.get('role')?.touched &&
-            employeeForm.get('role')?.invalid">
-
-            Select Role
-
-          </small>
-
         </div>
 
         <!-- Sub Branch -->
-
-        <div class="col-md-4 mb-4">
-
-          <label class="form-label">
-            Sub Branch
-          </label>
-
+        <div class="col-lg-4 col-md-6">
+          <label class="form-label">Sub Branch</label>
           <select
             class="form-select"
             formControlName="subBranchId">
 
-            <option value="">
-              Select Sub Branch
-            </option>
+            <option value="">Select Sub Branch</option>
 
             <option
-              *ngFor="let item of subBranches"
-              [value]="item._id">
+              *ngFor="let branch of subBranches"
+              [value]="branch._id">
 
-              {{ item.name }}
+              {{ branch.name }}
 
             </option>
 
           </select>
-
-          <small
-            class="text-danger"
-            *ngIf="
-            employeeForm.get('subBranchId')?.touched &&
-            employeeForm.get('subBranchId')?.invalid">
-
-            Select Branch
-
-          </small>
-
-        </div>
-
-        <!-- Status -->
-
-        <div class="col-md-4 mb-4">
-
-          <label class="form-label">
-            Status
-          </label>
-
-          <select
-            class="form-select"
-            formControlName="status">
-
-            <option value="ACTIVE">
-              Active
-            </option>
-
-            <option value="INACTIVE">
-              Inactive
-            </option>
-
-          </select>
-
         </div>
 
         <!-- Location -->
-
-        <div class="col-md-12 mb-4">
-
-          <label class="form-label">
-            Location
-          </label>
-
+        <div class="col-lg-4 col-md-6">
+          <label class="form-label">Location</label>
           <input
             type="text"
             class="form-control"
             formControlName="location"
             placeholder="Enter Location">
-
-        </div>
-
-        <!-- Employee Photo -->
-
-        <div class="col-md-6 mb-4">
-
-          <label class="form-label">
-            Employee Photo
-          </label>
-
-          <input
-            type="file"
-            class="form-control"
-            (change)="onPhotoChange($event)">
-
-          <div
-            class="preview-box mt-3"
-            *ngIf="photoPreview">
-
-            <img
-              [src]="photoPreview"
-              class="preview-image">
-
-          </div>
-
-        </div>
-
-        <!-- Aadhaar Image -->
-
-        <div class="col-md-6 mb-4">
-
-          <label class="form-label">
-            Aadhaar Image
-          </label>
-
-          <input
-            type="file"
-            class="form-control"
-            (change)="onAadhaarChange($event)">
-
-          <div
-            class="preview-box mt-3"
-            *ngIf="aadhaarPreview">
-
-            <img
-              [src]="aadhaarPreview"
-              class="preview-image">
-
-          </div>
-
         </div>
 
         <!-- Address -->
-
-        <div class="col-md-12 mb-4">
-
-          <label class="form-label">
-            Address
-          </label>
-
+        <div class="col-12">
+          <label class="form-label">Address</label>
           <textarea
             rows="4"
             class="form-control"
             formControlName="address"
             placeholder="Enter Address">
           </textarea>
+        </div>
 
+        <!-- Employee Photo -->
+        <div class="col-lg-6">
+          <label class="form-label">Employee Photo</label>
+
+          <input
+            type="file"
+            class="form-control"
+            accept="image/*"
+            (change)="onPhotoChange($event)">
+
+          <div
+            *ngIf="photoPreview"
+            class="preview-box">
+
+            <img
+              [src]="photoPreview"
+              class="preview-image">
+
+          </div>
+        </div>
+
+        <!-- Aadhaar -->
+        <div class="col-lg-6">
+          <label class="form-label">Aadhaar Image</label>
+
+          <input
+            type="file"
+            class="form-control"
+            accept="image/*"
+            (change)="onAadhaarChange($event)">
+
+          <div
+            *ngIf="aadhaarPreview"
+            class="preview-box">
+
+            <img
+              [src]="aadhaarPreview"
+              class="preview-image">
+
+          </div>
         </div>
 
       </div>
 
-      <!-- Buttons -->
-
-      <div class="text-end">
+      <div class="btn-section">
 
         <button
+          class="btn btn-save"
           type="submit"
-          class="btn-save me-2">
+          [disabled]="loading">
 
-          Save
+          {{ loading ? 'Saving...' : 'Save Employee' }}
 
         </button>
 
         <button
+          class="btn btn-back"
           type="button"
-          class="btn-back"
           (click)="goBack()">
 
           Back

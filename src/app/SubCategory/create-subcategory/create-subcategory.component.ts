@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CategoryService } from 'src/app/Services/category.service';
 import { SubcategoryService } from 'src/app/Services/subcategory.service';
+import { AlertService } from 'src/app/Services/alert.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -24,7 +25,8 @@ export class CreateSubcategoryComponent implements OnInit {
     private fb: FormBuilder,
     private subService: SubcategoryService,
     private categoryService: CategoryService,
-    private router: Router
+    private router: Router,
+    private alert: AlertService,
   ) {}
 
   ngOnInit(): void {
@@ -121,57 +123,32 @@ export class CreateSubcategoryComponent implements OnInit {
     .createSubCategory(
       formData
     )
-    .subscribe({
+   .subscribe({
 
-      // SUCCESS
+  next: () => {
 
-      next: () => {
+    this.alert.success(
+      'SubCategory Created Successfully'
+    );
 
-        Swal.fire({
+    this.router.navigate([
+      '/admin/list_subcategory'
+    ]);
 
-          icon: 'success',
+  },
 
-          title: 'Success',
+  error: (err: any) => {
 
-          text:
-            'SubCategory Created Successfully',
+    console.log(err);
 
-          timer: 2000,
-
-          showConfirmButton:
-            false
-
-        });
-
-        this.router.navigate([
-
-          '/admin/list_subcategory'
-
-        ]);
-
-      },
-
-      // ERROR
-
-     error: (err: any) => {
-
-  console.log('ERROR =>', err);
-
-  Swal.fire({
-
-    icon: 'error',
-
-    title: 'Error',
-
-    text:
+    this.alert.error(
       err?.error?.message ||
       'Failed To Create SubCategory'
+    );
 
-  });
+  }
 
-}
-
-    });
+});
 
 }
 

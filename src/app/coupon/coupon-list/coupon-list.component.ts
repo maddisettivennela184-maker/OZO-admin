@@ -6,6 +6,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
 import { Coupon } from 'src/app/Models/Coupon';
+import { AlertService } from 'src/app/Services/alert.service';
 import { CouponService } from 'src/app/Services/coupon.service';
 import Swal from 'sweetalert2';
 
@@ -50,7 +51,8 @@ export class CouponListComponent implements OnInit {
       Router,
 
     private dialog:
-      MatDialog
+      MatDialog,
+        private alert: AlertService
 
   ) { }
 
@@ -179,19 +181,8 @@ export class CouponListComponent implements OnInit {
 
               next: () => {
 
-                Swal.fire({
+               this.alert.success('Deleted Successfully');
 
-                  icon: 'success',
-
-                  title: 'Deleted',
-
-                  text: 'Coupon deleted successfully',
-
-                  timer: 2000,
-
-                  showConfirmButton: false
-
-                });
 
                 this.getAllCoupons();
 

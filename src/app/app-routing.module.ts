@@ -46,12 +46,27 @@ import { EmployeeListComponent } from './employee/employee-list/employee-list.co
 import { EmployeeCreateComponent } from './employee/employee-create/employee-create.component';
 import { EmployeeUpdateComponent } from './employee/employee-update/employee-update.component';
 import { ProfileComponent } from './profile/profile.component';
+import { AssignedProductsComponent } from './AssignedProducts/assigned-products/assigned-products.component';
+import { ListSchemaComponent } from './schema/list-schema/list-schema.component';
+import { CreateScheemaComponent } from './schema/create-scheema/create-scheema.component';
+import { UpdateScheemaComponent } from './schema/update-scheema/update-scheema.component';
+import { UserSchemaComponent } from './user-scheema/user-schema/user-schema.component';
+import { CreateUserscheemaComponent } from './user-scheema/create-userscheema/create-userscheema.component';
+import { UpdateUserscheemaComponent } from './user-scheema/update-userscheema/update-userscheema.component';
+import { ViewScheemaComponent } from './View-dialog-Controllers/view-scheema/view-scheema.component';
+import { SchemaPaymentListComponent } from './scheme-payment/schema-payment-list/schema-payment-list.component';
+import { SizeChatListComponent } from './size-chat/size-chat-list/size-chat-list.component';
+import { SizeChatCreateComponent } from './size-chat/size-chat-create/size-chat-create.component';
 
 const routes: Routes = [
 
   // First screen
   {
     path: '',
+    component: LoginComponent
+  },
+ {
+    path: 'login',
     component: LoginComponent
   },
 
@@ -112,7 +127,30 @@ const routes: Routes = [
         {path: 'update-subbranch/:id',component: SubBranchUpdateComponent},
         {path: 'employee-list',component: EmployeeListComponent},
         {path: 'employee-create',component: EmployeeCreateComponent},
-        {path: 'employee-update/:id',component: EmployeeUpdateComponent}
+        {path: 'employee-update/:id',component: EmployeeUpdateComponent},
+        {path: 'assign-products/:subBranchId',component: AssignedProductsComponent},
+{path:"scheme-list",component:ListSchemaComponent},
+{path:"CreateScheema",component:CreateScheemaComponent},
+{path:'edit-scheme/:id',component:UpdateScheemaComponent},
+{path:"user-scheema-list",component:UserSchemaComponent},
+{path:"user-scheema-Create",component:CreateUserscheemaComponent},
+{path:"user-scheema-update/:id",component:UpdateUserscheemaComponent},
+{path: 'view-scheme/:id',component: ViewScheemaComponent},
+{path:"userpayment-scheema-list",component:SchemaPaymentListComponent},
+{path:"sizechat-list",component:SizeChatListComponent},
+{path:"create-sizechat",component:SizeChatCreateComponent},
+
+
+
+
+
+
+
+
+{
+path:'product/:subBranchId',
+component:ProductListComponent
+}
 
 
 
@@ -128,10 +166,12 @@ const routes: Routes = [
       path: 'dashboard',
       component: SubbranchDashboardComponent
     },
+          { path: 'metal-list', component: MetalListComponent },
+
 
     {
-      path: 'product',
-      component: ProductListComponent
+      path: 'AssignedProducts',
+      component: AssignedProductsComponent
     },
 
     {

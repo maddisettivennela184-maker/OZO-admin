@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertService } from 'src/app/Services/alert.service';
 import { BannerService } from 'src/app/Services/banner.service';
 
 @Component({
@@ -32,7 +33,8 @@ export class UpdateBannerComponent
       ActivatedRoute,
 
     private router:
-      Router
+      Router,
+        private alert: AlertService
   ) { }
 
   ngOnInit(): void {
@@ -155,25 +157,29 @@ export class UpdateBannerComponent
         this.bannerId,
         formData
       )
-      .subscribe({
-        next: () => {
-          alert(
-            'Banner updated successfully'
-          );
+     .subscribe({
 
-          this.router.navigate([
-            '/admin/banners'
-          ]);
-        },
+  next: () => {
 
-        error: (
-          error
-        ) => {
-          console.error(
-            error
-          );
-        }
-      });
+    this.alert.success('Banner Updated Successfully');
+
+    this.router.navigate([
+      '/admin/banners'
+    ]);
+
+  },
+
+  error: (error: any) => {
+
+    console.error(error);
+
+    this.alert.error(
+      error?.error?.message || 'Failed To Update Banner'
+    );
+
+  }
+
+});
   }
 
   /*

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminLoginService } from 'src/app/Services/admin-login.service';
+import { AlertService } from 'src/app/Services/alert.service';
 import { EmployeeService } from 'src/app/Services/employee.service';
 import Swal from 'sweetalert2';
 
@@ -16,352 +17,405 @@ export class EmployeeUpdateComponent implements OnInit {
 
   employeeId!: string;
 
+  loading = false;
+
   subBranches: any[] = [];
 
-  selectedPhoto!: File;
+  photo!: File;
 
-  selectedAadhaar!: File;
+  aadhaarImage!: File;
 
-  photoPreview: string = '';
+  photoPreview: any = '';
 
-  aadhaarPreview: string = '';
+  aadhaarPreview: any = '';
 
   constructor(
 
     private fb: FormBuilder,
 
-    private employeeService:
-    EmployeeService,
+    private employeeService: EmployeeService,
 
-    private adminService:
-    AdminLoginService,
+    private adminService: AdminLoginService,
 
-    private route:
-    ActivatedRoute,
+    private alert: AlertService,
 
-    private router: Router
+    private router: Router,
+
+    private route: ActivatedRoute
 
   ) { }
 
   ngOnInit(): void {
 
     this.employeeId =
-      this.route.snapshot.params['id'];
+      this.route.snapshot.paramMap.get('id')!;
+
+    this.createForm();
+
+    this.getSubBranches();
+
+    this.getEmployee();
+
+  }
+
+  // ==========================
+  // CREATE FORM
+  // ==========================
+
+  createForm() {
 
     this.employeeForm =
       this.fb.group({
 
         firstName: [
+
           '',
+
           Validators.required
+
         ],
 
         lastName: [
+
           '',
+
           Validators.required
+
         ],
 
         contactNumber: [
+
           '',
-          Validators.required
+
+          [
+
+            Validators.required,
+
+            Validators.pattern(
+              '^[0-9]{10}$'
+            )
+
+          ]
+
         ],
 
         role: [
+
           '',
+
           Validators.required
+
         ],
 
         subBranchId: [
+
           '',
+
           Validators.required
+
         ],
 
-        location: [''],
+        address: [
 
-        address: [''],
+          '',
+
+          Validators.required
+
+        ],
+
+        location: [
+
+          '',
+
+          Validators.required
+
+        ],
 
         status: [
+
           'ACTIVE'
-        ]
 
-      });
-
-    this.getAllSubBranches();
-
-    this.getEmployeeById();
-
-  }
-
-  // ===================
-  // GET SUB BRANCHES
-  // ===================
-
-  getAllSubBranches() {
-
-    this.adminService
-      .getAllSubBranches()
-      .subscribe({
-
-        next: (res: any) => {
-
-          this.subBranches =
-            res.data;
-
-        }
-
+        ],
+isActive: [true]  
       });
 
   }
+  // ==========================
+// GET ALL SUB BRANCHES
+// ==========================
 
-  // ===================
-  // GET EMPLOYEE BY ID
-  // ===================
+getSubBranches() {
 
-  getEmployeeById() {
+  this.adminService
 
-    this.employeeService
-      .getEmployeeById(
-        this.employeeId
-      )
-      .subscribe({
+    .getAllSubBranches()
 
-        next: (res: any) => {
+    .subscribe({
 
-          const data =
-            res.data;
+      next: (res: any) => {
 
-          this.employeeForm
-            .patchValue({
+        this.subBranches = res.data;
 
-              firstName:
-                data.firstName,
+      },
 
-              lastName:
-                data.lastName,
+      error: (err: any) => {
 
-              contactNumber:
-                data.contactNumber,
+        console.log(err);
 
-              role:
-                data.role,
-
-              subBranchId:
-                data.subBranchId?._id ||
-                data.subBranchId,
-
-              location:
-                data.location,
-
-              address:
-                data.address,
-
-              status:
-                data.status
-
-            });
-
-          this.photoPreview =
-            data.photo;
-
-          this.aadhaarPreview =
-            data.aadhaarImage;
-
-        }
-
-      });
-
-  }
-
-  // ===================
-  // PHOTO CHANGE
-  // ===================
-
-  onPhotoChange(event: any) {
-
-    if (
-      event.target.files &&
-      event.target.files[0]
-    ) {
-
-      this.selectedPhoto =
-        event.target.files[0];
-
-      const reader =
-        new FileReader();
-
-      reader.onload = (e: any) => {
-
-        this.photoPreview =
-          e.target.result;
-
-      };
-
-      reader.readAsDataURL(
-        this.selectedPhoto
-      );
-
-    }
-
-  }
-
-  // ===================
-  // AADHAAR CHANGE
-  // ===================
-
-  onAadhaarChange(event: any) {
-
-    if (
-      event.target.files &&
-      event.target.files[0]
-    ) {
-
-      this.selectedAadhaar =
-        event.target.files[0];
-
-      const reader =
-        new FileReader();
-
-      reader.onload = (e: any) => {
-
-        this.aadhaarPreview =
-          e.target.result;
-
-      };
-
-      reader.readAsDataURL(
-        this.selectedAadhaar
-      );
-
-    }
-
-  }
-
-  // ===================
-  // UPDATE EMPLOYEE
-  // ===================
-
-  updateEmployee() {
-
-    if (
-      this.employeeForm.invalid
-    ) {
-
-      this.employeeForm
-        .markAllAsTouched();
-
-      return;
-
-    }
-
-    const formData =
-      new FormData();
-
-    Object.keys(
-      this.employeeForm.value
-    ).forEach(key => {
-
-      formData.append(
-
-        key,
-
-        this.employeeForm.value[key]
-
-      );
+      }
 
     });
 
-    if (
-      this.selectedPhoto
-    ) {
+}
 
-      formData.append(
 
-        'photo',
+// ==========================
+// GET EMPLOYEE BY ID
+// ==========================
 
-        this.selectedPhoto
+getEmployee() {
 
-      );
+  this.employeeService
 
-    }
+    .getEmployeeById(this.employeeId)
 
-    if (
-      this.selectedAadhaar
-    ) {
+    .subscribe({
 
-      formData.append(
+      next: (res: any) => {
 
-        'aadhaarImage',
+        console.log("Employee =>", res);
 
-        this.selectedAadhaar
+        const employee = res.data;
 
-      );
+        this.employeeForm.patchValue({
 
-    }
+          firstName: employee.firstName,
 
-    this.employeeService
-      .updateEmployee(
+          lastName: employee.lastName,
 
-        this.employeeId,
+          contactNumber: employee.contactNumber,
 
-        formData
+          role: employee.role,
 
-      )
-      .subscribe({
+          subBranchId: employee.subBranchId?._id,
 
-        next: (res: any) => {
+          address: employee.address,
 
-          Swal.fire({
+          location: employee.location,
 
-            icon: 'success',
+          status: employee.status,
+           isActive: employee.isActive 
 
-            title: 'Success',
+        });
 
-            text:
-              res.message ||
+        this.photoPreview = employee.photo;
 
-              'Employee Updated Successfully'
+        this.aadhaarPreview = employee.aadhaarImage;
 
-          });
+      },
 
-          this.router.navigate([
+      error: (err: any) => {
 
-            '/admin/employee-list'
+        console.log(err);
 
-          ]);
+      }
 
-        },
+    });
 
-        error: (err) => {
+}
 
-          Swal.fire({
 
-            icon: 'error',
+// ==========================
+// PHOTO CHANGE
+// ==========================
 
-            title: 'Error',
+onPhotoChange(event: any) {
 
-            text:
-              err.error.message
+  if (event.target.files.length > 0) {
 
-          });
+    this.photo = event.target.files[0];
 
-        }
+    const reader = new FileReader();
 
-      });
+    reader.onload = () => {
+
+      this.photoPreview = reader.result;
+
+    };
+
+    reader.readAsDataURL(this.photo);
 
   }
 
-  // ===================
-  // BACK
-  // ===================
+}
 
-  goBack() {
+
+// ==========================
+// AADHAAR CHANGE
+// ==========================
+
+onAadhaarChange(event: any) {
+
+  if (event.target.files.length > 0) {
+
+    this.aadhaarImage = event.target.files[0];
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+
+      this.aadhaarPreview = reader.result;
+
+    };
+
+    reader.readAsDataURL(this.aadhaarImage);
+
+  }
+
+}
+// ==========================
+// UPDATE EMPLOYEE
+// ==========================
+
+updateEmployee() {
+
+  if (this.employeeForm.invalid) {
+
+    this.employeeForm.markAllAsTouched();
+
+    return;
+
+  }
+
+  this.loading = true;
+
+  const formData = new FormData();
+
+  formData.append(
+    'firstName',
+    this.employeeForm.value.firstName
+  );
+
+  formData.append(
+    'lastName',
+    this.employeeForm.value.lastName
+  );
+
+  formData.append(
+    'contactNumber',
+    this.employeeForm.value.contactNumber
+  );
+
+  formData.append(
+    'role',
+    this.employeeForm.value.role
+  );
+
+  formData.append(
+    'subBranchId',
+    this.employeeForm.value.subBranchId
+  );
+
+  formData.append(
+    'address',
+    this.employeeForm.value.address
+  );
+
+  formData.append(
+    'location',
+    this.employeeForm.value.location
+  );
+
+  formData.append(
+    'status',
+    this.employeeForm.value.status
+  );
+  formData.append(
+  'isActive',
+  this.employeeForm.value.isActive
+);
+
+  // Photo
+  if (this.photo) {
+
+    formData.append(
+      'photo',
+      this.photo
+    );
+
+  }
+
+  // Aadhaar
+  if (this.aadhaarImage) {
+
+    formData.append(
+      'aadhaarImage',
+      this.aadhaarImage
+    );
+
+  }
+
+  this.employeeService
+
+    .updateEmployee(
+
+      this.employeeId,
+
+      formData
+
+    )
+
+    .subscribe({
+
+     next: (res: any) => {
+
+  this.loading = false;
+
+  this.alert.success(res.message);
+
+  setTimeout(() => {
 
     this.router.navigate([
-
       '/admin/employee-list'
-
     ]);
 
-  }
+  }, 1500);
+
+},
+
+      error: (err: any) => {
+
+        this.loading = false;
+
+        console.log(err);
+
+        this.alert.error(
+
+          err?.error?.message ||
+
+          'Update Failed'
+
+        );
+
+      }
+
+    });
+
+}
+
+
+// ==========================
+// BACK
+// ==========================
+
+goBack() {
+
+  this.router.navigate([
+
+    '/admin/employee-list'
+
+  ]);
+
+}
 
 }

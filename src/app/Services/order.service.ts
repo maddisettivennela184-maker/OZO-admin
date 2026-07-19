@@ -15,48 +15,51 @@ export class OrderService {
     private http: HttpClient
   ) {}
 
-  createOrder(data: any): Observable<any> {
+ createOrder(data: any): Observable<any> {
 
-    return this.http.post(
+  return this.http.post(
 
-      `${this.apiUrl}/create-order`,
+    `${this.apiUrl}/createOrder`,
 
-      data
+    data
 
-    );
+  );
 
+}
+getAllOrders(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/getAllOrders`);
   }
 
-  getAllOrders(): Observable<any> {
-
-    return this.http.get(
-
-      `${this.apiUrl}/get-all-orders`
-
-    );
-
-  }
+  // ==========================
+  // GET ORDER BY ID
+  // ==========================
 
   getOrderById(id: string): Observable<any> {
-
-    return this.http.get(
-
-      `${this.apiUrl}/get-order/${id}`
-
-    );
-
+    return this.http.get(`${this.apiUrl}/getOrder/${id}`);
   }
 
-  getOrdersByUser(
-    userId: string
-  ): Observable<any> {
+  // ==========================
+  // GET ORDERS BY USER
+  // ==========================
 
-    return this.http.get(
+  getOrdersByUser(userId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/getOrdersByUser/${userId}`);
+  }
 
-      `${this.apiUrl}/get-orders-by-user/${userId}`
+  // ==========================
+  // GET BRANCH ORDERS
+  // ==========================
 
-    );
+ getBranchOrders(branchId: string): Observable<any> {
+  return this.http.get(`${this.apiUrl}/getBranchOrders/${branchId}`);
+}
 
+  // ==========================
+  // GET SUB BRANCH ORDERS
+  // ==========================
+
+  getSubBranchOrders(subBranchId: string): Observable<any> {
+    return this.http.get(`${this.apiUrl}/getSubBranchOrders/${subBranchId}`);
   }
 
   cancelOrder(
@@ -74,15 +77,23 @@ export class OrderService {
 
   }
 
-  deleteOrder(
-    id: string
-  ): Observable<any> {
+  deleteOrder(id: string): Observable<any> {
 
     return this.http.delete(
-
       `${this.apiUrl}/delete-order/${id}`
-
     );
 
   }
+  calculatePrice(data: any): Observable<any> {
+
+  return this.http.post(
+
+    `${this.apiUrl}/calculatePrice`,
+
+    data
+
+  );
+
+}
+ 
 }

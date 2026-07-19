@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdsService } from 'src/app/Services/ads.service';
+import { AlertService } from 'src/app/Services/alert.service';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -24,7 +25,9 @@ section!: string;
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private adsService: AdsService
+    private adsService: AdsService,
+    
+  private alert: AlertService
   ) {}
 
  ngOnInit(): void {
@@ -140,19 +143,8 @@ getAdsById() {
 
     next: (res: any) => {
 
-      Swal.fire({
+     this.alert.success('Updated Successfully');
 
-        icon: 'success',
-
-        title: 'Success',
-
-        text: 'Updated Successfully',
-
-        timer: 2000,
-
-        showConfirmButton: false
-
-      });
 
       this.router.navigate([
         '/admin/Ads'

@@ -11,6 +11,10 @@
   border-radius: 16px;
 
 }
+.Assign{
+  color:var(  --red-color);
+  border: none;
+}
 
 /* =========================================
    TOP SECTION
@@ -129,17 +133,7 @@ table {
 
 }
 
-th {
 
-  background: #fafafa;
-
-  color: #222;
-
-  font-size: 14px;
-
-  font-weight: 700;
-
-}
 
 td {
 
@@ -173,7 +167,9 @@ td {
 
 .active {
 
-  color: green;
+  border-radius: 20px;
+  font-size: larger;
+  padding: 7px;
 
   font-weight: 600;
 
@@ -185,6 +181,32 @@ td {
 
   font-weight: 600;
 
+}
+
+/* status chaing  */
+.status-badge{
+    display:inline-block;
+    min-width:90px;
+    text-align:center;
+    padding:6px 14px;
+    border-radius:20px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.active{
+    background:#d1f7dd;
+    color:#198754;
+}
+
+.inactive{
+    background:#ffe1e1;
+    color:#dc3545;
+}
+
+.status-badge:hover{
+    opacity:.8;
 }
 
 /* =========================================
@@ -510,5 +532,20 @@ mat-paginator {
   border-radius: 12px;
 
   border: 1px solid #ddd;
+
+}
+.Assign {
+  background-color: #64010117 !important;
+  color: var(--red-color) !important;
+  border-radius: 15px;
+  text-transform: none;
+  font-weight: 500;
+  padding: 5px 18px;
+}
+.table thead th{
+
+color:#8b0000;
+
+font-weight:600;
 
 }

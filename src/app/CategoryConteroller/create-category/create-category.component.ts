@@ -4,6 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CategoryService } from 'src/app/Services/category.service';
 import Swal from 'sweetalert2';
+import { AlertService } from 'src/app/Services/alert.service';
 
 @Component({
   selector: 'app-create-category',
@@ -25,6 +26,7 @@ export class CreateCategoryComponent implements OnInit {
     public router: Router,
 
     public snackBar: MatSnackBar,
+    private alert: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -77,21 +79,7 @@ export class CreateCategoryComponent implements OnInit {
 
       console.log(response);
 
-      Swal.fire({
-
-        icon: 'success',
-
-        title: 'Success',
-
-        text:
-          'Category Created Successfully',
-
-        timer: 2000,
-
-        showConfirmButton:
-          false
-
-      });
+     this.alert.success('Category Created Successfully');
 
       this.router.navigate([
 

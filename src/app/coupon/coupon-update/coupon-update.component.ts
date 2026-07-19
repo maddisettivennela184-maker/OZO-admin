@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertService } from 'src/app/Services/alert.service';
 import { CouponService } from 'src/app/Services/coupon.service';
 import Swal from 'sweetalert2';
 
@@ -23,7 +24,8 @@ export class CouponUpdateComponent implements OnInit {
 
     private router: Router,
 
-    private couponService: CouponService
+    private couponService: CouponService,
+      private alert: AlertService
 
   ) { }
 
@@ -169,57 +171,34 @@ export class CouponUpdateComponent implements OnInit {
       this.couponForm.value
 
     )
-    .subscribe({
+   .subscribe({
 
-      next: (
-        response
-      ) => {
+  next: (response) => {
 
-        Swal.fire({
+    this.alert.success('Coupon Updated Successfully');
 
-          icon: 'success',
+    setTimeout(() => {
 
-          title: 'Success',
+      this.router.navigate([
+        '/admin/coupon-list'
+      ]);
 
-          text: 'Coupon Updated Successfully',
+    }, 2000);
 
-          timer: 2000,
+  },
 
-          showConfirmButton: false
+  error: (error: any) => {
 
-        }).then(() => {
+    console.error(error);
 
-          this.router.navigate([
-            '/admin/coupon-list'
-          ]);
+    this.alert.error(
+      error?.error?.message ||
+      'Something went wrong'
+    );
 
-        });
+  }
 
-      },
-
-      error: (
-        error
-      ) => {
-
-        console.error(
-          error
-        );
-
-        Swal.fire({
-
-          icon: 'error',
-
-          title: 'Update Failed',
-
-          text:
-            error?.error?.message ||
-            'Something went wrong'
-
-        });
-
-      }
-
-    });
+});
 
 }
 

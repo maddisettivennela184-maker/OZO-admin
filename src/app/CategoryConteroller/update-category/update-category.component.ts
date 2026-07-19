@@ -113,53 +113,63 @@ export class UpdateCategoryComponent implements OnInit {
       formData
 
     )
-    .subscribe({
+   .subscribe({
 
-      next: () => {
+  next: () => {
 
-        Swal.fire({
+    Swal.fire({
 
-          icon: 'success',
+      icon: 'success',
 
-          title: 'Success',
+      title: 'Success',
 
-          text:
-            'Updated Successfully',
+      text: 'Updated Successfully',
 
-          timer: 2000,
+      timer: 2000,
 
-          showConfirmButton:
-            false
+      timerProgressBar: true,
 
-        });
+      showConfirmButton: false,
 
-        this.router.navigate([
-
-          '/admin/category'
-
-        ]);
-
-      },
-
-      error: (err: any) => {
-
-      console.log('ERROR =>', err);
-
-      Swal.fire({
-
-        icon: 'error',
-
-        title: 'Error',
-
-        text:
-          err?.error?.message ||
-          'Update Failed'
-
-      });
-
-    }
+      customClass: {
+        popup: 'success-popup'
+      }
 
     });
+
+    this.router.navigate([
+      '/admin/category'
+    ]);
+
+  },
+
+  error: (err: any) => {
+
+    console.log('ERROR =>', err);
+
+    Swal.fire({
+
+      icon: 'error',
+
+      title: 'Error',
+
+      text: err?.error?.message || 'Update Failed',
+
+      timer: 2000,
+
+      timerProgressBar: true,
+
+      showConfirmButton: false,
+
+      customClass: {
+        popup: 'error-popup'
+      }
+
+    });
+
+  }
+
+});
 
 }
 

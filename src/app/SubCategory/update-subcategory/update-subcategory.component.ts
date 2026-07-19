@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertService } from 'src/app/Services/alert.service';
 import { CategoryService } from 'src/app/Services/category.service';
 import { SubcategoryService } from 'src/app/Services/subcategory.service';
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -23,7 +25,8 @@ export class UpdateSubcategoryComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private subService: SubcategoryService,
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+      private alert: AlertService
   ) {}
 
   ngOnInit(): void {
@@ -120,56 +123,31 @@ export class UpdateSubcategoryComponent implements OnInit {
       formData
 
     )
-    .subscribe({
+   .subscribe({
 
-      // SUCCESS
+  // SUCCESS
+  next: () => {
 
-      next: () => {
+    this.alert.success('Updated Successfully');
 
-        Swal.fire({
+    this.router.navigate([
+      '/admin/list_subcategory'
+    ]);
 
-          icon: 'success',
+  },
 
-          title: 'Success',
+  // ERROR
+  error: (err: any) => {
 
-          text:
-            'Updated Successfully',
+    console.log(err);
 
-          timer: 2000,
+    this.alert.error(
+      err?.error?.message || 'Update Failed'
+    );
 
-          showConfirmButton:
-            false
+  }
 
-        });
-
-        this.router.navigate([
-
-          '/admin/list_subcategory'
-
-        ]);
-
-      },
-
-      // ERROR
-
-      error: (err: any) => {
-
-        console.log(err);
-
-        Swal.fire({
-
-          icon: 'error',
-
-          title: 'Oops...',
-
-          text:
-            'Update Failed'
-
-        });
-
-      }
-
-    });
+});
 
 }
   

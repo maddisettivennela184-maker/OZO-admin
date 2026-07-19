@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/Services/alert.service';
 import { EmployeeService } from 'src/app/Services/employee.service';
 import { ViewEmployeeComponent } from 'src/app/View-dialog-Controllers/view-employee/view-employee.component';
 import Swal from 'sweetalert2';
@@ -15,46 +16,31 @@ import Swal from 'sweetalert2';
 export class EmployeeListComponent implements OnInit {
 
   displayedColumns: string[] = [
+    'sno',
+    'photo',
+    'name',
+    'contactNumber',
+    'role',
+    'subBranch',
+    'location',
+    'status',
+    'actions'
+  ];
 
-  'sno',
-
-  'photo',
-
-  'name',
-
-  'contactNumber',
-
-  'role',
-
-  'location',
-
-  'status',
-
-  'actions'
-
-];
-
-
-  dataSource =
-    new MatTableDataSource<any>();
+  dataSource = new MatTableDataSource<any>();
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
 
   constructor(
-
-    private employeeService:
-    EmployeeService,
-
+    private employeeService: EmployeeService,
     private router: Router,
-    private dialog: MatDialog
-
-  ) { }
+    private dialog: MatDialog,
+    private alert: AlertService
+  ) {}
 
   ngOnInit(): void {
-
     this.getAllEmployees();
-
   }
 
   getAllEmployees() {
@@ -65,11 +51,19 @@ export class EmployeeListComponent implements OnInit {
 
         next: (res: any) => {
 
-          this.dataSource.data =
-            res.data;
+          this.dataSource.data = res.data;
 
-          this.dataSource.paginator =
-            this.paginator;
+          this.dataSource.paginator = this.paginator;
+
+        },
+
+        error: (err: any) => {
+
+          console.log(err);
+
+          this.alert.error(
+            err?.error?.message || 'Failed To Load Employees'
+          );
 
         }
 
@@ -79,77 +73,80 @@ export class EmployeeListComponent implements OnInit {
 
   applyFilter(event: Event) {
 
-    const filterValue =
-      (event.target as HTMLInputElement)
-      .value;
+    const filterValue = (event.target as HTMLInputElement).value;
 
-    this.dataSource.filter =
-      filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue.trim().toLowerCase();
 
   }
 
-  editEmployee(
-    element: any
-  ) {
+  editEmployee(element: any) {
 
     this.router.navigate([
-
       '/admin/employee-update',
-
       element._id
-
     ]);
 
   }
-    viewemployee(
-      employee: any
-): void {
 
-  this.dialog.open(
+  viewemployee(employee: any): void {
 
-    ViewEmployeeComponent,
+    this.dialog.open(ViewEmployeeComponent, {
 
-    {
+      width: '800px',
 
-    width: '800px',
+      maxHeight: '90vh',
 
-    maxHeight: '90vh',
+      data: employee,
 
-    data: employee,
+      disableClose: true
 
-    disableClose: true
+    });
 
   }
 
-  );
-
-}
-
-  deleteEmployee(
-    element: any
-  ) {
+  deleteEmployee(element: any) {
 
     Swal.fire({
 
       title: 'Delete Employee?',
 
+      text: 'You cannot undo this action.',
+
       icon: 'warning',
 
       showCancelButton: true,
 
-      confirmButtonColor: '#7a0000'
+      confirmButtonText: 'Delete',
+
+      confirmButtonColor: '#640101',
+
+      cancelButtonColor: '#6c757d'
 
     }).then((result) => {
 
       if (result.isConfirmed) {
 
         this.employeeService
-          .deleteEmployee(
-            element._id
-          )
-          .subscribe(() => {
+          .deleteEmployee(element._id)
+          .subscribe({
 
-            this.getAllEmployees();
+            next: () => {
+
+              this.alert.success('Employee Deleted Successfully');
+
+              this.getAllEmployees();
+
+            },
+
+            error: (err: any) => {
+
+              console.log(err);
+
+              this.alert.error(
+                err?.error?.message || 'Delete Failed'
+              );
+
+            }
 
           });
 
@@ -158,51 +155,46 @@ export class EmployeeListComponent implements OnInit {
     });
 
   }
+
   changeStatus(element: any) {
 
-  Swal.fire({
+    Swal.fire({
 
-    title: 'Change Status',
+      title: 'Change Status',
 
-    input: 'radio',
+      input: 'radio',
 
-    inputOptions: {
+      inputOptions: {
 
-      ACTIVE: 'Active',
+        ACTIVE: 'Active',
 
-      INACTIVE: 'Inactive'
+        INACTIVE: 'Inactive'
 
-    },
+      },
 
-    inputValue: element.status,
+      inputValue: element.status,
 
-    showCancelButton: true,
+      showCancelButton: true,
 
-    confirmButtonColor: '#640101',
+      confirmButtonColor: '#640101',
 
-    cancelButtonColor: '#6c757d'
+      cancelButtonColor: '#6c757d'
 
-  }).then((result) => {
+    }).then((result) => {
 
-    if (result.isConfirmed) {
+      if (result.isConfirmed) {
 
-      element.status =
-        result.value;
+        // API unte ikkada call cheyyi
+        // this.employeeService.updateStatus(element._id, result.value).subscribe(...)
 
-      Swal.fire(
+        element.status = result.value;
 
-        'Success',
+        this.alert.success('Status Updated Successfully');
 
-        'Status Updated Successfully',
+      }
 
-        'success'
+    });
 
-      );
-
-    }
-
-  });
-
-}
+  }
 
 }

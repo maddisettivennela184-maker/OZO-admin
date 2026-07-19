@@ -78,7 +78,7 @@ export class CouponCreateComponent {
 
             text: 'Coupon Created Successfully',
 
-            confirmButtonColor: '#3085d6'
+            confirmButtonColor: '#680404'
 
           }).then(() => {
 

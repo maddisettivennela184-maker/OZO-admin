@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AlertService } from 'src/app/Services/alert.service';
 import { StonesRateService } from 'src/app/Services/stones-rate.service';
 import Swal from 'sweetalert2';
 
@@ -19,7 +20,8 @@ export class StonesUpdateComponent implements OnInit {
     private fb: FormBuilder,
     private stoneRateService: StonesRateService,
     private router: Router,
-    private activeRoute: ActivatedRoute
+    private activeRoute: ActivatedRoute,
+      private alert: AlertService
   ) {
 
     this.stoneRateForm = this.fb.group({
@@ -157,21 +159,8 @@ export class StonesUpdateComponent implements OnInit {
 
         next: (response) => {
 
-          Swal.fire({
+       this.alert.success('Updated Successfully');
 
-            icon: 'success',
-
-            title: 'Success',
-
-            text:
-              'Stone Rate Updated Successfully',
-
-            timer: 2000,
-
-            showConfirmButton:
-              false
-
-          });
 
           this.router.navigate([
             '/admin/stones-list'

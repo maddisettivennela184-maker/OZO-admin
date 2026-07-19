@@ -39,7 +39,9 @@
       </li>
 
       <ul class="submenu" [class.show]="openMenu === 'catalog'">
-
+ <li routerLink="sizechat-list">
+          Size Chat
+        </li>
         <li routerLink="metal-list">
           Metal List
         </li>
@@ -64,9 +66,7 @@
           Products
         </li>
 
-        <li routerLink="inventory">
-          Inventory
-        </li>
+       
 
       </ul>
 
@@ -88,6 +88,8 @@
 
       </li>
 
+      
+
       <ul class="submenu" [class.show]="openMenu === 'sales'">
 
         <li routerLink="Order">
@@ -97,6 +99,8 @@
         <li routerLink="transactions">
           Transactions
         </li>
+
+          
 
 
         <li routerLink="Coupon-lists">
@@ -211,6 +215,39 @@
  <li routerLink="employee-list">
           Employee
         </li>
+
+      </ul>
+
+      <!-- ==============schems===================== -->
+       <li (click)="toggleMenu('Schem')">
+
+        <div class="menu-left">
+
+          <i class="fa-solid fa-image"></i>
+
+          <span>Schems</span>
+
+        </div>
+
+        <i class="fa-solid fa-angle-down" [class.rotate]="openMenu === 'Schem'">
+        </i>
+
+      </li>
+
+      <ul class="submenu" [class.show]="openMenu === 'Schem'">
+
+         <li routerLink="scheme-list">
+          Scheema
+        </li>
+        <li routerLink="user-scheema-list">
+          User-SCheema
+        </li>
+        <li routerLink="userpayment-scheema-list">
+          scheme payment
+        </li>
+
+       
+
 
       </ul>
 

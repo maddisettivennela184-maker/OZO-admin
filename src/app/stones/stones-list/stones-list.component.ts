@@ -5,6 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { DeleteConfirmationComponent } from 'src/app/delete-confirmation/delete-confirmation.component';
+import { AdminLoginService } from 'src/app/Services/admin-login.service';
+import { AlertService } from 'src/app/Services/alert.service';
 import { StonesRateService } from 'src/app/Services/stones-rate.service';
 import Swal from 'sweetalert2';
 
@@ -56,7 +58,9 @@ export class StonesListComponent implements OnInit {
       Router,
 
     private dialog:
-      MatDialog
+      MatDialog,
+        private alert: AlertService,
+          public authService: AdminLoginService
 
   ) { }
 
@@ -191,21 +195,8 @@ export class StonesListComponent implements OnInit {
 
               next: () => {
 
-                Swal.fire({
+               this.alert.success('Deleted Successfully');
 
-                  icon: 'success',
-
-                  title: 'Success',
-
-                  text:
-                    'Stone Rate Delete Successfully',
-
-                  timer: 2000,
-
-                  showConfirmButton:
-                    false
-
-                });
                 this.getAllStoneRates();
 
               },
