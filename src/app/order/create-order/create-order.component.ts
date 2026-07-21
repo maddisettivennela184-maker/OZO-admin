@@ -111,6 +111,11 @@ getProducts() {
   });
 
 }
+loadAllSkus() {
+
+  this.filteredVariants = [...this.allVariants];
+
+}
 onVariantChange() {
 
   const variantId = this.orderForm.value.variant;
@@ -391,20 +396,20 @@ variantDetails: structuredClone(variant),
     this.router.navigate(['/admin/Order']);
   }
   // search sku
-   onSearch(event: any) {
+ onSearch(event: any) {
 
-  const term = event.term?.trim();
+  const term = event.term?.trim().toLowerCase();
 
-  if (!term || term.length < 2) {
+  if (!term) {
 
-    // Empty dropdown
-    this.filteredVariants = [];
-
+    // Search empty ayithe anni SKUs chupinchu
+    this.filteredVariants = [...this.allVariants];
     return;
+
   }
 
   this.filteredVariants = this.allVariants.filter((x: any) =>
-    x.sku.toLowerCase().includes(term.toLowerCase())
+    x.sku.toLowerCase().includes(term)
   );
 
 }

@@ -1,1 +1,132 @@
-<p>size-chat-update works!</p>
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-md-12">
+
+            <div class="title-section">
+
+                <h2>Update Size Chart</h2>
+
+            </div>
+
+        </div>
+
+        <div class="category-card">
+
+            <form
+                [formGroup]="sizeChartForm"
+                (ngSubmit)="onUpdate()">
+
+                <div class="form-layout">
+
+                    <!-- Left -->
+
+                    <div class="left-section">
+
+                        <div class="form-group">
+
+                            <label>Title</label>
+
+                            <input
+                                type="text"
+                                formControlName="title"
+                                placeholder="Enter Title">
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Sub Category</label>
+
+                            <select formControlName="subCategory">
+
+                                <option value="">
+                                    Select Sub Category
+                                </option>
+
+                                <option
+                                    *ngFor="let item of subCategories"
+                                    [value]="item._id">
+
+                                    {{item.name}}
+
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Description</label>
+
+                            <textarea
+                                rows="4"
+                                formControlName="description">
+                            </textarea>
+
+                        </div>
+
+                        <div class="form-group">
+
+                            <label>Change Image</label>
+
+                            <input
+                                type="file"
+                                (change)="onFileChange($event)">
+
+                        </div>
+
+                    </div>
+
+                    <!-- Right -->
+
+                    <div class="right-section">
+
+                        <div class="preview-box">
+
+                            <img
+                                *ngIf="imagePreview"
+                                [src]="imagePreview">
+
+                            <p *ngIf="!imagePreview">
+
+                                No Image
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="button-group">
+
+                    <button
+                        type="submit"
+                        class="btn-create">
+
+                        Update
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="btn-back"
+                        (click)="goBack()">
+
+                        Back
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

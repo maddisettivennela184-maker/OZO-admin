@@ -95,5 +95,12 @@ getAllOrders(): Observable<any> {
   );
 
 }
+getTotalOrders() {
+
+  return this.http.get(
+    `${this.apiUrl}/total-orders`
+  );
+
+}
  
 }

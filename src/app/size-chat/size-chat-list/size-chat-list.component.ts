@@ -83,7 +83,7 @@ export class SizeChatListComponent implements OnInit {
   editSizeChart(element: any) {
 
     this.router.navigate([
-      '/admin/update-size-chart',
+      '/admin/update-size',
       element._id
     ]);
 

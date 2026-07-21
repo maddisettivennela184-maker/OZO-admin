@@ -9,7 +9,7 @@
 
     border-radius:12px;
 
-    padding:20px 25px;
+    /* padding:20px 25px; */
 
     box-shadow:0 5px 15px rgba(0,0,0,.08);
 
@@ -104,15 +104,21 @@ label {
     --gray-colour: rgb(98, 92, 92);
     --green-colour: rgb(47, 208, 11);
 }
-::ng-deep .bill-select .ng-placeholder{
+::ng-deep .bill-select .ng-select-container {
 
-    color: #9ca3af !important;
+    height: 45px !important;
+}
 
-    font-size: 15px;
+::ng-deep .bill-select .ng-value-container {
 
-    font-weight: 500;
+    height: 45px !important;
+    line-height: 45px !important;
+}
+::ng-deep .bill-select .ng-placeholder {
 
-   
+
+
+    color: #9ca3af;
 
 }
 

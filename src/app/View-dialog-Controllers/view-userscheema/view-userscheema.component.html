@@ -4,14 +4,14 @@
     <span>User Scheme Details</span>
   </div>
 
-  <button
-    mat-flat-button
-    mat-dialog-close
-    class="btn-close"
-    type="button"
-    aria-label="Close">
-    <i class="fas fa-times"></i>
-  </button>
+    <button
+      mat-icon-button
+      class="close-btn"
+      (click)="closeDialog()">
+
+      <i class="fa fa-times"></i>
+
+    </button>
 </h2>
 
 <div mat-dialog-content class="dialog-content">
@@ -101,6 +101,72 @@
       </div>
     </div>
   </div>
+<!-- 
+  Payment History card add cheyyi -->
+<div class="info-card">
+
+    <div class="card-header">
+        <i class="fas fa-money-check"></i>
+        <h3>Payment History</h3>
+
+        <span class="ms-auto">
+            {{ data?.payments?.length || 0 }} Payments
+        </span>
+    </div>
+
+    <div class="row">
+
+        <div
+            class="col-md-6 mb-3"
+            *ngFor="let payment of data?.payments">
+
+            <div class="payment-box">
+
+                <div class="d-flex justify-content-between align-items-center mb-3">
+
+                    <h5 class="mb-0">
+                        Month {{ payment.monthNo }}
+                    </h5>
+
+                   <span
+  class="status-badge"
+  [ngClass]="{
+    'status-paid': payment.status === 'PAID',
+    'status-pending': payment.status === 'PENDING',
+    'status-failed': payment.status === 'FAILED'
+  }">
+  {{ payment.status }}
+</span>
+
+                </div>
+
+                <p>
+                    <strong>Amount :</strong>
+                    ₹ {{ payment.amount | number:'1.2-2' }}
+                </p>
+
+                <p>
+                    <strong>Date :</strong>
+                    {{ payment.paymentDate | date:'dd MMM yyyy' }}
+                </p>
+
+                <p>
+                    <strong>Gateway :</strong>
+                    {{ payment.gateway }}
+                </p>
+
+                <!-- <p>
+                    <strong>Transaction :</strong>
+                    {{ payment.transactionId }}
+                </p> -->
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
   <!-- ================= Dates ================= -->
   <div class="info-card dates-card">

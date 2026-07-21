@@ -16,35 +16,10 @@
 
         <!-- Company -->
 
-        <div class="col-md-7">
-
-            <h2 class="company-name">
-
-                OZO Gold & Diamond Jewellery
-
-            </h2>
-
-            <p class="company-address">
-
-                Hyderabad, Telangana
-
-            </p>
-
-            <p class="company-contact">
-
-                📞 +91 70360 20999
-
-                |
-
-                ✉ info@ozojewellery.com
-
-            </p>
-
-        </div>
 
         <!-- Title -->
 
-        <div class="col-md-3 text-end">
+        <div class="col-md-8 ">
 
             <h1 class="billing-title">
 
@@ -57,6 +32,8 @@
                 Jewellery Billing System
 
             </span>
+            <!-- Right Empty -->
+        <div class="col-md-2"></div>
 
         </div>
 
@@ -107,7 +84,7 @@
 
                                     <ng-select class="bill-select" [items]="filteredVariants" bindLabel="sku"
                                         bindValue="_id" [searchable]="true" [clearable]="true" [virtualScroll]="true"
-                                        appendTo="body" formControlName="variant" placeholder="Enter SKU"
+                                        appendTo="body" formControlName="variant" placeholder="Enter SKU"(open)="loadAllSkus()"
                                         (search)="onSearch($event)" (change)="onVariantChange()">
 
                                         <ng-template ng-option-tmp let-item="item">

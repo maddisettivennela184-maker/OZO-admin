@@ -33,4 +33,11 @@ export class SizeChatService {
   deleteSizeChart(id: string): Observable<any> {
     return this.http.delete(`${this.apiUrl}/delete-size-chart/${id}`);
   }
+  getSizeChartById(id: string): Observable<any> {
+
+  return this.http.get(
+    `${this.apiUrl}/get-size-chart/${id}`
+  );
+
+}
 }

@@ -21,10 +21,10 @@ console.log(this.data);
 
 }
 
-close(){
+ closeDialog() {
 
-this.dialogRef.close();
+    this.dialogRef.close();
 
-}
+  }
 
 }

@@ -180,6 +180,25 @@ onSubmit() {
   'adminId',
   res._id
 );
+// 👇 Success Message
+Swal.fire({
+  icon: 'success',
+  title: 'Login Successful',
+  text: 'Welcome back!',
+  confirmButtonColor: '#640101'
+}).then(() => {
+
+  if (res.role === 'BRANCH') {
+
+    this.router.navigate(['/admin/dashboard']);
+
+  } else if (res.role === 'SUB_BRANCH') {
+
+    this.router.navigate(['/SUB_BRANCH/dashboard']);
+
+  }
+
+});
 
         // Branch Login
 

@@ -186,17 +186,48 @@
       <i class="fas fa-shield-alt"></i>
       <h3>Payment Status</h3>
     </div>
-    <div class="status-wrapper">
-      <span class="payment-status"
-            [ngClass]="{
-              'paid': data?.status === 'PAID',
-              'pending': data?.status === 'PENDING',
-              'failed': data?.status === 'FAILED'
-            }">
-        <i class="fas fa-circle"></i>
-        <span>{{ data?.status }}</span>
-      </span>
+   <div class="status-wrapper">
+
+  <div
+    class="status-card"
+    [ngClass]="{
+      'status-paid': data?.status === 'PAID',
+      'status-pending': data?.status === 'PENDING',
+      'status-failed': data?.status === 'FAILED'
+    }">
+
+    <div class="status-icon">
+
+      <i
+        class="fas"
+        [ngClass]="{
+          'fa-check-circle': data?.status === 'PAID',
+          'fa-clock': data?.status === 'PENDING',
+          'fa-times-circle': data?.status === 'FAILED'
+        }">
+      </i>
+
     </div>
+
+    <div class="status-content">
+
+      <span class="status-title">
+
+        Payment Status
+
+      </span>
+
+      <h5>
+
+        {{ data?.status }}
+
+      </h5>
+
+    </div>
+
+  </div>
+
+</div>
   </div>
 
   <!-- ================= Remarks ================= -->

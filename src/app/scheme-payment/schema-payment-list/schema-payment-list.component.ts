@@ -33,6 +33,7 @@ export class SchemaPaymentListComponent implements OnInit, AfterViewInit {
     'actions'
 
   ];
+  
 
   paymentList: any[] = [];
 

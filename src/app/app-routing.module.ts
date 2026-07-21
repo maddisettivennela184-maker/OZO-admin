@@ -57,6 +57,7 @@ import { ViewScheemaComponent } from './View-dialog-Controllers/view-scheema/vie
 import { SchemaPaymentListComponent } from './scheme-payment/schema-payment-list/schema-payment-list.component';
 import { SizeChatListComponent } from './size-chat/size-chat-list/size-chat-list.component';
 import { SizeChatCreateComponent } from './size-chat/size-chat-create/size-chat-create.component';
+import { SizeChatUpdateComponent } from './size-chat/size-chat-update/size-chat-update.component';
 
 const routes: Routes = [
 
@@ -139,6 +140,7 @@ const routes: Routes = [
 {path:"userpayment-scheema-list",component:SchemaPaymentListComponent},
 {path:"sizechat-list",component:SizeChatListComponent},
 {path:"create-sizechat",component:SizeChatCreateComponent},
+{path:"update-size/:id",component:SizeChatUpdateComponent},
 
 
 

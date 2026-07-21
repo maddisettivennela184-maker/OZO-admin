@@ -170,23 +170,20 @@ export class UserSchemaComponent implements OnInit, AfterViewInit {
   // View
   // ==========================
 
-  viewUserScheme(element: any) {
+ viewUserScheme(element: any) {
 
-    this.dialog.open(
+  this.userSchemeService
+      .getPaymentHistory(element._id)
+      .subscribe((res:any)=>{
 
-      ViewUserscheemaComponent,
+          this.dialog.open(ViewUserscheemaComponent,{
+              width:'900px',
+              data: res.data
+          });
 
-      {
+      });
 
-        width: '900px',
-
-        data: element
-
-      }
-
-    );
-
-  }
+}
 
   // ==========================
   // Delete

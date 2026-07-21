@@ -16,7 +16,7 @@
     margin-bottom: 20px;
 }
 
-.title-section h2 {
+.title-section h2{
     font-size: 28px;
     font-weight: 600;
     color:var(--red-color);
@@ -141,9 +141,7 @@ textarea {
     transition: .3s;
 }
 
-.btn-create:hover {
-    background: #3730a3;
-}
+
 
 .btn-back {
     background: #6b7280;

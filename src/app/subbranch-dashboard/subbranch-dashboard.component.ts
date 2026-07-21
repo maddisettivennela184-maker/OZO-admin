@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js';
+import { OrderService } from '../Services/order.service';
 
 @Component({
   selector: 'app-subbranch-dashboard',
@@ -9,6 +10,7 @@ import { Chart } from 'chart.js';
 })
 export class SubbranchDashboardComponent 
   implements AfterViewInit {
+    totalOrders: number = 0;
 
   @ViewChild('barChart')
   barChartRef!: ElementRef;
@@ -18,6 +20,16 @@ export class SubbranchDashboardComponent
 
   @ViewChild('donutChart')
   donutChartRef!: ElementRef;
+  dataSource: any;
+  paginator: any;
+  sort: any;
+  constructor(
+
+  private orderService: OrderService,
+
+  private router: Router
+
+) { }
 
   ngAfterViewInit(): void {
 
@@ -26,8 +38,23 @@ export class SubbranchDashboardComponent
       this.loadCharts();
 
     }, 100);
+    this.getOrders();
 
   }
+    // get total orders
+  getOrders(): void {
+
+ this.orderService.getTotalOrders().subscribe({
+
+    next: (res: any) => {
+
+      this.totalOrders = res.totalOrders;
+
+    }
+
+  });
+
+}
 
   loadCharts() {
 
@@ -262,5 +289,7 @@ export class SubbranchDashboardComponent
     });
 
   }
+
+
 
 }

@@ -2,7 +2,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 20px;
+  /* padding: 16px 20px; */
   font-weight: 600;
 }
 
@@ -12,15 +12,12 @@
   gap: 10px;
 }
 
-.btn-close {
-  min-width: 36px;
-  width: 36px;
-  height: 36px;
-  padding: 0;
+.close-btn {
+ 
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
+  border: none;
 }
 
 .dialog-content {
@@ -84,7 +81,7 @@
 }
 
 .paid {
-  color: #198754;
+  color: #1987543e;
 }
 
 .remaining {
@@ -96,23 +93,38 @@
   justify-content: flex-start;
 }
 
-.status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 18px;
-  border-radius: 999px;
-  font-weight: 600;
-  color: #fff;
-  min-width: 220px;
-  justify-content: center;
+.payment-badge{
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 85px;
+    height: 36px;
+    padding: 0 18px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: .5px;
 }
 
-.status-active { background: #198754; }
-.status-completed { background: #0d6efd; }
-.status-matured { background: #6f42c1; }
-.status-cancelled { background: #dc3545; }
-.status-defaulted { background: #6c757d; }
+/* Paid */
+.badge-paid{
+    background: #E8F8EF;
+    color: #00cd4b6e;
+}
+
+/* Pending */
+.badge-pending{
+    background: #FFF7E6;
+    color: #F59E0B;
+}
+
+/* Failed */
+.badge-failed{
+    background: #FDECEC;
+    color: #DC2626;
+}
+
+
 
 .remarks-content {
   background: #fff;
@@ -125,8 +137,90 @@
   color: #555;
 }
 
+/* payment histoey */
+.payment-box{
+
+    border:1px solid var(--orange-colour);
+    border-radius:12px;
+    padding:18px;
+    background:#fff;
+    height:100%;
+    transition:0.3s;
+
+}
+
+.payment-box:hover{
+
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+
+}
+
+.payment-box h5{
+
+    font-size:18px;
+    font-weight:600;
+    color:#640101;
+
+}
+
+.payment-box p{
+
+    margin-bottom:8px;
+    color:#555;
+
+}
+
+.payment-box strong{
+
+    color:#222;
+
+}
+
+.badge{
+
+    padding:8px 14px;
+    border-radius:20px;
+    font-size:12px;
+
+}
+
 @media (max-width: 768px) {
   .details-grid {
     grid-template-columns: 1fr;
   }
+}
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 90px;
+  height: 38px;
+
+  padding: 0 18px;
+
+  border-radius: 999px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  text-transform: capitalize;
+}
+
+/* Paid */
+.status-paid {
+  background: #E7F8EE;
+  color: #169B62;
+}
+
+/* Pending */
+.status-pending {
+  background: #FFF4D6;
+  color: #D97706;
+}
+
+/* Failed */
+.status-failed {
+  background: #FDEAEA;
+  color: #DC2626;
 }
