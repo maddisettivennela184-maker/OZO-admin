@@ -3,33 +3,23 @@
   <div class="employee-card">
 
     <!-- Header -->
-
     <div class="card-header">
-
       <h3>Update Employee</h3>
-
       <p>Update employee details</p>
-
     </div>
-
-    <!-- Form -->
 
     <form
       [formGroup]="employeeForm"
       (ngSubmit)="updateEmployee()"
       enctype="multipart/form-data">
 
-      <div class="row">
+      <div class="row g-4">
 
         <!-- First Name -->
-
-        <div class="col-md-6 mb-3">
-
+        <div class="col-lg-4 col-md-6">
           <label class="form-label">
-
             First Name
             <span class="text-danger">*</span>
-
           </label>
 
           <input
@@ -42,22 +32,15 @@
             class="text-danger"
             *ngIf="employeeForm.get('firstName')?.touched &&
                    employeeForm.get('firstName')?.invalid">
-
             First Name is required
-
           </small>
-
         </div>
 
         <!-- Last Name -->
-
-        <div class="col-md-6 mb-3">
-
+        <div class="col-lg-4 col-md-6">
           <label class="form-label">
-
             Last Name
             <span class="text-danger">*</span>
-
           </label>
 
           <input
@@ -70,22 +53,15 @@
             class="text-danger"
             *ngIf="employeeForm.get('lastName')?.touched &&
                    employeeForm.get('lastName')?.invalid">
-
             Last Name is required
-
           </small>
-
         </div>
 
         <!-- Contact -->
-
-        <div class="col-md-6 mb-3">
-
+        <div class="col-lg-4 col-md-6">
           <label class="form-label">
-
-            Contact Number
+            Phone Number
             <span class="text-danger">*</span>
-
           </label>
 
           <input
@@ -93,37 +69,28 @@
             maxlength="10"
             class="form-control"
             formControlName="contactNumber"
-            placeholder="Enter Contact Number">
+            placeholder="Enter Phone Number">
 
           <small
             class="text-danger"
             *ngIf="employeeForm.get('contactNumber')?.touched &&
                    employeeForm.get('contactNumber')?.invalid">
-
             Enter Valid Mobile Number
-
           </small>
-
         </div>
 
         <!-- Role -->
-
-        <div class="col-md-6 mb-3">
-
+        <div class="col-lg-4 col-md-6">
           <label class="form-label">
-
             Role
             <span class="text-danger">*</span>
-
           </label>
 
           <select
             class="form-select"
             formControlName="role">
 
-            <option value="">
-              Select Role
-            </option>
+            <option value="">Select Role</option>
 
             <option value="MANAGER">
               Manager
@@ -142,18 +109,13 @@
             </option>
 
           </select>
-
         </div>
 
         <!-- Sub Branch -->
-
-        <div class="col-md-6 mb-3">
-
+        <div class="col-lg-4 col-md-6">
           <label class="form-label">
-
             Sub Branch
             <span class="text-danger">*</span>
-
           </label>
 
           <select
@@ -173,18 +135,13 @@
             </option>
 
           </select>
-
         </div>
 
         <!-- Location -->
-
-        <div class="col-md-6 mb-3">
-
+        <div class="col-lg-4 col-md-6">
           <label class="form-label">
-
             Location
             <span class="text-danger">*</span>
-
           </label>
 
           <input
@@ -192,37 +149,30 @@
             class="form-control"
             formControlName="location"
             placeholder="Enter Location">
-
         </div>
 
         <!-- Address -->
-
-        <div class="col-md-12 mb-4">
+        <div class="col-12">
 
           <label class="form-label">
-
             Address
             <span class="text-danger">*</span>
-
           </label>
 
           <textarea
-            rows="4"
+            rows="5"
             class="form-control"
             formControlName="address"
             placeholder="Enter Address">
-
           </textarea>
 
         </div>
-                <!-- Employee Photo -->
 
-        <div class="col-md-6 mb-4">
+        <!-- Employee Photo -->
+        <div class="col-lg-6">
 
           <label class="form-label">
-
             Employee Photo
-
           </label>
 
           <input
@@ -232,7 +182,7 @@
             (change)="onPhotoChange($event)">
 
           <div
-            class="text-center mt-3"
+            class="preview-box mt-3"
             *ngIf="photoPreview">
 
             <img
@@ -243,14 +193,11 @@
 
         </div>
 
-        <!-- Aadhaar Image -->
-
-        <div class="col-md-6 mb-4">
+        <!-- Aadhaar -->
+        <div class="col-lg-6">
 
           <label class="form-label">
-
             Aadhaar Image
-
           </label>
 
           <input
@@ -260,7 +207,7 @@
             (change)="onAadhaarChange($event)">
 
           <div
-            class="text-center mt-3"
+            class="preview-box mt-3"
             *ngIf="aadhaarPreview">
 
             <img
@@ -282,11 +229,10 @@
           class="btn-create"
           [disabled]="loading">
 
-          {{ loading ? 'Updating...' : 'Update ' }}
+          {{ loading ? 'Updating...' : 'Update Employee' }}
 
         </button>
 
-        
         <button
           type="button"
           class="btn-back"

@@ -1,5 +1,7 @@
 .container-fluid{
     padding:20px;
+      text-transform: capitalize;
+
 }
 
 .page-title{

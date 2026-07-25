@@ -7,6 +7,9 @@ font-weight:700;
 color:#7d0000;
 
 }
+.product-container{
+   text-transform: capitalize;
+}
 
 .page-subtitle{
 

@@ -152,22 +152,66 @@ export class SchemaPaymentListComponent implements OnInit, AfterViewInit {
   // View Payment
   // ==========================
 
+  // viewPayment(element: any): void {
+
+  //   this.dialog.open(
+
+  //     ViewPaymentSchemeComponent,
+
+  //     {
+
+  //       width: '850px',
+
+  //       data: element
+
+  //     }
+        
+
+  //   );
+
+  // }
+ 
+
   viewPayment(element: any): void {
 
-    this.dialog.open(
+  this.paymentService
+    .getPaymentHistory(element.subscription._id)
+    .subscribe({
 
-      ViewPaymentSchemeComponent,
+      next: (res: any) => {
 
-      {
+        this.dialog.open(ViewPaymentSchemeComponent, {
 
-        width: '850px',
+          width: '900px',
 
-        data: element
+          data: {
+
+            // Current payment
+            ...element,
+
+            // User Scheme
+            subscription: res.data.subscription,
+
+            // User (HTML lo data.user use chestunnav)
+            user: res.data.subscription.user,
+
+            // History
+            paymentHistory: res.data.payments
+
+          }
+
+        });
+
+      },
+
+      error: (err) => {
+
+        console.log(err);
 
       }
 
-    );
+    });
 
-  }
+}
 
 }

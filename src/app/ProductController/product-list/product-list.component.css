@@ -3,6 +3,7 @@
 ========================================= */
 
 .product-container {
+  text-transform: capitalize;
 
   padding: 25px;
 

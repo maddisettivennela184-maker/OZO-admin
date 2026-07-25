@@ -1,354 +1,220 @@
 <div class="dialog-container">
 
-    <!-- Header -->
-
-    <div class="dialog-header">
-
-        <h2>
-            <i class="fa fa-gem me-2"></i>
-            Product Details
-        </h2>
-
-        <button
-            class="close-btn"
-            (click)="closeDialog()">
-
-            <i class="fa fa-times"></i>
-
-        </button>
-
+  <!-- Header -->
+  <div class="dialog-header">
+    <div class="title-wrap">
+      <span class="title-icon">
+        <i class="fa fa-gem"></i>
+      </span>
+      <div>
+        <h2>Product Details</h2>
+        <p>Overview of product, variant, stone and billing data</p>
+      </div>
     </div>
 
-    <!-- Body -->
+    <button class="close-btn" (click)="closeDialog()">
+      <i class="fa fa-times"></i>
+    </button>
+  </div>
 
-    <div class="dialog-body">
+  <!-- Body -->
+  <div class="dialog-body">
+     <div class="row g-4">
+      <div class="col-lg-4 col-md-5">
+        <div class="image-card">
+          <div class="image-top-badge">
+            <i class="fa fa-image"></i>
+            Product Image
+          </div>
 
-        <div class="row">
-
-            <!-- Images -->
-
-            <div class="col-md-4">
-
-                <img
-                    [src]="data.productDetails.images[0]"
-                    class="product-image mb-3">
-
-                <div class="row">
-
-                    <div
-                        class="col-4 mb-2"
-                        *ngFor="let img of data.productDetails.images">
-
-                        <img
-                            [src]="img"
-                            class="img-fluid rounded border">
-
-                    </div>
-
-                </div>
-
-            </div>
-
-            <!-- Details -->
-
-            <div class="col-md-8">
-
-                <table class="table table-borderless">
-
-                    <tr>
-                        <th>Product</th>
-                        <td>{{data.productDetails.name}}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Slug</th>
-                        <td>{{data.productDetails.slug}}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Category</th>
-                        <td>{{data.productDetails.category?.name}}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Sub Category</th>
-                        <td>{{data.productDetails.subCategory?.name}}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Sub Sub Category</th>
-                        <td>{{data.productDetails.subSubCategory?.name}}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Brand</th>
-                        <td>{{data.productDetails.brand}}</td>
-                    </tr>
-
-                    <!-- <tr>
-                        <th>Product Type</th>
-                        <td>{{data.productDetails.productType}}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Gender</th>
-                        <td>{{data.productDetails.gender}}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Occasion</th>
-                        <td>{{data.productDetails.occasion}}</td>
-                    </tr>
-
-                    <tr>
-                        <th>Hallmark No</th>
-                        <td>{{data.productDetails.hallmarkNumber}}</td>
-                    </tr> -->
-
-                    <tr>
-                        <th>Hallmark Certified</th>
-                        <td>
-
-                            <span
-                                class="badge bg-success"
-                                *ngIf="data.productDetails.hallmarkCertified">
-
-                                Yes
-
-                            </span>
-
-                            <span
-                                class="badge bg-danger"
-                                *ngIf="!data.productDetails.hallmarkCertified">
-
-                                No
-
-                            </span>
-
-                        </td>
-
-                    </tr>
-
-                   
-                </table>
-
-            </div>
-
+          <div class="image-wrapper">
+            <img
+              [src]="data.productDetails.images[0]"
+              class="product-image">
+          </div>
         </div>
+      </div>
 
-        <!-- Variant Details -->
+      <div class="col-lg-8 col-md-7">
+        
 
-        <div class="mt-4">
+        <div class="product-spec">
+            <div class="spec-row">
+           <h2>{{data.productDetails.name}}</h2>
+            <p>{{data.productDetails.brand}}</p>
+          </div>
+          <div class="spec-row">
+            <span>Category</span>
+            <strong>{{data.productDetails.category?.name}}</strong>
+          </div>
 
-            <h4 class="text-danger mb-3">
+          <div class="spec-row">
+            <span>Sub Category</span>
+            <strong>{{data.productDetails.subCategory?.name}}</strong>
+          </div>
 
-                Variant Details
+          <div class="spec-row">
+            <span>Sub Sub Category</span>
+            <strong>{{data.productDetails.subSubCategory?.name}}</strong>
+          </div>
 
-            </h4>
+          <div class="spec-row">
+            <span>Slug</span>
+            <strong>{{data.productDetails.slug}}</strong>
+          </div>
 
-            <table class="table table-bordered">
-
-                <tbody>
-
-                    <tr>
-
-                        <th>SKU</th>
-
-                        <td>{{data.variantDetails.sku}}</td>
-
-                        <th>Purity</th>
-
-                        <td>{{data.variantDetails.metalPurity}}</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <th>Metal Type</th>
-
-                        <td>{{data.variantDetails.metalType}}</td>
-
-                        <th>Metal Color</th>
-
-                        <td>{{data.variantDetails.metalColor}}</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <th>Gross Weight</th>
-
-                        <td>{{data.variantDetails.grossWeight}} g</td>
-
-                        <th>Net Weight</th>
-
-                        <td>{{data.variantDetails.netWeight}} g</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <th>Size</th>
-
-                        <td>{{data.variantDetails.size}}</td>
-
-                        <th>Stock</th>
-
-                        <td>{{data.variantDetails.stock}}</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <th>Making Charge</th>
-
-                        <td>
-
-                            ₹ {{data.variantDetails.makingCharges}}
-
-                        </td>
-
-                        <th>Discount</th>
-
-                        <td>
-
-                            {{data.variantDetails.discountPercentage}} %
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
+          <div class="spec-row">
+            <span>Brand</span>
+            <strong>{{data.productDetails.brand}}</strong>
+          </div>
+          <div class="spec-row">
+            <span >Hallmark</span>
+            <strong>     <i
+              class="fa"
+              [ngClass]="data.productDetails.hallmarkCertified ? 'fa-check-circle' : 'fa-times-circle'">
+            </i>       {{data.productDetails.hallmarkCertified ? 'Hallmarked' : 'Not Hallmarked'}}
+</strong>
+          </div>
         </div>
+      </div>
+    </div>
 
-        <!-- Stone Details -->
-<div *ngIf="data.variantDetails?.stones?.length">
+    <!-- Variant Details -->
+   <!-- Variant Details -->
+<div class="section-card mt-4">
+  <div class="section-head">
+    <h4>Variant Details</h4>
+  </div>
 
-    <h4 class="text-danger mb-3">
-        Stone Details
-    </h4>
+  <div class="variant-grid">
 
-    <table class="table table-bordered">
+    <div class="variant-item">
+      <span>SKU</span>
+      <strong>{{data.variantDetails.sku}}</strong>
+    </div>
 
-        <thead>
+    <div class="variant-item">
+      <span>Purity</span>
+      <strong>{{data.variantDetails.metalPurity}}</strong>
+    </div>
 
-            <tr>
-                <th>#</th>
-                <th>Stone Type</th>
-                <th>Category</th>
-                <th>Quality</th>
-                <th>Weight</th>
-                <th>Qty</th>
-            </tr>
+    <div class="variant-item">
+      <span>Metal Type</span>
+      <strong>{{data.variantDetails.metalType}}</strong>
+    </div>
 
-        </thead>
+    <div class="variant-item">
+      <span>Metal Color</span>
+      <strong>{{data.variantDetails.metalColor}}</strong>
+    </div>
 
-        <tbody>
+    <div class="variant-item">
+      <span>Gross Weight</span>
+      <strong>{{data.variantDetails.grossWeight}} g</strong>
+    </div>
 
-            <tr *ngFor="let stone of data.variantDetails.stones; let i=index">
+    <div class="variant-item">
+      <span>Net Weight</span>
+      <strong>{{data.variantDetails.netWeight}} g</strong>
+    </div>
 
-                <td>{{i + 1}}</td>
-                <td>{{stone.stoneType}}</td>
-                <td>{{stone.stoneCategory}}</td>
-                <td>{{stone.quality}}</td>
-                <td>{{stone.totalWeight}}</td>
-                <td>{{stone.quantity}}</td>
+    <div class="variant-item">
+      <span>Size</span>
+      <strong>{{data.variantDetails.size}}</strong>
+    </div>
 
-            </tr>
+   
 
-        </tbody>
+    <div class="variant-item">
+      <span>Making Charge</span>
+      <strong>₹ {{data.variantDetails.makingCharges}}</strong>
+    </div>
 
-    </table>
+    <div class="variant-item">
+      <span>Discount</span>
+      <strong>{{data.variantDetails.discountPercentage}}%</strong>
+    </div>
 
+  </div>
 </div>
 
-        <!-- Billing Details -->
+    <!-- Stone Details -->
+    <div class="section-card mt-4" *ngIf="data.variantDetails?.stones?.length">
+      <div class="section-head">
+        <h4>Stone Details</h4>
+      </div>
 
-        <div class="mt-4">
+      <div class="table-responsive">
+        <table class="detail-table stone-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Stone Type</th>
+              <th>Category</th>
+              <th>Quality</th>
+              <th>Weight</th>
+              <th>Qty</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let stone of data.variantDetails.stones; let i=index">
+              <td>{{i + 1}}</td>
+              <td>{{stone.stoneType}}</td>
+              <td>{{stone.stoneCategory}}</td>
+              <td>{{stone.quality}}</td>
+              <td>{{stone.totalWeight}}</td>
+              <td>{{stone.quantity}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
-            <h4 class="text-danger mb-3">
+    <!-- Billing Details -->
+    <div class="section-card mt-4">
+      <div class="section-head">
+        <h4>Billing Details</h4>
+      </div>
 
-                Billing Details
-
-            </h4>
-
-            <table class="table table-bordered">
-
-                <tbody>
-
-                    <tr>
-
-                        <th>Quantity</th>
-
-                        <td>{{data.quantity}}</td>
-
-                        <th>Metal Value</th>
-
-                        <td>{{data.metalValue | currency:'INR'}}</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <th>Making Charge</th>
-
-                        <td>{{data.makingCharge | currency:'INR'}}</td>
-
-                        <th>GST</th>
-
-                        <td>{{data.gstAmount | currency:'INR'}}</td>
-
-                    </tr>
-
-                    <tr>
-
-                        <th>Total Price</th>
-
-                        <td
-                            colspan="3"
-                            class="fw-bold text-success fs-5">
-
-                            {{data.totalPrice | currency:'INR'}}
-
-                        </td>
-
-                    </tr>
-
-                </tbody>
-
-            </table>
-
+      <div class="billing-grid">
+        <div class="billing-item">
+          <span>Quantity</span>
+          <strong>{{data.quantity}}</strong>
         </div>
 
+        <div class="billing-item">
+          <span>Metal Value</span>
+          <strong>{{data.metalValue | currency:'INR'}}</strong>
+        </div>
+
+        <div class="billing-item">
+          <span>Making Charge</span>
+          <strong>{{data.makingCharge | currency:'INR'}}</strong>
+        </div>
+
+        <div class="billing-item">
+          <span>GST</span>
+          <strong>{{data.gstAmount | currency:'INR'}}</strong>
+        </div>
+      </div>
+
+      <div class="total-strip">
+        <span>Total Price</span>
+        <strong>{{data.totalPrice | currency:'INR'}}</strong>
+      </div>
     </div>
+  </div>
 
-    <!-- Footer -->
+  <!-- Footer -->
+  <div class="dialog-footer">
+    <button class="btn-close-dialog" (click)="closeDialog()">
+      <i class="fa fa-times me-2"></i>
+      Close
+    </button>
 
-    <div class="dialog-footer">
-
-        <button
-            class="btn-close-dialog"
-            (click)="closeDialog()">
-
-            <i class="fa fa-times me-2"></i>
-
-            Close
-
-        </button>
-
-        <button
-            class="btn-print"
-            (click)="printInvoice()">
-
-            <i class="fa fa-print me-2"></i>
-
-            Print
-
-        </button>
-
-    </div>
-
+    <button class="btn-print" (click)="printInvoice()">
+      <i class="fa fa-print me-2"></i>
+      Print
+    </button>
+  </div>
 </div>

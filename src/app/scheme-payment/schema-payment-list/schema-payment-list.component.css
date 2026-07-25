@@ -5,10 +5,13 @@
 .container-fluid {
 
     padding: 20px;
+      text-transform: capitalize;
+
 
     background: #f5f7fb;
 
     min-height: 100vh;
+     text-transform: capitalize;
 
 }
 

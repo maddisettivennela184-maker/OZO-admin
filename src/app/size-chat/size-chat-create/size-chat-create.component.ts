@@ -170,7 +170,7 @@ export class SizeChatCreateComponent implements OnInit {
           );
 
           this.router.navigate([
-            '/admin/size-chart'
+            '/admin/sizechat-list'
           ]);
 
         },
@@ -200,7 +200,7 @@ export class SizeChatCreateComponent implements OnInit {
   goBack() {
 
     this.router.navigate([
-      '/admin/size-chart'
+      '/admin/sizechat-list'
     ]);
 
   }

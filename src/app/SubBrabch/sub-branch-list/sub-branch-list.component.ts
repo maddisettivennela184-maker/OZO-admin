@@ -130,7 +130,7 @@ export class SubBranchListComponent implements OnInit {
   
       {
   
-      width: '800px',
+      width: '500px',
   
       maxHeight: '90vh',
   

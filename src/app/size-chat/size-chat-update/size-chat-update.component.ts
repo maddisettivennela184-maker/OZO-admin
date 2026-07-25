@@ -196,7 +196,7 @@ export class SizeChatUpdateComponent implements OnInit {
 
           this.alert.success(res.message);
 
-          this.router.navigate(['/admin/size-chart']);
+          this.router.navigate(['/admin/sizechat-list']);
 
         },
 
@@ -224,7 +224,7 @@ export class SizeChatUpdateComponent implements OnInit {
 
   goBack() {
 
-    this.router.navigate(['/admin/size-chart']);
+    this.router.navigate(['/admin/sizechat-list']);
 
   }
 

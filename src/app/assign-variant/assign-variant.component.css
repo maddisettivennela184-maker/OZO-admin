@@ -10,6 +10,9 @@ border-top-right-radius: 8px;
 box-shadow: 0 4px 14px rgba(0,0,0,0.15);
 margin: 0;
 }
+body{
+     text-transform: capitalize;
+}
 
 /* Dialog content area */
 .mat-dialog-content {

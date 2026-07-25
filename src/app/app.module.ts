@@ -164,7 +164,7 @@ import { SizeChatUpdateComponent } from './size-chat/size-chat-update/size-chat-
     ViewPaymentSchemeComponent,
     SizeChatListComponent,
     SizeChatCreateComponent,
-    SizeChatUpdateComponent
+    SizeChatUpdateComponent,
    
   ],
   imports: [

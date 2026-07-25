@@ -40,4 +40,9 @@ export class SchemePaymentService {
     );
 
   }
+getPaymentHistory(subscriptionId: string) {
+  return this.http.get(
+    `${this.apiUrl}/get-payment-history/${subscriptionId}`
+  );
+}
 }

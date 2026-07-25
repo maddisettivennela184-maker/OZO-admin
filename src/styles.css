@@ -3,7 +3,7 @@
   --lyt-yellow-color: #d4af375d;
   /* This is a blue color, you can change it */
   --red-color: #640101;
-  --wight-color: #fff;
+
   --gray-colour: rgb(98, 92, 92);
   --green-colour: rgb(47, 208, 11);
   --blue-colour: rgb(27, 112, 240);
@@ -12,12 +12,16 @@
     --dark-green: #155724;
     --active-bg-green:rgba(105, 249, 105, 0.274);
     --active-text:rgb(73, 118, 4);
+      --wight-color: #fff;
 
 
 
   /* Example of another color */
 
 }
+/* body {
+  text-transform: capitalize;
+} */
 
 /* google-fonts */
 body,
