@@ -13,144 +13,134 @@ import { SubcategoryService } from 'src/app/Services/subcategory.service';
 export class SizeChatUpdateComponent implements OnInit {
 
   sizeChartForm!: FormGroup;
-
   id!: string;
-
   selectedFile: File | null = null;
-
-  imagePreview: any = '';
-
+  imagePreview: string = '';
   subCategories: any[] = [];
 
   constructor(
-
     private fb: FormBuilder,
-
     private route: ActivatedRoute,
-
     private router: Router,
-
     private sizeChartService: SizeChatService,
-
     private subCategoryService: SubcategoryService,
-
     private alert: AlertService
-
   ) { }
 
   ngOnInit(): void {
 
-    this.id = this.route.snapshot.paramMap.get('id')!;
+    this.id = this.route.snapshot.paramMap.get('id') || '';
+
+    console.log("ID => ", this.id);
 
     this.sizeChartForm = this.fb.group({
-
       title: ['', Validators.required],
-
       subCategory: ['', Validators.required],
-
       description: ['']
-
     });
 
     this.getSubCategories();
 
-    this.getSizeChartById();
-
   }
 
-  // ===============================
+  // ==========================
   // Get All Sub Categories
-  // ===============================
+  // ==========================
 
   getSubCategories() {
 
-    this.subCategoryService
-      .getAllSubCategories()
-      .subscribe({
+    this.subCategoryService.getAllSubCategories().subscribe({
 
-        next: (res: any) => {
+      next: (res: any) => {
 
-          this.subCategories = res.data;
+        console.log("Sub Categories => ", res);
 
-        },
+        this.subCategories = res.data || [];
 
-        error: (err: any) => {
+        // Load Size Chart after categories loaded
+        this.getSizeChartById();
 
-          console.log(err);
+      },
 
-        }
+      error: (err) => {
 
-      });
+        console.log(err);
+
+      }
+
+    });
 
   }
 
-  // ===============================
-  // Get Size Chart By Id patch avataneki 
-  // ===============================
+  // ==========================
+  // Get Size Chart By Id
+  // ==========================
 
   getSizeChartById() {
 
-    this.sizeChartService
-      .getSizeChartById(this.id)
-      .subscribe({
+    this.sizeChartService.getSizeChartById(this.id).subscribe({
 
-        next: (res: any) => {
+      next: (res: any) => {
 
-          const data = res.data;
+        console.log("Size Chart => ", res);
 
-          this.sizeChartForm.patchValue({
+        const data = res.data;
 
-            title: data.title,
+        this.sizeChartForm.patchValue({
 
-            subCategory: data.subCategory._id,
+          title: data.title,
 
-            description: data.description
+          subCategory: data.subCategory?._id || data.subCategory,
 
-          });
+          description: data.description
 
-          this.imagePreview = data.image;
+        });
 
-        },
+        this.imagePreview = data.image;
 
-        error: (err: any) => {
+        console.log("Form Value => ", this.sizeChartForm.value);
 
-          console.log(err);
+      },
 
-        }
+      error: (err) => {
 
-      });
+        console.log(err);
+
+      }
+
+    });
 
   }
 
-  // ===============================
+  // ==========================
   // File Change
-  // ===============================
+  // ==========================
 
- onFileChange(event: any) {
+  onFileChange(event: any) {
 
-  const file = event.target.files?.[0];
+    const file = event.target.files[0];
 
-  if (!file) {
-    return;
+    if (!file) {
+      return;
+    }
+
+    this.selectedFile = file;
+
+    const reader = new FileReader();
+
+    reader.onload = () => {
+
+      this.imagePreview = reader.result as string;
+
+    };
+
+    reader.readAsDataURL(file);
+
   }
 
-  this.selectedFile = file;
-
-  const reader = new FileReader();
-
-  reader.onload = () => {
-
-    this.imagePreview = reader.result;
-
-  };
-
-  reader.readAsDataURL(file);
-
-}
-
-  // ===============================
+  // ==========================
   // Update
-  // ===============================
+  // ==========================
 
   onUpdate() {
 
@@ -164,63 +154,41 @@ export class SizeChatUpdateComponent implements OnInit {
 
     const formData = new FormData();
 
-    formData.append(
-      'title',
-      this.sizeChartForm.value.title
-    );
-
-    formData.append(
-      'subCategory',
-      this.sizeChartForm.value.subCategory
-    );
-
-    formData.append(
-      'description',
-      this.sizeChartForm.value.description
-    );
+    formData.append("title", this.sizeChartForm.value.title);
+    formData.append("subCategory", this.sizeChartForm.value.subCategory);
+    formData.append("description", this.sizeChartForm.value.description);
 
     if (this.selectedFile) {
 
-      formData.append(
-        'image',
-        this.selectedFile
-      );
+      formData.append("image", this.selectedFile);
 
     }
 
-    this.sizeChartService
-      .updateSizeChart(this.id, formData)
-      .subscribe({
+    this.sizeChartService.updateSizeChart(this.id, formData).subscribe({
 
-        next: (res: any) => {
+      next: (res: any) => {
 
-          this.alert.success(res.message);
+        this.alert.success(res.message);
 
-          this.router.navigate(['/admin/sizechat-list']);
+        this.router.navigate(['/admin/sizechat-list']);
 
-        },
+      },
 
-        error: (err: any) => {
+      error: (err: any) => {
 
-          console.log(err);
+        console.log(err);
 
-          this.alert.error(
+        this.alert.error(err.error?.message || "Update Failed");
 
-            err.error?.message ||
+      }
 
-            'Update Failed'
-
-          );
-
-        }
-
-      });
+    });
 
   }
 
-  // ===============================
+  // ==========================
   // Back
-  // ===============================
+  // ==========================
 
   goBack() {
 
