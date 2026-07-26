@@ -85,7 +85,7 @@ export class SizeChatUpdateComponent implements OnInit {
   }
 
   // ===============================
-  // Get Size Chart By Id
+  // Get Size Chart By Id patch avataneki 
   // ===============================
 
   getSizeChartById() {
